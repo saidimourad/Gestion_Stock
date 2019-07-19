@@ -60,6 +60,13 @@
     <!-- responsive CSS
 		============================================ -->
     <link rel="stylesheet" href="../css/responsive.css">
+
+
+
+
+
+
+
     {% block stylesheets %}
 
     {% endblock %}
@@ -83,18 +90,20 @@
             <nav class="sidebar-nav left-sidebar-menu-pro">
                 <ul class="metismenu" id="menu1">
                     <li class="active">
-                        <a class="has-arrow" href="index.html">
-                            <span class="educate-icon educate-home icon-wrap"></span>
-                            <span class="mini-click-non">Education</span>
-                        </a>
+
+
+                    <li>
+                        <a class="has-arrow" href="all-professors.html" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Compte Utilisateur </span></a>
                         <ul class="submenu-angle" aria-expanded="true">
-                            <li><a title="Dashboard v.1" href="index.html"><span class="mini-sub-pro">Dashboard v.1</span></a></li>
-                            <li><a title="Dashboard v.2" href="index-1.html"><span class="mini-sub-pro">Dashboard v.2</span></a></li>
-                            <li><a title="Dashboard v.3" href="index-2.html"><span class="mini-sub-pro">Dashboard v.3</span></a></li>
-                            <li><a title="Analytics" href="analytics.html"><span class="mini-sub-pro">Analytics</span></a></li>
-                            <li><a title="Widgets" href="widgets.html"><span class="mini-sub-pro">Widgets</span></a></li>
+                            <li><a title="Liste des utilisateur" href="all-professors.html"><span class="mini-sub-pro">Liste des utilisateur</span></a></li>
+                            <li><a title="Ajouter Utilisateur" href="add-professor.html"><span class="mini-sub-pro">Ajouter Utilisateur</span></a></li>
+                            <li><a title="Liste des Roles" href="/fonction"><span class="mini-sub-pro">Liste des Roles</span></a></li>
+                            <li><a title="Ajouter Role" href="add-professor.html"><span class="mini-sub-pro">Ajouter Role</span></a></li>
                         </ul>
                     </li>
+
+
+
                     <li>
                         <a title="Landing Page" href="events.html" aria-expanded="false"><span class="educate-icon educate-event icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Event</span></a>
                     </li>
@@ -1050,25 +1059,7 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="breadcome-list">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                    <div class="breadcome-heading">
-                                        <form role="search" class="sr-input-func">
-                                            <input type="text" placeholder="Search..." class="search-int form-control">
-                                            <a href="#"><i class="fa fa-search"></i></a>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
-                                    <ul class="breadcome-menu">
-                                        <li><a href="#">Home</a> <span class="bread-slash">/</span>
-                                        </li>
-                                        <li><span class="bread-blod">Dashboard V.1</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
 
                         </div>
                     </div>
@@ -1078,9 +1069,9 @@
     </div>
 
     <div class="courses-area mg-b-15">
-        <div class="container-fluid">
+        <div class="container-fluid breadcome-list">
             <div class="row">
-                <div class="container">
+                <div class="container ">
 
                     {% block body %}{% endblock %}
 
@@ -1094,7 +1085,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="footer-copy-right">
-                        <p>Copyright © 2019. All rights reserved. <a href="https://colorlib.com/wp/templates/">Colorlib</a></p>
+                        <p>Copyright © 2019. All rights reserved. <a href="https://colorlib.com/wp/templates/">Saidi Mourad</a></p>
                     </div>
                 </div>
             </div>
