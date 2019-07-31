@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base2.html.twig' %}
 {% block title %} Ajouter Utilisateur{% endblock %}
 {% block body %}
     <div class="row">
@@ -11,20 +11,19 @@
         {{ form_row(form.nom, {'label' : 'Nom:', 'attr' : {'class' : 'form-control'}}) }}
         {{ form_row(form.prenom, {'label' : 'Prenom:', 'attr' : {'class' : 'form-control'}}) }}
         {{ form_row(form.cin, {'label' : 'Cin:', 'attr' : {'class' : 'form-control'}}) }}
-        {{ form_row(form.date_naissance, {'label' : 'Date Naissance:', 'attr' : {'class' : 'form-control'}}) }}
+        {{ form_row(form.date_naissance, {'label' : 'Date Naissance:',  'attr' : {'class' : 'form-control'}}) }}
         {{ form_row(form.fonction, {'label' : 'Fonction:', 'attr' : {'class' : 'form-control'}}) }}
                 {{ form_row(form.tel, {'label' : 'Tel:', 'attr' : {'class' : 'form-control'}}) }}
         {{ form_row(form.email, {'label' : 'Email:', 'attr' : {'class' : 'form-control'}}) }}
         {{ form_row(form.login, {'label' : 'login:', 'attr' : {'class' : 'form-control'}}) }}
 
-        {{ form_row(form.password, {'label' : 'Mot de passe:', 'attr' : {'class' : 'form-control'}}) }}
+        {{ form_row(form.password, {'label' : 'Mot de passe:','type' : 'password' ,'attr' : {'class' : 'form-control'}}) }}
         {{ form_row(form.actif, {'label' : 'Actif:', 'attr' : {'class' : 'form-control'}}) }}
 
 
 
 
-
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
     {{ form_end(form) }}
 
     </div>
@@ -36,4 +35,50 @@
 
 
     </div>
+
+{% block javascripts %}
+    <script>
+        //***********************************//
+        // For select 2
+        //***********************************//
+        $(".select2").select2();
+
+        /*colorpicker*/
+        $('.demo').each(function() {
+            //
+            // Dear reader, it's actually very easy to initialize MiniColors. For example:
+            //
+            //  $(selector).minicolors();
+            //
+            // The way I've done it below is just for the demo, so don't get confused
+            // by it. Also, data- attributes aren't supported at this time...they're
+            // only used for this demo.
+            //
+            $(this).minicolors({
+                control: $(this).attr('data-control') || 'hue',
+                position: $(this).attr('data-position') || 'bottom left',
+
+                change: function(value, opacity) {
+                    if (!value) return;
+                    if (opacity) value += ', ' + opacity;
+                    if (typeof console === 'object') {
+                        console.log(value);
+                    }
+                },
+                theme: 'bootstrap'
+            });
+
+        });
+        /*datwpicker*/
+        jQuery('.mydatepicker').datepicker();
+        jQuery('#datepicker-autoclose').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+        var quill = new Quill('#editor', {
+            theme: 'snow'
+        });
+
+    </script>
+{% endblock %}
 {% endblock %}
