@@ -1,442 +1,954 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en">
 
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+    <title>Gestion de Stock</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
-    <title>Gestion de Stock</title>
-    <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="../../assets/extra-libs/multicheck/multicheck.css">
-    <link href="../../assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
-    <link href="../../dist/css/style.min.css" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
+
+
+
+
+
+{#
+        <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+#}
+
+{#
+    <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+#}
+
+    {#adddddd#}
+
+{#
+    <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css" rel="stylesheet" />
+#}
+
+
+
+
+
+
+    <link href="../../plugins/bootstrap/bootstrap.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+
+    <link rel="stylesheet" href="../../plugins/jquery-ui/jquery-ui.css">
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+
+    <link rel="stylesheet" href="../../dist/css/icons/font-awesome/css/fontawesome.css">
+
+   {# <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">#}
+    <!--  -->
+     <link rel="stylesheet" href="../../dist/css/icons/material-design-iconic-font/css/materialdesignicons.min.css">
+
+        <!-- DataTables -->
+    <link href="../../plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+    <!-- Theme style    -->
+
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+
+    <link rel="stylesheet" href="../../dist/css/style.css">
+
+    <!-- Toastr -->
+    <link rel="stylesheet" href="../../plugins/toastr/toastr.min.css">
+
+    <!-- Google Font: Source Sans Pro -->
+{#
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+#}
 </head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-dark navbar-info">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="/home" class="nav-link">Acceuil</a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="#" class="nav-link">Contact</a>
+            </li>
+        </ul>
 
-<body>
-<!-- ============================================================== -->
-<!-- Preloader - style you can find in spinners.css -->
-<!-- ============================================================== -->
-<div class="preloader">
-    <div class="lds-ripple">
-        <div class="lds-pos"></div>
-        <div class="lds-pos"></div>
-    </div>
-</div>
-<!-- ============================================================== -->
-<!-- Main wrapper - style you can find in pages.scss -->
-<!-- ============================================================== -->
-<div id="main-wrapper">
-    <!-- ============================================================== -->
-    <!-- Topbar header - style you can find in pages.scss -->
-    <!-- ============================================================== -->
-    <header class="topbar" data-navbarbg="skin5">
-        <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-            <div class="navbar-header" data-logobg="skin5">
-                <!-- This is for the sidebar toggle which is visible on mobile only -->
-                <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-                <!-- ============================================================== -->
-                <!-- Logo -->
-                <!-- ============================================================== -->
-                <a class="navbar-brand" href="index.html">
-                    <!-- Logo icon -->
-                    <b class="logo-icon p-l-10">
-                        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                        <!-- Dark Logo icon -->
-
-                    </b>
-                    <!--End Logo icon -->
-                    <!-- Logo text -->
-                    <span class="logo-text">
-                             <!-- dark Logo text -->
-                             <img src="../../assets/images/logo-text.png" alt="homepage" class="light-logo" width="130" height="50" />
-
-                        </span>
-                    <!-- Logo icon -->
-                    <!-- <b class="logo-icon"> -->
-                    <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                    <!-- Dark Logo icon -->
-                    <!-- <img src="../../assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
-
-                    <!-- </b> -->
-                    <!--End Logo icon -->
-                </a>
-                <!-- ============================================================== -->
-                <!-- End Logo -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Toggle which is visible on mobile only -->
-                <!-- ============================================================== -->
-                <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
-            </div>
-            <!-- ============================================================== -->
-            <!-- End Logo -->
-            <!-- ============================================================== -->
-            <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
-                <!-- ============================================================== -->
-                <!-- toggle and nav items -->
-                <!-- ============================================================== -->
-                <ul class="navbar-nav float-left mr-auto">
-                    <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
-                    <!-- ============================================================== -->
-                    <!-- create new -->
-                    <!-- ============================================================== -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="d-none d-md-block">Create New <i class="fa fa-angle-down"></i></span>
-                            <span class="d-block d-md-none"><i class="fa fa-plus"></i></span>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                    <!-- ============================================================== -->
-                    <!-- Search -->
-                    <!-- ============================================================== -->
-                    <li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
-                        <form class="app-search position-absolute">
-                            <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"><i class="ti-close"></i></a>
-                        </form>
-                    </li>
-                </ul>
-                <!-- ============================================================== -->
-                <!-- Right side toggle and nav items -->
-                <!-- ============================================================== -->
-                <ul class="navbar-nav float-right">
-                    <!-- ============================================================== -->
-                    <!-- Comment -->
-                    <!-- ============================================================== -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                    <!-- ============================================================== -->
-                    <!-- End Comment -->
-                    <!-- ============================================================== -->
-                    <!-- ============================================================== -->
-                    <!-- Messages -->
-                    <!-- ============================================================== -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-comment-processing"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
-                            <ul class="list-style-none">
-                                <li>
-                                    <div class="">
-                                        <!-- Message -->
-                                        <a href="javascript:void(0)" class="link border-top">
-                                            <div class="d-flex no-block align-items-center p-10">
-                                                <span class="btn btn-success btn-circle"><i class="ti-calendar"></i></span>
-                                                <div class="m-l-10">
-                                                    <h5 class="m-b-0">Event today</h5>
-                                                    <span class="mail-desc">Just a reminder that event</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <!-- Message -->
-                                        <a href="javascript:void(0)" class="link border-top">
-                                            <div class="d-flex no-block align-items-center p-10">
-                                                <span class="btn btn-info btn-circle"><i class="ti-settings"></i></span>
-                                                <div class="m-l-10">
-                                                    <h5 class="m-b-0">Settings</h5>
-                                                    <span class="mail-desc">You can customize this template</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <!-- Message -->
-                                        <a href="javascript:void(0)" class="link border-top">
-                                            <div class="d-flex no-block align-items-center p-10">
-                                                <span class="btn btn-primary btn-circle"><i class="ti-user"></i></span>
-                                                <div class="m-l-10">
-                                                    <h5 class="m-b-0">Pavan kumar</h5>
-                                                    <span class="mail-desc">Just see the my admin!</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <!-- Message -->
-                                        <a href="javascript:void(0)" class="link border-top">
-                                            <div class="d-flex no-block align-items-center p-10">
-                                                <span class="btn btn-danger btn-circle"><i class="fa fa-link"></i></span>
-                                                <div class="m-l-10">
-                                                    <h5 class="m-b-0">Luanch Admin</h5>
-                                                    <span class="mail-desc">Just see the my new admin!</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <!-- ============================================================== -->
-                    <!-- End Messages -->
-                    <!-- ============================================================== -->
-
-                    <!-- ============================================================== -->
-                    <!-- User profile and search -->
-                    <!-- ============================================================== -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../../assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
-                        <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                            <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
-                            <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
-                            <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
-                            <div class="dropdown-divider"></div>
-                            <div class="p-l-30 p-10"><a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View Profile</a></div>
-                        </div>
-                    </li>
-                    <!-- ============================================================== -->
-                    <!-- User profile and search -->
-                    <!-- ============================================================== -->
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <!-- ============================================================== -->
-    <!-- End Topbar header -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- Left Sidebar - style you can find in sidebar.scss  -->
-    <!-- ============================================================== -->
-    <aside class="left-sidebar" data-sidebarbg="skin5">
-        <!-- Sidebar scroll-->
-        <div class="scroll-sidebar">
-            <!-- Sidebar navigation-->
-            <nav class="sidebar-nav">
-                <ul id="sidebarnav" class="p-t-30">
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/utilisateur" aria-expanded="false"><i class="m-r-10 mdi mdi-account-settings-variant"></i><span class="hide-menu">Liste utilisateur</span></a></li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/fonction" aria-expanded="false"><i class="m-r-10 mdi mdi-clipboard-account"></i><span class="hide-menu">Liste Fontion</span></a></li>
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-receipt"></i><span class="hide-menu">Gestion Article </span></a>
-                        <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"><a href="form-basic.html" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> Article </span></a></li>
-                            <li class="sidebar-item"><a href="form-wizard.html" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Catégorie </span></a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="widgets.html" aria-expanded="false"><i class="fas fa-arrow-alt-circle-left"></i><span class="hide-menu">Gestion des Entrées</span></a></li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="tables.html" aria-expanded="false"><i class="fas fa-arrow-alt-circle-right"></i><span class="hide-menu">Gestion des Sortie</span></a></li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="grid.html" aria-expanded="false"><i class="fas fa-cart-arrow-down"></i><span class="hide-menu">Commande</span></a></li>
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-receipt"></i><span class="hide-menu">Affecter Personnel </span></a>
-                        <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"><a href="form-basic.html" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> Affecter chef du bureau </span></a></li>
-                            <li class="sidebar-item"><a href="form-wizard.html" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Affecter chef d'unité </span></a></li>
-                            <li class="sidebar-item"><a href="form-wizard.html" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu"> Affecter magasinier </span></a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-buttons.html" aria-expanded="false"><i class="mdi mdi-relative-scale"></i><span class="hide-menu">Buttons</span></a></li>
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">Icons </span></a>
-                        <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"><a href="icon-material.html" class="sidebar-link"><i class="mdi mdi-emoticon"></i><span class="hide-menu"> Material Icons </span></a></li>
-                            <li class="sidebar-item"><a href="icon-fontawesome.html" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> Font Awesome Icons </span></a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-elements.html" aria-expanded="false"><i class="mdi mdi-pencil"></i><span class="hide-menu">Elements</span></a></li>
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu">Parametre </span></a>
-                        <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"><a href="index2.html" class="sidebar-link"><i class="fas fa-map-marker-alt"></i><span class="hide-menu"> Région</span></a></li>
-                            <li class="sidebar-item"><a href="pages-gallery.html" class="sidebar-link"><i class="mdi mdi-multiplication-box"></i><span class="hide-menu"> Magasin </span></a></li>
-                            <li class="sidebar-item"><a href="pages-calendar.html" class="sidebar-link"><i class="mdi mdi-calendar-check"></i><span class="hide-menu"> Repas </span></a></li>
-                            <li class="sidebar-item"><a href="pages-invoice.html" class="sidebar-link"><i class="mdi mdi-bulletin-board"></i><span class="hide-menu"> Année Scolaire </span></a></li>
-                            <li class="sidebar-item"><a href="pages-chat.html" class="sidebar-link"><i class="mdi mdi-message-outline"></i><span class="hide-menu"> Chat Option </span></a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-key"></i><span class="hide-menu">Authentication </span></a>
-                        <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"><a href="authentication-login.html" class="sidebar-link"><i class="mdi mdi-all-inclusive"></i><span class="hide-menu"> Login </span></a></li>
-                            <li class="sidebar-item"><a href="authentication-register.html" class="sidebar-link"><i class="mdi mdi-all-inclusive"></i><span class="hide-menu"> Register </span></a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-alert"></i><span class="hide-menu">Errors </span></a>
-                        <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"><a href="error-403.html" class="sidebar-link"><i class="mdi mdi-alert-octagon"></i><span class="hide-menu"> Error 403 </span></a></li>
-                            <li class="sidebar-item"><a href="error-404.html" class="sidebar-link"><i class="mdi mdi-alert-octagon"></i><span class="hide-menu"> Error 404 </span></a></li>
-                            <li class="sidebar-item"><a href="error-405.html" class="sidebar-link"><i class="mdi mdi-alert-octagon"></i><span class="hide-menu"> Error 405 </span></a></li>
-                            <li class="sidebar-item"><a href="error-500.html" class="sidebar-link"><i class="mdi mdi-alert-octagon"></i><span class="hide-menu"> Error 500 </span></a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-            <!-- End Sidebar navigation -->
-        </div>
-        <!-- End Sidebar scroll-->
-    </aside>
-    <!-- ============================================================== -->
-    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- Page wrapper  -->
-    <!-- ============================================================== -->
-    <div class="page-wrapper">
-        <!-- ============================================================== -->
-        <!-- Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <div class="page-breadcrumb">
-            <div class="row">
-                <div class="col-12 d-flex no-block align-items-center">
-                    <h4 class="page-title"></h4>
-                    <div class="ml-auto text-right">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <!--    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                  <li class="breadcrumb-item active" aria-current="page">Library</li>
-                                  -->
-                              </ol>
-                          </nav>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <!-- ============================================================== -->
-        <!-- End Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Container fluid  -->
-        <!-- ============================================================== -->
-        <div class="container-fluid">
-            <!-- ============================================================== -->
-            <!-- Start Page Content -->
-            <!-- ============================================================== -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-
-
-                    <div class="card">
-
-
-                    <div class="card">
-                        <div class="card-body">
-
-
-                                {% block body %}
-                                {% endblock %}
-
-
-                        </div>
-                    </div>
+        <!-- SEARCH FORM -->
+        <form class="form-inline ml-3">
+            <div class="input-group input-group-sm">
+                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-navbar" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- End PAge Content -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Right sidebar -->
-            <!-- ============================================================== -->
-            <!-- .right-sidebar -->
-            <!-- ============================================================== -->
-            <!-- End Right sidebar -->
-            <!-- ============================================================== -->
-        </div>
-        <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- footer -->
-        <!-- ============================================================== -->
-        <footer class="footer text-center">
-            All Rights Reserved Designed and Developed by Saidi Mourad</a>.
-        </footer>
-        <!-- ============================================================== -->
-        <!-- End footer -->
-        <!-- ============================================================== -->
-    </div>
-    <!-- ============================================================== -->
-    <!-- End Page wrapper  -->
-    <!-- ============================================================== -->
+<div class="ml-5">
+    <h6 class="text-forange" ><i class="far fa-clock mr-1"></i>Le {{ "now"|date("d/m/Y") }} : Année scolaire en cours: {% if app_config is defined %} {{ app_config[0] }} / {{ app_config[0]+1   }}{% endif %}  <i class="far fa-clock mr-1"></i></h6>
+
+
 </div>
-<!-- ============================================================== -->
-<!-- End Wrapper -->
-<!-- ============================================================== -->
-<!-- ============================================================== -->
-<!-- All Jquery -->
-<!-- ============================================================== -->
-<script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap tether Core JavaScript -->
-<script src="../../assets/libs/popper.js/dist/umd/popper.min.js"></script>
-<script src="../../assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- slimscrollbar scrollbar JavaScript -->
-<script src="../../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-<script src="../../assets/extra-libs/sparkline/sparkline.js"></script>
-<!--Wave Effects -->
-<script src="../../dist/js/waves.js"></script>
-<!--Menu sidebar -->
-<script src="../../dist/js/sidebarmenu.js"></script>
-<!--Custom JavaScript -->
-<script src="../../dist/js/custom.min.js"></script>
-<!-- this page js -->
-<script src="../../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
-<script src="../../assets/extra-libs/multicheck/jquery.multicheck.js"></script>
-<script src="../../assets/extra-libs/DataTables/datatables.min.js"></script>
+
+        </form>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Messages Dropdown Menu -->
+
+
+            <li class="nav-item dropdown">
+
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-comments"></i>
+{#
+                    <span class="badge badge-danger navbar-badge">3</span>
+#}
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right ">
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <img src="../../dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    Brad Diesel
+                                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                                </h3>
+                                <p class="text-sm">Call me whenever you can...</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <img src="../../dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    John Pierce
+                                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                                </h3>
+                                <p class="text-sm">I got your message bro</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <img src="../../dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    Nora Silvester
+                                    <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                                </h3>
+                                <p class="text-sm">The subject goes here</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                </div>
+            </li>
+            <!-- Notifications Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-bell"></i>
+{#
+                    <span class="badge badge-warning navbar-badge">15</span>
+#}
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">15 Notifications</span>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2"></i> 4 new messages
+                        <span class="float-right text-muted text-sm">3 mins</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-users mr-2"></i> 8 friend requests
+                        <span class="float-right text-muted text-sm">12 hours</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-file mr-2"></i> 3 new reports
+                        <span class="float-right text-muted text-sm">2 days</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                </div>
+            </li>
+
+
+
+            <!-- Notifications Compte -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="fas fa-user-cog"></i>
+                    <span class="badge badge-warning navbar-badge"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header"></span>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-user-lock"></i>
+                        {% for unrole in app.user.roles %}
+
+                        {% if unrole == 'ROLE_ADMIN' %}
+            <span >Administrateur</span>
+            {% endif %}
+            {% if unrole == 'ROLE_CHEFBUREAU' %}
+                <span>Chef de Bureau</span>
+            {% endif %}
+            {% if unrole == 'ROLE_CHEFUNITE' %}
+                <span>Chef d'unité</span>
+            {% endif %}
+            {% if unrole == 'ROLE_MAGASINIER' %}
+                <span>Magasinier</span>
+            {% endif %}
+            {% if unrole == 'ROLE_DIRECTEUR' %}
+                <span>Directeur</span>
+            {% endif %}
+                            {% if unrole == 'ROLE_FOURNISSEUR' %}
+                                <span>Fournisseur</span>
+                            {% endif %}
+
+            {% endfor %}
+                        <span class="float-right text-muted text-sm"></span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-users mr-2"></i> {% if app.user.nom %}{{ app.user.nom}}{% endif %}
+                        {% if app.user.prenom %}    {{ app.user.prenom}}{% endif %}{% if app.user.nomste %}    {{ app.user.nomste}}{% endif %}
+                        <span class="float-right text-muted text-sm"></span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="/passwordupdate" class="dropdown-item">
+                        <i class="fas fa-file mr-2"></i> Paramètres du compte
+                        <span class="float-right text-muted text-sm"></span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{{ path('logout') }}" class="dropdown-item dropdown-footer">   <i class="fas fa-user-times"></i> Déconnexion</a>
+                </div>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
+                    <i class="fas fa-th-large"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar elevation-4  sidebar-light-teal">
+        <!-- Brand Logo -->
+        <a href="#" class="brand-link navbar-info">
+            <img src="../../dist/img/AdminLTELogo.png"
+                 alt="AdminLTE Logo"
+                 class="brand-image img-circle elevation-3"
+                 style="opacity: .8">
+            <span class="brand-text font-weight-light">OOESCO</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar user (optional) -->
+
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="../../dist/img/user.jpg" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                    <a href="#" class="d-block">{{ app.user.email }}</a>
+                </div>
+
+            </div>
+            <div class="info">
+            {% if (is_granted('ROLE_MAGASINIER'))  %}
+
+               {#Magasin:  {{ app_magasin[0]   }}#}
+
+            {% endif %}
+        </div>
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+                         with font-awesome or any other icon font library -->
+                          {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') or is_granted('ROLE_USER')%}
+                    <li class="nav-item has-treeview">
+                        <a href="/user" class="nav-link">
+                            <i class="m-r-10 mdi mdi-account-settings-variant"></i>
+                            <p>
+                                Liste des Utilisateurs
+                            </p>
+                        </a>
+
+                    </li>
+                            {% endif %}
+
+            {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR'))%}
+                    <li class="nav-item has-treeview">
+                        <a href="/fournisseur" class="nav-link">
+
+                            <i class="mdi mdi-shopping"></i>
+                            <p>
+                                Liste des Fournisseurs
+                            </p>
+                        </a>
+
+                    </li>
+                            {% endif %}
+            {#        {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR'))%}
+
+                    <li class="nav-item has-treeview">
+                        <a href="/fonction" class="nav-link">
+                            <i class="m-r-10 mdi mdi-clipboard-account"></i>
+                            <p>
+                                Liste des fonctions
+                            </p>
+                        </a>
+
+                    </li>
+                    {% endif %}#}
+                    {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') or  is_granted('ROLE_CHEFUNITE') )%}
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="mdi mdi-receipt"></i>
+                            <p>
+                                Gestion des articles
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/article" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Article</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/categorie" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Catégorie</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    {% endif %}
+
+                    {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') or  is_granted('ROLE_MAGASINIER'))%}
+                    <li class="nav-item has-treeview">
+                        <a href="/entree" class="nav-link">
+                            <i class="fas fa-arrow-alt-circle-right"></i>
+
+                            <p>
+                                Gestion des Entrées
+                            </p>
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item has-treeview">
+                        <a href="/sortie" class="nav-link">
+                            <i class="fas fa-arrow-alt-circle-left"></i>
+                            <p>
+                                Gestion des Sorties
+                            </p>
+                        </a>
+
+                    </li>
+
+                    {% endif %}
+
+
+                    {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') or  is_granted('ROLE_MAGASINIER') or  is_granted('ROLE_CHEFBUREAU') or   is_granted('ROLE_CHEFUNITE'))%}
+
+                    <li class="nav-item has-treeview">
+                        <a href="/stock" class="nav-link">
+                            <i class="fas fa-cart-arrow-down"></i>
+                            <p>
+                               Etat du Stock
+                            </p>
+                        </a>
+
+                    </li>
+
+                    {% endif %}
+
+                    {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') or  is_granted('ROLE_MAGASINIER') or  is_granted('ROLE_CHEFBUREAU') or   is_granted('ROLE_CHEFUNITE'))%}
+
+                        <li class="nav-item has-treeview">
+                            <a href="/consommation" class="nav-link">
+                                <i class="fas fa-file-alt"></i>
+                                <p>
+                                    Consommation
+                                </p>
+                            </a>
+
+                        </li>
+
+                    {% endif %}
+
+
+
+
+                    {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') or  is_granted('ROLE_CHEFBUREAU') or is_granted('ROLE_FOURNISSEUR') or   is_granted('ROLE_CHEFUNITE')or  is_granted('ROLE_MAGASINIER'))%}
+
+
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-cart-arrow-down"></i>
+                            <p>
+                                Commande
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        {% endif %}
+
+
+                        <ul class="nav nav-treeview">
+                            {% if ( is_granted('ROLE_CHEFBUREAU') )%}
+
+                                <li class="nav-item">
+                                <a href="/newcommande" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Ajouter une commande</p>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if (is_granted('ROLE_FOURNISSEUR') or is_granted('ROLE_CHEFBUREAU') or  is_granted('ROLE_MAGASINIER') or is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR')) %}
+                            <li class="nav-item">
+                                <a href="/mescommande" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Liste des commandes</p>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if ( is_granted('ROLE_CHEFUNITE'))%}
+                            <li class="nav-item">
+                                <a href="/mescommande" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Valider les commandes</p>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                      </ul>
+                    </li>
+
+
+
+
+                    {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') or is_granted('ROLE_CHEFBUREAU') or is_granted('ROLE_CHEFUNITE')   )%}
+
+                        <li class="nav-item has-treeview">
+                            <a href="/besoin" class="nav-link">
+                                <i class="fas fa-file-alt"></i>
+                                <p>
+                                    Besoin
+                                </p>
+                            </a>
+
+                        </li>
+
+                    {% endif %}
+
+
+
+                    {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') or  is_granted('ROLE_MAGASINIER'))%}
+
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="mdi mdi-inbox"></i>
+
+                            <p>
+                                Mouvement
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        {% endif %}
+
+                        <ul class="nav nav-treeview">
+                            {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') or  is_granted('ROLE_CHEFBUREAU') or  is_granted('ROLE_MAGASINIER'))%}
+                                <li class="nav-item">
+                                    <a href="/mouvement/entree" class="nav-link">
+                                        <i class="mdi mdi-checkbox-marked-circle"></i>
+                                        <p>Entrée</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/mouvement/sortie" class="nav-link">
+                                        <i class="mdi mdi-checkbox-marked-circle"></i>
+                                        <p>Sortie</p>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                        </ul>
+                    </li>
+
+
+                    {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR')  )%}
+
+
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="mdi mdi-receipt"></i>
+                            <p>
+                                Affecter personnel
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        {% endif %}
+
+                        <ul class="nav nav-treeview">
+                            {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR'))%}
+                            <li class="nav-item">
+                                <a href="/affecterchunite" class="nav-link">
+                                    <i class="mdi mdi-checkbox-marked-circle"></i>
+                                    <p>Affecter chef d'unité</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/affecterchb" class="nav-link">
+                                    <i class="mdi mdi-checkbox-marked-circle"></i>
+                                    <p>Affecter chef de bureau</p>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') )%}
+                            <li class="nav-item">
+                                <a href="/magasinier" class="nav-link">
+                                    <i class="mdi mdi-checkbox-marked-circle"></i>
+                                    <p>Affecter magasinier</p>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                        </ul>
+                    </li>
+
+                    {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') )%}
+
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-cogs"></i>
+                            <p>
+                                Paramètres
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        {% endif %}
+
+                        <ul class="nav nav-treeview">
+                            {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') )%}
+
+                            <li class="nav-item">
+                                <a href="/region" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Région</p>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') )%}
+
+                            <li class="nav-item">
+                                <a href="/magasin" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Magasin</p>
+                                </a>
+
+                                {% endif %}
+                            {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR'))%}
+
+                            <li class="nav-item">
+                                <a href="/repas" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Repas</p>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') )%}
+
+                            <li class="nav-item">
+                                <a href="/annee_scolaire" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Année scolaire</p>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+
+
+
+
+
+                    <li class="nav-item has-treeview">
+                        <a href="{{ path('logout') }}" class="nav-link">
+                            <i class="fas fa-user-times"></i>
+                            <p>
+                                Déconnexion
+                            </p>
+                        </a>
+
+                    </li>
+
+
+
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+{#        <section class="content-header">
+            <div class="container-fluid">
+
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-6">
+
+                    </div>
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>#}
+
+        <!-- Main content -->
+        <section class="content">
+         {#   {% for message in app.flashes('info') %}
+                <div class="callout callout-info">
+                    <h5><i class="fas fa-info"></i> Note:</h5>
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+
+
+            {% for message in app.flashes('notice') %}
+            <div class="callout callout-info">
+                <h5><i class="fas fa-info"></i> Note:</h5>
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% for message in app.flashes('success') %}
+                <div class="callout callout-info">
+                    <h5><i class="fas fa-info"></i> Note:</h5>
+                    {{ message }}
+                </div>
+            {% endfor %}#}
+
+           <div class="card-body">
+               <div class="row">
+                   <div class="col-md-4">
+                   </div>
+                   <div class="col-md-4">
+                   </div>
+                   <div class="col-md-4">
+{#
+               <marquee behavior="scroll" direction="right"  >  <h6 class="text-primary">Année scolaire en cours: {{ app_config[0] }} / {{ app_config[0]+1 }}</h6></marquee>
+#}
+
+               {% for message in app.flashes('danger') %}
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+                {% for message in app.flashes('info') %}
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-info"></i> Info!</h5>
+                    {{ message }}
+                </div>
+                    {% endfor %}
+
+
+                {% for message in app.flashes('notice') %}
+                    <div class="alert alert-warning alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h5><i class="icon fas fa-exclamation-triangle"></i> Notice!</h5>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h5><i class="icon fas fa-check"></i> Success!</h5>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+             {#  {% for flashMessage in app.session.flashbag.get('success') %}
+                   <div class="alert alert-success alert-dismissible">
+                       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                       <h5><i class="icon fas fa-check"></i> Success!</h5>
+                   </div>
+
+                   {{ flashMessage }}
+
+               {% endfor %}#}
+
+
+
+
+                   </div>
+               </div>
+            </div>
+
+
+
+            <div class="card ">
+
+
+                <!-- /.card-header -->
+                <div class="card-body "  >
+
+                    {% block body %}
+                    {% endblock %}
+                    <!-- /.card-body -->
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+
+                        <!-- /.card-header -->
+
+                    <!-- /.card -->
+
+
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="float-right d-none d-sm-block">
+            <b>Version</b> 1.0.0
+        </div>
+
+        <strong>Copyright &copy; 2019
+
+
+            </a>.</strong> All rights
+        reserved.
+
+        <h7 class="text-primary">Année scolaire en cours: {{ app_config[0] }} / {{ app_config[0]+1 }}</h7>
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+
+
+
+
+<!-- jQuery -->
+
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<script src="../../plugins/jquery-ui/jquery-ui.js"></script>
+
+<!-- Toastr -->
+<script src="../../plugins/toastr/toastr.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+{#<script src="../../plugins/datatables/jquery.dataTables.js"></script>#}
+<script src="../../plugins/datatables/dataTables.bootstrap4.js"></script>
+<script src="../../plugins/datatables/dataTables.buttons.min.js"></script>
+<script src="../../plugins/datatables/buttons.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables/jszip.min.js"></script>
+<script src="../../plugins/datatables/pdfmake.min.js"></script>
+<script src="../../plugins/datatables/vfs_fonts.js"></script>
+<script src="../../plugins/datatables/buttons.html5.min.js"></script>
+<script src="../../plugins/datatables/buttons.print.min.js"></script>
+<script src="../../plugins/datatables/buttons.colVis.min.js"></script>
+<script src="../../plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="../../plugins/datatables/responsive.bootstrap4.min.js"></script>
+
+
+<!-- FastClick -->
+<script src="../../plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<script src="../../plugins/select2/js/select2.full.min.js"></script>
+
+<script src="../../js/app.js"></script>
+<!-- SweetAlert2 -->
+<script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
+
+
+
+
+
+
+
+
 <script>
-    /****************************************
-     *       Basic Table                   *
-     ****************************************/
-    $('#zero_config').DataTable();
+    $(document).ready(function(){
 
 
-    $(".select2").select2();
+        $('#exemple4').DataTable(
+            {
 
-    /*colorpicker*/
-    $('.demo').each(function() {
-        //
-        // Dear reader, it's actually very easy to initialize MiniColors. For example:
-        //
-        //  $(selector).minicolors();
-        //
-        // The way I've done it below is just for the demo, so don't get confused
-        // by it. Also, data- attributes aren't supported at this time...they're
-        // only used for this demo.
-        //
-        $(this).minicolors({
-            control: $(this).attr('data-control') || 'hue',
-            position: $(this).attr('data-position') || 'bottom left',
 
-            change: function(value, opacity) {
-                if (!value) return;
-                if (opacity) value += ', ' + opacity;
-                if (typeof console === 'object') {
-                    console.log(value);
+                initComplete: function () {
+
+                 //   this.api().columns().every( function () {
+                            this.api().columns([0 ,1, 2, 3, 4, 5, 6, 7, 8 ]).every( function () {
+                        var column = this;
+                        var select = $('<select class="select2" style="width: 100%;"><option value="">Tous</option></select>')
+                            .appendTo( $(column.footer()).empty() )
+                            .on( 'change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+
+                                column
+                                    .search( val ? '^'+val+'$' : '', true, false )
+                                    .draw();
+                            } );
+
+                        column.data().unique().sort().each( function ( d, j ) {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );
+                    } );
+                },
+               // "order": [[ 0, "desc" ]],
+                "order": [[ 0, "asc" ]],
+
+               "iDisplayLength": 5,
+                 "aLengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                dom: 'lBfrtip',
+                lengthChange: true,
+
+               /* "buttons": [
+                    {
+                        extend: 'collection',
+                        text: 'Export',
+                        buttons: [
+                            'copy',
+                            'excel',
+                            'csv',
+                            'pdf',
+                            'print',
+
+
+                        ]
+                    }
+                ],
+                "buttons": [
+                    {
+                        extend: 'collection',
+                        text: 'Export',
+                        buttons: [
+
+                            'colvis'
+
+                        ]
+                    }
+                ],*/
+
+               buttons: ['print','excel','pdf','colvis' ],
+
+
+                language: {
+                    processing:     "Traitement en cours...",
+                    search:         "Rechercher&nbsp;:",
+                    lengthMenu:     "Afficher _MENU_ &eacute;l&eacute;ments",
+                    info:           "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                    infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+                    infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                    infoPostFix:    "",
+                    loadingRecords: "Chargement en cours...",
+                    zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    emptyTable:     "Aucune donnée disponible dans le tableau",
+                    paginate: {
+                        first:      "Premier",
+                        previous:   "Pr&eacute;c&eacute;dent",
+                        next:       "Suivant",
+                        last:       "Dernier"
+                    }
+
                 }
-            },
-            theme: 'bootstrap'
-        });
+            }
+
+
+        );
+        table.buttons().container()
+            .appendTo( '#example_wrapper .col-md-6:eq(0)' );
+
+
 
     });
-    /*datwpicker*/
-    jQuery('.mydatepicker').datepicker();
-    jQuery('#datepicker-autoclose').datepicker({
-        autoclose: true,
-        todayHighlight: true
-    });
-    var quill = new Quill('#editor', {
-        theme: 'snow'
-    });
-
 </script>
+
+<script src="../../js/main.js" ></script>
+
+
+{% block javascripts %}
+{% endblock %}
+
+
 
 
 </body>
-
 </html>
+
+
+<script>
+
+
+    $(document).ready(function($) {
+       // $('.liste').select2();
+        $('.select2').select2();
+    });
+
+
+</script>
+
