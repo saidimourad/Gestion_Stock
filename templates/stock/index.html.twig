@@ -1,0 +1,220 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- COLOR PALETTE -->
+
+
+            <div class="card card-default color-palette-box bgpowderblue ">
+                <div class="card-header border  bgdarkseagreen">
+                    <h3 class="card-title">
+                        <i class="fas fa-tag"></i>
+                        Gestion de Stock {% if infomagasin  is defined %}
+                            {% for item in infomagasin %}
+                                : {{ item.designation }}
+                            {% endfor %}
+                        {% endif %}                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+                {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR')  or  is_granted('ROLE_CHEFBUREAU') or   is_granted('ROLE_CHEFUNITE')) %}
+
+
+                <div class="card-body">
+                    <!-- Main content -->
+                    <section class="content">
+                        <div class="container-fluid">
+                            <div class="card   card-outline">
+                                <div class="card-header border  bglightblue">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-list"></i>
+                                        Recherche par Magasin
+
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="maximize"><i
+                                                    class="fas fa-expand"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div> <!-- /.card-body -->
+                                <div class="card-body">
+
+
+                                    <form action="{{ path('stockaffiche') }}" method="post">
+                                        {{ form_start(form) }}
+                                        <div class="col-md-12 ">
+
+                                            <div class="row ">
+                                                <div class="col-md-4 form-check-inline">
+                                                    <div class="form-group">
+                                                        {{ form_row(form.magasin) }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3 ">
+
+                                                    <div class="form-group">
+                                                        <button type="submit" name="afficher"
+                                                                class="btn  btn-outline-primary float-left  ">Afficher
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+                                        {{ form_end(form) }}
+
+                                    </form>
+
+                                </div><!-- /.card-body -->
+                            </div>
+                        </div><!-- /.container-fluid -->
+                    </section>
+                    <!-- /.content -->
+
+                    {% endif %}
+
+                    <div><br></div>
+
+                    <!-- Main content -->
+                    <section class="content">
+                        <div class="container-fluid">
+                            <div class="card card-outline  ">
+                                <div class="card-header border-0 bgmoccasin">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-edit"></i>
+                                        Etat de Stock
+
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="maximize"><i
+                                                    class="fas fa-expand"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div> <!-- /.card-body -->
+                                <div class="card-body">
+                                    {% if stock %}
+
+                                    <div class="table-responsive " id="utilisateurs">
+                                        <div class="card-body">
+
+                                            <table id="exemple4"
+                                                   class="table table-bordered table-hover table-striped display">
+                                                <thead class="table-info">
+                                                <tr class="text-dark">
+                                                    <th>Catégorie</th>
+                                                    <th>Article</th>
+                                                    <th>Unité</th>
+                                                    <th>Qté minimale</th>
+                                                    <th>Total Entrée</th>
+                                                    <th>Total Sortie</th>
+                                                    <th>En Stock</th>
+
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for item in stock %}
+
+
+
+                                                    <tr>
+                                                        <td>{{ item.nom_cat }}</td>
+                                                        <td>{{ item.nom_art }}</td>
+                                                        <td>{{ item.unite }}</td>
+                                                        <td>{{ item.qte_min|number_format(3) }}</td>
+                                                        <td>{{ item.entree|number_format(3) }}</td>
+                                                        <td>{{ item.sortie|number_format(3) }}</td>
+                                                        <td>
+
+                                                            {% if  (item.entree -item.sortie) > item.qte_min %}
+
+                                                                <p class="text-success">{{ (item.entree -item.sortie)|number_format(3) }}</p>
+
+                                                            {% else %}
+                                                                <p class="text-danger">{{ (item.entree -item.sortie)|number_format(3) }}</p>
+
+
+                                                            {% endif %}
+
+
+                                                        </td>
+
+
+                                                    </tr>
+
+                                                {% endfor %}
+                                                </tbody>
+                                                <tfoot>
+                                                <tr id="filters">
+
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+
+                                                </tr>
+
+                                                </tfoot>
+                                            </table>
+
+                                            {% else %}
+                                                <div class="container-fluid">
+                                                    <div class="callout callout-info">
+                                                        <h5><i class="fas fa-info"></i> Note:</h5>
+                                                        Pas d'enregistrement.
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+
+                                        </div><!-- /.card-body -->
+                                    </div>
+                                </div><!-- /.container-fluid -->
+                    </section>
+                    <!-- /.content -->
+
+                </div>
+
+            </div>
+
+            <!-- /.card-body -->
+        </div>
+    </section>
+
+
+{% endblock %}
+{% block javascripts %}
+
+
+
+
+
+
+{% endblock %}

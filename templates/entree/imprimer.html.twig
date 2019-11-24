@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Gestion de Stock</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+
+    <link rel="stylesheet" href="../../dist/css/icons/font-awesome/css/fontawesome.css">
+
+    <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+    <!--  -->
+    <link rel="stylesheet" href="../../dist/css/icons/material-design-iconic-font/css/materialdesignicons.min.css">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../../plugins/datatables/dataTables.bootstrap4.css">
+    <!-- Theme style    -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="../../plugins/toastr/toastr.min.css">
+
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+{% block body %}
+
+<body >
+<div >
+    <!-- Main content -->
+    <section class="invoice">
+        <!-- title row -->
+        <div class="row">
+
+
+
+
+                   <div class="col-sm-12 invoice-col">
+
+                <strong>Office des œuvres scolaires </strong><br>
+                Tunis 130 Rue 9 avril 1938,1006 <br>
+                <br>
+                <b>Référence de l'Entree: Ref{{ entity.refEntree }}ENT{{ entity.anneeScolaire.designation }}</b> <br>
+
+                <b>La date de l'Entree:</b>  {{ entity.dateEntree|date("d/m/Y")}}<br>
+                <b>Magasin :</b> {{ entity.magasin.designation}}<br>
+                 <br>
+                       <strong>Fournisseur</strong><br>
+                       {{ entity.commande.userfr.nomste}}<br>
+                       Tél: {{ entity.commande.userfr.tel}}<br>
+                       Email: {{ entity.commande.userfr.email}}
+
+                    <div><br></div>
+            </div>
+
+            </div>
+            <!-- /.col -->
+<br>
+        <!-- /.row -->
+
+        <!-- Table row -->
+        <div class="row">
+            <div class="col-12 table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Catégorie</th>
+                        <th>Article</th>
+                        <th>Unité</th>
+                        <th>Quantité</th>
+                        <th>Prix TTC</th>
+                        <th>Total TTC</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for entree in entrees %}
+                        <tr>
+                            <td>{{ entree.article.categorie.nomCat }}</td>
+                            <td>{{ entree.article.nomArt }}</td>
+                            <td>{{ entree.article.unite }}</td>
+                            <td>{{ entree.qteentree |number_format(3)}}</td>
+                            <td>{{ entree.prixentree |number_format(3) }}</td>
+                            <td>{{( entree.prixentree * entree.qteentree) |number_format(3) }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>Total</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td>{{somme |number_format(3) }}</td>
+
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <!-- accepted payments column -->
+            <div class="col-6">
+
+            </div>
+            <!-- /.col -->
+            <div class="col-12">
+                <p class="lead">Réception</p>
+
+                <div class="table-responsive">
+
+                    <table class="table table-striped table-hover table-bordered">
+
+                        <tr> <td>Signature Magasinier</td>
+                            <td>Signature Chef de Bureau</td>
+                            <td>Signature Chef cuisine</td>
+                            <td>Signature Fournisseur</td>
+                        </tr>
+                        <tr> <td><br><br></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                 {#   <table class="table">
+                        <tr>
+                            <th style="width:50%">Magasinier</th>
+                            <td><br></td>
+                        </tr>
+                        <tr>
+                            <th>Chef de bureau</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Chef Cuisine</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Fournisseur</th>
+                            <td></td>
+                        </tr>
+                    </table>#}
+
+
+
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+{% endblock %}
+<!-- ./wrapper -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- FastClick -->
+<script src="../../plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+</body>
+</html>

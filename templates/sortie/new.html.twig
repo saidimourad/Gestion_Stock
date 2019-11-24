@@ -1,0 +1,396 @@
+{% extends 'base.html.twig' %}
+
+
+{% macro niceForm(form) %}
+    <div class="row">
+        <div class="col-md-6">
+
+            {{ form_row(form.article, {'attr' : {'class' : 'form-control select2','style':'width: 100%;'}}) }}
+
+{#
+            onchange="alert(this.innerHTML)";
+            checkAvailability()
+#}
+        </div>
+        <div class="col-md-6">
+
+            {{ form_row(form.qtesortie, {'attr' : {'class' : 'callFunction','onkeyup':'checkAvailability(this.id)', 'id':'username'}}) }}
+
+      {#      {{ form_row(form.message, {'attr' : {'label' : 'test'}}) }}
+
+            <span id="user-availability-status"></span>#}
+{#
+            <p id="loaderIcon">qté no</p>
+#}
+     {#   <div>
+
+            <ul class="nav nav-second-level" id="entitiesNav">
+            </ul>
+        </div>#}
+        </div>
+
+{#
+    </div>
+#}
+
+{#
+    <div class="row">
+#}
+        <div class="col-md-12">
+            {{ form_row(form.message, {'attr' : {'class':'form-control-plaintext'}}) }}
+{#
+            'readonly' : 'true',
+#}
+        </div>
+    </div>
+{% endmacro niceForm %}
+{% import _self as formMacros %}
+
+{% block body %}
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- COLOR PALETTE -->
+            <div class="card card-default color-palette-box bgpowderblue ">
+                <div class="card-header border  bgdarkseagreen">
+                    <h3 class="card-title">
+                        <i class="fas fa-tag"></i>
+                        Gestion des Sorties
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <form id="multipleArticle" class="form-horizontal" action="{{ path('addsortie') }}" method="post"
+                      novalidate>
+
+
+                    <div class="card-body">
+                        <!-- Main content -->
+                        <section class="content">
+                            <div class="container-fluid">
+                                <div class="card   card-outline">
+                                    <div class="card-header border  bglightblue">
+                                        <h3 class="card-title">
+                                            <i class="fas fa-list"></i>
+                                            Sorties
+
+                                        </h3>
+                                    </div> <!-- /.card-body -->
+                                    <div class="card-body">
+
+
+                                        <div class="my-custom-class-for-errors">
+                                            {{ form_errors(form) }}
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="form-group col-md-4">
+                                                <div class="form-group">
+                                                    {{ form_row(form.repas, {'label' : 'Type repas', 'attr' : {'class' : 'form-control select2','style':'width: 100%;'}}) }}
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-4">
+
+                                                <div class="form-group">
+                                                    {{ form_row(form.anneeScolaire, {'label' : 'Année Scolaire', 'attr' : {'class' : 'form-control select2','style':'width: 100%;'}}) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div><!-- /.card-body -->
+                                </div>
+                            </div><!-- /.container-fluid -->
+                        </section>
+                        <!-- /.content -->
+
+                        <!-- Main content -->
+                        <section class="content">
+                            <div class="container-fluid">
+                                <div class="card card-outline  ">
+                                    <div class="card-header border-0 bgmoccasin">
+                                        <h3 class="card-title">
+                                            <i class="fas fa-edit"></i>
+                                            Détail Sorties
+
+                                        </h3>
+                                    </div> <!-- /.card-body -->
+                                    <div class="card-body">
+                                        <div>
+
+                                            <ul class="nav nav-second-level" id="entitiesNav">
+                                            </ul>
+                                        </div>
+                                        <div class="col-sm-10 col-sm-offset-2" id="exp_list"
+                                             data-prototype="{{ formMacros.niceForm(form.detailsorties.vars.prototype)|e('html_attr') }}" data-index="{{ form.detailsorties|length }}">
+
+
+
+                                        </div>
+                                        {{ form_end(form) }}
+
+
+    {#                                    {% if prototype is defined and not prototype.rendered %}
+                                            hhh
+        {%- set attr = attr|merge({'data-prototype': form_row(prototype) })  -%}
+    {% endif %}
+#}
+
+
+
+
+                                   {#     {% if data-index == 0 %}
+                                            hello
+                                        {% endif %#}
+
+
+
+
+                                        <a href="{{ path('sortie') }}" class="btn  block btn-outline-info  "><i
+                                                    class="fa fa-undo"></i> Vers Liste</a>
+
+                                    </div><!-- /.card-body -->
+                                </div>
+                            </div><!-- /.container-fluid -->
+                        </section>
+                        <!-- /.content -->
+
+                    </div>
+                </form>
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </section>
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+    <script src="../../plugins/jquery/jquery.validate.js"></script>
+
+    <script type="text/javascript">
+        /*    $.validator.setDefaults( {
+                submitHandler: function () {
+                    alert( "submitted!" );
+                }
+            } );*/
+
+
+        $(document).ready(function () {
+            $('#save').attr("disabled",false );
+            $("#multipleArticle").validate({
+
+                lang: 'fr',
+                rules: {
+
+                    'categorie[nom_cat]': {
+                        required: true,
+                        maxlength: 50,
+                        minlength: 5
+                    },
+
+
+                },
+                messages: {
+                    'categorie[nom_cat]': {
+                        required: "Veuillez renseigner la catégorie .",
+                        minlength: "Champ au moins 5 caractères.",
+                        maxlength: "Champ  au plus 50 caractères."
+                    },
+
+
+                },
+                errorElement: "em",
+                errorPlacement: function (error, element) {
+                    // Add the `invalid-feedback` class to the error element
+                    error.addClass("invalid-feedback");
+
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.next("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-valid").removeClass("is-invalid");
+                }
+            });
+
+        });
+    </script>
+
+    <script>
+
+        function checkAvailability1() {
+            $("#loaderIcon").show();
+            jQuery.ajax({
+                url: "sortie_verifier",
+                data:{'username=':$("#username").val(),'_token':$("#sortie__token").val()},
+              //  data:{'username='+$("#username").val(),},
+
+                type: "POST",
+                success:function(data){
+                    $("#user-availability-status").html(data);
+                    $("#loaderIcon").hide();
+                },
+                error:function (){}
+            });
+        }
+
+    </script>
+
+
+    <script>
+
+        function checkAvailability2() {
+            $("#loaderIcon").show();
+            jQuery.ajax({
+
+                type: "POST",
+                url: "{{ path('ajaxGetProductsAction') }}",
+                data: {template_id: $("#username").val()}
+            })
+                .done(function (data) {
+
+                    if (typeof data.status != "undefined" && data.status != "undefined") {
+                        // At this point we know that the status is defined,
+                        // so we need to check for its value ("OK" in my case)
+                        if (data.status == "OK") {
+                            // At this point we know that the server response
+                            // is what we were expecting,
+                            // so retrive the response and use if
+
+                            if (typeof data.message != "undefined" && data.message != "undefined") {
+                                // Do whatever you need with data.message
+                            }
+                        }
+                    }
+                });
+        }
+
+    </script>
+
+    <script type="text/javascript">
+        function checkAvailability(val) {
+     // jQuery(document).ready(function(value) {
+            var searchRequest = null;
+          //  $("#username").keyup(function() {
+
+                var minlength = 1;
+                var that = this;
+               // var value = $(val).val();
+          //  alert(val);
+
+            var str1 = "#";
+            var str2 =  val;
+            var str3= str2.substr(0, 23);
+            var str4="article";
+            var str5="qtesortie";
+            var str6="message";
+         //   alert(str3);
+            var article = str1.concat(str3,str4);
+            var qtesortie= str1.concat(str3,str5);
+          //  var message= "#sortie_detailsorties_0_qtesortie-error"
+            var message= str1.concat(str3,str6);
+
+           // alert(article);
+           // alert(qtesortie);
+            // sortie_detailsorties_0_qtesortie
+            var str = str1.concat(str2);
+         //   alert(article);
+           // var value = e.target.getAttribute('callFunction');
+            var value1= $(article).val();
+            var value2= parseInt($(qtesortie).val());
+            var value3= $(message).val();
+
+           // alert(message);
+            //alert(value2);
+            //alert(value2);
+            // var value= $('#val').val();
+          //  alert(value);
+
+
+
+
+            var entitySelector = $("#entitiesNav").html('');
+               // if (value.length >= minlength ) {
+                   // if (value.length >= minlength ) {
+                    if (searchRequest != null)
+                        searchRequest.abort();
+                    searchRequest = $.ajax({
+                        type: "GET",
+                        url: "{{ path('ajaxGetProductsAction') }}",
+                        data: {
+                            'q' : value2,
+                            'a' : value1
+
+                        },
+                        dataType: "text",
+                        success: function(msg){
+                            //we need to check if the value is the same
+                           // if (value===$(that).val()) {
+                                var result = JSON.parse(msg);
+                                $.each(result, function(key, arr) {
+                                    $.each(arr, function(id, value) {
+                                        if (key === 'posts') {
+                                            if (id !== 'error') {
+                                                if(id==='disponible')
+                                                {
+                                                  //  $(article).addClass("select2");
+
+                                                    $(message).addClass("text-success").removeClass("text-danger");
+                                                    $(message).val(value);
+
+
+                                                                                                  //   $('input[id="pname"]').val('ADRIAN');
+                                                   // entitySelector.append('<li class="text-success" id="value1" >'+value+'</li>').attr('name').replace(2);
+                                                    $('#save').attr("disabled",false );
+
+                                                   // $('#value3').attr('value').replace(value3);
+
+                                                }
+                                                 else if(id==='indisponible')
+                                                {
+                                                    $(message).addClass("text-danger");
+                                                  //  entitySelector.append('<li ><b class="text-danger" id="value2">'+value+'</b></li>').attr('id').replace('-'+value1, 'ind');
+                                                    $(message).val(value);
+                                                    $('#save').attr("disabled",true );
+
+                                                }
+                                                else if(id==='repture')
+                                                {
+                                                    $(message).addClass("text-blue").removeClass("text-danger");
+                                                    $(message).addClass("text-blue").removeClass("text-success");
+                                                   // entitySelector.append('<li ><b class="text-blue">'+value+'</b></li>').replace('-'+value1, 'rep');
+                                                    $(message).val(value);
+                                                    $('#save').attr("disabled",false );
+                                                }
+                                               // entitySelector.append('<li ><b>'+value[1]+'</b></li>');
+
+                                            } else {
+                                                entitySelector.append('<li class="errorLi">'+value+'</li>');
+                                                $('#save').attr("disabled",true );
+
+                                            }
+                                        }
+                                    });
+                                });
+                            }
+                       // }
+                    });
+              //  }
+            //});
+      //  });
+        }
+    </script>
+
+{% endblock %}

@@ -1,0 +1,362 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sortie{% endblock %}
+
+{% block body %}
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- COLOR PALETTE -->
+
+            {% if sorties %}
+
+            <div class="card card-default color-palette-box bgpowderblue ">
+                <div class="card-header border  bgdarkseagreen">
+                    <h3 class="card-title">
+                        <i class="fas fa-tag"></i>
+                        Gestion des Sorties
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="card-body">
+                    <!-- Main content -->
+                    <section class="content">
+                        <div class="container-fluid">
+                            <div class="card   card-outline">
+                                <div class="card-header border  bglightblue">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-list"></i>
+                                        Recherche par date
+
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="maximize"><i
+                                                    class="fas fa-expand"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div> <!-- /.card-body -->
+                                <div class="card-body">
+
+                                    <form class="form-horizontal" method="post">
+
+                                        <div class="row">
+
+                                            <div class="form-group col-md-3">
+                                                <label>Date début: </label>
+
+                                                <div class="input-group   ">
+                                                    <input class="form-control form-control-sm" name="min"
+                                                           placeholder="dd/mm/yyyy"
+                                                           id="min" type="text"
+                                                           autocomplete="off" data-inputmask="'alias': 'dd/mm/yyyy'">
+                                                    <div class="input-group-prepend">
+                                                        {#  <span class="input-group-text">
+
+                                                       <img src="../../plugins/jquery-ui/img/calendar-blue.gif">
+                                                      </span>#}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+
+                                                <label>Date fin: </label>
+
+                                                <div class="input-group">
+                                                    <input class="form-control form-control-sm" name="max"
+                                                           placeholder="dd/mm/yyyy"
+                                                           id="max" type="text"
+                                                           autocomplete="off" data-inputmask="'alias': 'dd/mm/yyyy'">
+                                                    <div class="input-group-prepend">
+                                                        {#      <span class="input-group-text ">
+
+                                                               <img src="../../plugins/jquery-ui/img/calendar-blue.gif">
+                                                          </span>#}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div><!-- /.card-body -->
+                            </div>
+                        </div><!-- /.container-fluid -->
+                    </section>
+                    <!-- /.content -->
+
+                    <!-- Main content -->
+                    <section class="content">
+                        <div class="container-fluid">
+                            <div class="card card-outline  ">
+                                <div class="card-header border-0 bgmoccasin">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-edit"></i>
+                                        Liste des Sorties
+
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="maximize"><i
+                                                    class="fas fa-expand"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div> <!-- /.card-body -->
+                                <div class="card-body">
+                                    <div class="card-body table-responsive p-0 " id="entrees">
+
+                                        <table id="exemple4"
+                                               class="table table-bordered table-hover table-striped display">
+                                            <thead class="table-info">
+                                            <tr class="text-dark">
+
+                                                <th>Réf</th>
+                                                <th>Date</th>
+                                                <th>Année</th>
+                                                <th>Type de repas</th>
+                                                {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') ) %}
+                                                    <th>Région</th>
+                                                {% endif %}
+                                                <th>Magasin</th>
+                                                <th>Action</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for item in sorties %}
+                                                <tr>
+                                                    <td>
+                                                        Ref{{ item.refSortie }}SRT{{ item.anneeScolaire.designation }}
+                                                    </td>
+                                                    <td>{{ item.dateSortie|date("d/m/Y") }}</td>
+
+                                                    <td>{{ item.anneeScolaire.designation }}</td>
+                                                    <td>{{ item.repas.designation }}</td>
+                                                    {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') ) %}
+                                                        <td>{{ item.magasin.region.designation }}</td>
+                                                    {% endif %}
+                                                    <td>{{ item.magasin.designation }}</td>
+
+                                                    <td>
+                                                        {% if (is_granted('ROLE_MAGASINIER')) %}
+                                                        <a class=" btn btn-default btn-sm px-2  text-blue" href="sortie/updatesortie/{{ (item.id+111985)| encode }}"
+                                                           data-toggle="tooltip" data-placement="top" title="Modifier">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                        </a>
+                                                            {% endif %}
+
+                                                            <a class=" btn btn-default btn-sm px-2  text-blue" href="sortie/show/{{ (item.id+111985)| encode }}" data-toggle="tooltip"
+                                                               data-placement="top" title="Détail">
+                                                                <i class="fas fa-search-plus "></i>
+                                                            </a>
+                                                            {% if (is_granted('ROLE_MAGASINIER')) %}
+
+                                                                <form method="post" style="display: inline-block "
+                                                                      action="{{ path('sortie_delete', {'id': (item.id+111985)| encode}) }}"
+                                                                      onsubmit="return confirm('Voulez-vous vraiment supprimer ?')">
+                                                                    <input type="hidden" name="_method" value="DELETE">
+                                                                    <input type="hidden" name="_token"
+                                                                           value="{{ csrf_token('delete' ~ item.id) }}">
+                                                                    <button data-toggle="tooltip" data-placement="top"
+                                                                            title="Supprimer"
+                                                                            class="btn btn-default btn-sm px-2 text-blue">
+                                                                        <i class="fas fa-trash mt-0"></i></button>
+
+
+                                                                </form>
+                                                                {% endif %}
+                                                                <a class=" btn btn-default btn-sm px-2  text-blue" href="sortie/imprimersortie/{{ (item.id+111985)| encode }}"
+                                                                   target="_blank" data-toggle="tooltip"
+                                                                   data-placement="top" title="Imprimer">
+                                                                    <i class="fas fa-print"></i>
+                                                                </a>
+                                                    </td>
+
+                                                </tr>
+
+                                            {% endfor %}
+                                            </tbody>
+                                            <tfoot>
+
+                                            <tr id="filters">
+
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') ) %}
+                                                    <th></th>
+                                                {% endif %}
+                                                <th></th>
+                                                <th></th>
+
+                                            </tr>
+
+                                            </tfoot>
+                                        </table>
+
+                                    </div>
+                                    {% else %}
+                                        <div>
+                                            <br>
+                                        </div>
+                                        <div class="callout callout-info">
+                                            <h5><i class="fas fa-info"></i> Note:</h5>
+                                            Pas d'enregistrement.
+                                        </div>
+                                     {#   {% if (is_granted('ROLE_MAGASINIER')) %}
+                                            <div class="col-md-2">
+                                                <a href="sortie/newsortie" class="btn  btn-outline-primary  ">
+                                                    <i class="fa fa-plus-square"></i> Ajouter</a>
+                                            </div>
+                                        {% endif %}#}
+                                    {% endif %}
+                                    <div>
+                                        <br>
+                                    </div>
+                                    {% if (is_granted('ROLE_MAGASINIER')) %}
+                                        <div class="col-md-2">
+                                            <a href="sortie/newsortie" class="btn  btn-outline-primary  ">
+                                                <i class="fa fa-plus-square"></i> Ajouter</a>
+                                        </div>
+                                    {% endif %}
+
+                                </div><!-- /.card-body -->
+                            </div>
+                        </div><!-- /.container-fluid -->
+                    </section>
+                    <!-- /.content -->
+
+                </div>
+
+            </div>
+
+            <!-- /.card-body -->
+        </div>
+    </section>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+
+    <script>
+
+        $(document).ready(function () {
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    var min = $('#min').datepicker("getDate");
+                    //   alert(min);
+                    var max = $('#max').datepicker("getDate");
+                    // alert(max);
+                    //    var startDate = new Date(data[1]);
+                    // alert(startDate);
+
+
+                    //     var dateString = "23/10/2015"; // Oct 23
+
+                    var dateParts = data[1].split("/");
+
+// month is 0-based, that's why we need dataParts[1] - 1
+                    var startDate = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+
+                    // alert(startDate);
+
+
+                    if (min == null && max == null) {
+                        return true;
+                    }
+                    if (min == null && startDate <= max) {
+                        return true;
+                    }
+                    if (max == null && startDate >= min) {
+                        return true;
+                    }
+                    if (startDate <= max && startDate >= min) {
+                        return true;
+                    }
+                    return false;
+                }
+            );
+
+
+            $("#min").datepicker({
+                dateFormat: "dd/mm/yy",
+
+                showOn: "button",
+                showAnim: 'slideDown',
+                showButtonPanel: true,
+                autoSize: true,
+
+                // buttonImageOnly: true,
+                // buttonText: "...",
+                buttonImage: "../../plugins/jquery-ui/img/calendar-blue.gif",
+                closeText: "Vider",
+
+
+                onSelect: function () {
+                    table.draw();
+                },
+                changeMonth: true,
+                changeYear: true
+
+
+            });
+
+
+            $("#max").datepicker({
+                dateFormat: "dd/mm/yy",
+                showOn: "button",
+                showAnim: 'slideDown',
+                showButtonPanel: true,
+                autoSize: true,
+
+                buttonImage: "../../plugins/jquery-ui/img/calendar-blue.gif",
+                closeText: "Vider",
+                onSelect: function () {
+                    table.draw();
+                },
+                changeMonth: true,
+                changeYear: true
+            });
+
+
+            var table = $('#exemple4').DataTable();
+
+            $(document).on("click", ".ui-datepicker-close", function () {
+                $('#max').val("")
+                table.draw();
+            });
+
+            $(document).on("click", ".ui-datepicker-close", function () {
+                $('#min').val("")
+                table.draw();
+            });
+
+            // Event listener to the two range filtering inputs to redraw on input
+            $('#min, #max').change(function () {
+                table.draw();
+            });
+        });
+
+
+    </script>
+
+
+{% endblock %}

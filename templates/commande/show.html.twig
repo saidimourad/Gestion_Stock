@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div >
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Bon de Commande</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Bon de Commande</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="callout callout-info">
+                            <h5><i class="fas fa-info"></i> Note:</h5>
+                            Cette page pour imprimer et génere le PDF de bon de commande .
+                        </div>
+
+
+                        <!-- Main content -->
+                        <div class="invoice p-3 mb-3">
+                            <!-- title row -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4>
+                                        <i class="fas fa-globe"></i> OESCOO.
+                                        <small class="float-right">Date:
+                                            {{ "now"|date("d/m/Y") }}</small>
+                                    </h4>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- info row -->
+                            <div class="row invoice-info">
+                                <div class="col-sm-4 invoice-col">
+
+                                    <address>
+                                        <strong>Office des œuvres scolaires </strong><br>
+                                        Tunis 130 Rue 9 avril 1938,1006 <br>
+
+                                    </address>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 invoice-col">
+
+                                    {% if entity.userfr.nomste is defined  %}
+
+
+                                    <address>
+                                        <strong>Fournisseur</strong><br>
+                                        {{ entity.userfr.nomste}}<br>
+                                        Tél: {{ entity.userfr.tel}}<br>
+                                        Email: {{ entity.userfr.email}}<br>
+                                        <strong>Date de livraison</strong><br>
+                                        {% if entity.datelivraison is defined  %}
+
+                                            </b> {{ entity.datelivraison|date("d/m/Y")}} <br>
+                                        {% endif %}
+                                    </address>
+
+                                    {% endif %}
+
+
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 invoice-col">
+                                    <b>La Référence de la Commande: Ref{{ entity.refCommande }}CMD{{ entity.anneeScolaire.designation }}</b><br>
+
+                                    <b>La date de Commande:</b>  {{ entity.dateCommande|date("d/m/Y")}}<br>
+                                    <b>Magasin :</b> {{ entity.magasin.designation}}<br>
+                                    <b>Lancé par :</b> {{ entity.userchb.nom}} {{ entity.userchb.prenom}}<br>
+                                    {% if entity.userchu.nom is defined  %}
+
+                                    <b>Validé par :</b> {{ entity.userchu.nom}} {{ entity.userchu.prenom}}<br>
+                                    {% endif %}
+
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+
+                            <!-- Table row -->
+                            <div class="row">
+                                <div class="col-12 table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Nom Article</th>
+                                            <th>Unité</th>
+                                            <th>Quantité</th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for entree in details %}
+                                            <tr>
+                                                <td>{{ entree.article.nomArt }}</td>
+                                                <td>{{ entree.article.unite }}</td>
+                                                <td>{{ entree.qtecommande |number_format(3)}}</td>
+
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+
+                            <div class="row">
+                                <!-- accepted payments column -->
+
+                                <!-- /.col -->
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+
+                            <!-- this row will not appear when printing -->
+                            <div class="row no-print">
+                                <div class="col-12">
+                                    <a href="{{ path('mescommande')}}"  class="btn btn-outline-info  "><i class="fa fa-undo"></i> Vers Liste</a>
+                                    {% if (is_granted('ROLE_CHEFBUREAU'))%}
+                                    <a href="{{ path('updatecommande', { 'id': entity.id }) }}" class="btn btn-outline-success float-right" >
+                                        <i class="far fa-credit-card"></i> Mettre à jours</a>
+                                    {% endif %}
+
+                                    <a href="{{ path('updatecommande', { 'id': entity.id }) }}" target="_blank" class="btn btn-outline-primary float-right" style="margin-right: 5px;" >
+                                        <i class="fas fa-download"></i> Generate PDF</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.invoice -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+{% endblock %}

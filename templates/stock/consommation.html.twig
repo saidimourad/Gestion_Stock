@@ -1,0 +1,543 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+  <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- COLOR PALETTE -->
+
+
+            <div class="card card-default color-palette-box bgpowderblue ">
+                <div class="card-header border  bgdarkseagreen">
+                    <h3 class="card-title">
+                        <i class="fas fa-tag"></i>
+                    Gestion de stock   {% if infomagasin  is defined  %}
+
+
+                        {% for item in infomagasin %}
+                            : {{ item.designation }}
+
+
+
+                        {% endfor %}
+                    {% endif %}                  </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+    {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR')  or  is_granted('ROLE_CHEFBUREAU') or   is_granted('ROLE_CHEFUNITE'))%}
+
+
+                <div class="card-body">
+                    <!-- Main content -->
+                    <section class="content">
+                        <div class="container-fluid">
+                            <div class="card   card-outline">
+                                <div class="card-header border  bglightblue">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-list"></i>
+                                        Recherche par Magasin
+
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="maximize"><i
+                                                    class="fas fa-expand"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div> <!-- /.card-body -->
+                                <div class="card-body">
+
+
+
+
+                                    <form action="{{ path('consommationafficher') }}" method="post">
+                                        {{ form_start(form) }}
+                                        <div class="col-md-12 ">
+
+                                            <div class="row ">
+                                                <div class="col-md-4 form-check-inline">
+                                                    <div class="form-group">
+                                                        {{ form_row(form.magasin) }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3 ">
+
+                                                    <div class="form-group">
+                                                        <button type="submit" name="afficher"
+                                                                class="btn  btn-outline-primary float-left  ">Afficher
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+                                        {{ form_end(form) }}
+
+                                    </form>
+
+                                </div><!-- /.card-body -->
+                            </div>
+                        </div><!-- /.container-fluid -->
+                    </section>
+                    <!-- /.content -->
+
+                    {% endif %}
+
+                    <div><br></div>
+
+                    <!-- Main content -->
+                    <section class="content">
+                        <div class="container-fluid">
+                            <div class="card card-outline  ">
+                                <div class="card-header border-0 bgmoccasin">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-edit"></i>
+                                        Total Consommation
+
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="maximize"><i
+                                                    class="fas fa-expand"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div> <!-- /.card-body -->
+                                <div class="card-body">
+                                    {% if stock %}
+
+                                    <div class="table-responsive " id="utilisateurs">
+                                        <div class="card-body">
+
+<div class="card-body">
+            <h5 class="card-title m-b-0">Total Consommation :
+
+                {% if infomagasin  is defined  %}
+
+
+                    {% for item in infomagasin %}
+                        {{ item.designation }}
+
+
+
+                    {% endfor %}
+                {% endif %}
+                {% if somme  is defined  %}
+
+
+
+                    <span class="text-success">{{ somme|number_format(3) }} Dinars</span>
+
+
+
+
+                {% endif %}
+
+            </h5>
+        </div>
+            <table id="exemple4" class="table table-bordered table-hover table-striped display" >
+                <thead class="table-info">
+                <tr class="text-dark">
+
+                <th>Catégorie</th>
+                <th>Article</th>
+                <th>Unité</th>
+             {#   <th>Qté min</th>#}
+                <th>Total Entrée</th>
+                <th>Total TTC en dinars</th>
+              {#  <th>Total Sortie</th>
+                <th>En Stock</th>#}
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in stock %}
+
+
+
+                <tr>
+                    <td>{{ item.nom_cat }}</td>
+                    <td>{{ item.nom_art }}</td>
+                    <td>{{ item.unite }}</td>
+                   {# <td>{{ item.qte_min|number_format(3) }}</td>#}
+                    <td>{{ item.entree|number_format(3) }}</td>
+                    <td>{{ item.consommation|number_format(3) }} </td>
+                   {# <td>{{ item.sortie|number_format(3) }}</td>
+                    <td>
+
+                        {% if  (item.entree -item.sortie) > item.qte_min  %}
+
+                            <p class="text-success">{{ (item.entree -item.sortie)|number_format(3)}}</p>
+
+                        {% else %}
+                            <p class="text-danger">{{ (item.entree -item.sortie)|number_format(3)}}</p>
+
+
+                        {% endif %}
+
+
+
+                    </td>#}
+
+
+
+
+                </tr>
+
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr id="filters">
+
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+             {#   <th></th>
+                <th></th>#}
+
+            </tr>
+
+            </tfoot>
+        </table>
+
+
+                                            {% else %}
+                                                <div class="container-fluid">
+                                                    <div class="callout callout-info">
+                                                        <h5><i class="fas fa-info"></i> Note:</h5>
+                                                        Pas d'enregistrement.
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+
+                                        </div><!-- /.card-body -->
+                                    </div>
+                                </div><!-- /.container-fluid -->
+                    </section>
+                    <!-- /.content -->
+
+                </div>
+
+            </div>
+
+            <!-- /.card-body -->
+        </div>
+    </section>
+
+
+
+{#
+
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="card card-info card-outline">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-list"></i>
+                    Total Consommation   {% if infomagasin  is defined  %}
+
+
+                        {% for item in infomagasin %}
+                            : {{ item.designation }}
+
+
+
+                        {% endfor %}
+                    {% endif %}
+                </h3>
+                    <hr size="4" color="#A7AFAD">
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                    </button>
+                </div>
+                <div class="panel-body">
+
+    {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR')  or  is_granted('ROLE_CHEFBUREAU') or   is_granted('ROLE_CHEFUNITE'))%}
+
+        <div class="row mt-4" >
+            <nav class="w-100 ">
+                <div class="nav nav-tabs" id="product-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="product-desc-tab" data-toggle="tab" href="#product-desc" role="tab" aria-controls="product-desc" aria-selected="true">Recherche consommation par Magasin</a>
+                    #}
+{#
+                                    <a class="nav-item nav-link" id="product-comments-tab" data-toggle="tab" href="#product-comments" role="tab" aria-controls="product-comments" aria-selected="false">Recherche par Fournisseur</a>
+                    #}{#
+
+                </div>
+            </nav>
+            <div class="tab-content p-3" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab">
+                    <div class="card-body">
+                        <form  action="{{ path('consommationafficher') }}" method="post">
+
+
+
+
+                            {{ form_start(form) }}
+                            <div class="col-md-12">
+
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        {{ form_row(form.magasin) }}
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="submit" name="afficher" class="btn btn-outline-primary  -align-right">Afficher</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            #}
+{#         <label>Sélectionner un magasin: </label>
+                                     <input type="date" name="date1" required>#}{#
+
+
+
+                            {{ form_end(form) }}
+
+                        </form>
+
+                    </div>
+
+
+                </div>
+                #}
+{# <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab">
+                     <div class="card-body">
+                         <form class="form-horizontal" action="{{ path('stock') }}" method="post">
+                             <label>Date début: </label>
+                             <input type="date" name="date1" required>
+                             <label>Date fin : </label>
+
+                             <input type="date" name="date2" required>
+
+                             <button type="submit" name="afficher" class="btn btn-primary">Afficher</button>
+                         </form>
+                     </div>#}{#
+
+
+            </div>
+        </div>
+        </div>
+
+
+
+
+
+        <div class="border">
+
+        </div>
+
+    {% endif %}
+
+
+
+
+    {% if stock %}
+        <div class="row">
+        <div class="col-lg-12">
+        <div class="panel panel-default">
+        <div class="panel-body">
+        <div class="table-responsive" id="utilisateurs">
+        <div class="card-body">
+            <h5 class="card-title m-b-0">Total Consommation :
+
+                {% if infomagasin  is defined  %}
+
+
+                    {% for item in infomagasin %}
+                        {{ item.designation }}
+
+
+
+                    {% endfor %}
+                {% endif %}
+                {% if somme  is defined  %}
+
+
+
+                    <span class="text-success">{{ somme|number_format(3) }} Dinars</span>
+
+
+
+
+                {% endif %}
+
+            </h5>
+        </div>
+
+
+            <table id="exemple4" class="table table-bordered table-hover table-striped display" >
+                <thead class="table-info">
+                <tr class="text-dark">
+
+                <th>Catégorie</th>
+                <th>Article</th>
+                <th>Unité</th>
+             #}
+{#   <th>Qté min</th>#}{#
+
+                <th>Total Entrée</th>
+                <th>Total TTC en dinars</th>
+              #}
+{#  <th>Total Sortie</th>
+                <th>En Stock</th>#}{#
+
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in stock %}
+
+
+
+                <tr>
+                    <td>{{ item.nom_cat }}</td>
+                    <td>{{ item.nom_art }}</td>
+                    <td>{{ item.unite }}</td>
+                   #}
+{# <td>{{ item.qte_min|number_format(3) }}</td>#}{#
+
+                    <td>{{ item.entree|number_format(3) }}</td>
+                    <td>{{ item.consommation|number_format(3) }} </td>
+                   #}
+{# <td>{{ item.sortie|number_format(3) }}</td>
+                    <td>
+
+                        {% if  (item.entree -item.sortie) > item.qte_min  %}
+
+                            <p class="text-success">{{ (item.entree -item.sortie)|number_format(3)}}</p>
+
+                        {% else %}
+                            <p class="text-danger">{{ (item.entree -item.sortie)|number_format(3)}}</p>
+
+
+                        {% endif %}
+
+
+
+                    </td>#}{#
+
+
+
+
+
+                </tr>
+
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr id="filters">
+
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+             #}
+{#   <th></th>
+                <th></th>#}{#
+
+
+            </tr>
+
+            </tfoot>
+        </table>
+
+    {% else %}
+        <div class="callout callout-info">
+            <h5><i class="fas fa-info"></i> Note:</h5>
+            Pas d'enregistrement.
+        </div>
+    {% endif %}
+    </div>
+
+    </div>
+
+
+    </div>
+    </div>
+    </div><!--/.row-->
+
+
+    </div>
+
+    </div>
+#}
+
+
+{% endblock %}
+{% block javascripts %}
+
+<script>
+    $(document).ready(function() {
+        $('#example4').DataTable( {
+            "footerCallback": function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+
+                // Total over all pages
+                total = api
+                    .column( 4 )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+
+                // Total over this page
+                pageTotal = api
+                    .column( 4, { page: 'current'} )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+
+                // Update footer
+                $( api.column( 4 ).footer() ).html(
+                    '$'+pageTotal +' ( $'+ total +' total)'
+                );
+            }
+        } );
+    } );
+
+    </script>
+
+
+
+
+{% endblock %}

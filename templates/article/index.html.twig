@@ -1,0 +1,300 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid ">
+            <!-- COLOR PALETTE -->
+            <div class="card card-default color-palette-box bgpowderblue  ">
+                <div class="card-header border  bgdarkseagreen">
+                    <h3 class="card-title">
+                        <i class="fas fa-tag"></i>
+                        Gestion des Articles
+                    </h3>
+                    <div class="card-tools ">
+                        <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="card-body border ">
+                    <!-- Main content -->
+                    <section class="content">
+                        <div class="container-fluid">
+                            <div class="card   card-outline">
+                                <div class="card-header border  bglightblue">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-list"></i>
+                                        Détail Article
+
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                                        </button>
+                                            <button type="button" class="btn btn-tool" data-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div> <!-- /.card-body -->
+                                <div class="card-body ">
+
+
+                                    <div class="form-group   ">
+                                        {{ form_start(form, {'attr': {'novalidate': 'novalidate','class' : 'form-group form-horizontal', 'id':'form', 'role' : 'form' }}) }}
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    {{ form_row(form.nom_art, {'attr' : {'class' : 'form-control', 'id' : 'nom_art', 'name' : 'nom_art'}}) }}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+
+                                                <div class="form-group">
+                                                    {{ form_row(form.unite, {'attr' : {'class' : 'form-control', 'id' : 'unite', 'name' : 'unite' }}) }}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+
+                                                <div class="form-group">
+                                                    {{ form_row(form.qte_min, {'attr' : {'class' : 'form-control ' }}) }}
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+
+                                                <div class="form-group">
+                                                    {{ form_row(form.categorie, {'attr' : {'class' : 'form-control select2','style':'width: 100%;'}}) }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-1">
+
+                                            <div class="form-group">
+                                                <button type="submit" class="btn  btn-outline-success "><i class="fa fa-save"></i> Enregistrer</button>
+                                            </div>
+                                        </div>
+
+                                        {{ form_end(form) }}
+
+                                    </div>
+
+                                </div><!-- /.card-body -->
+                            </div>
+                        </div><!-- /.container-fluid -->
+                    </section>
+                    <!-- /.content -->
+
+                    <!-- Main content -->
+                    <section class="content">
+                        <div class="container-fluid ">
+                            <div class="card card-outline  ">
+                                <div class="card-header border-0 bgmoccasin">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-edit"></i>
+                                        Liste des Articles
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                                        </button>
+                                            <button type="button" class="btn btn-tool" data-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div> <!-- /.card-body -->
+                                <div class="card-body">
+                                    {% if articles %}
+
+                                    <div class="table-responsive mx-auto col-12  " id="articles">
+
+
+                                        <table id="exemple4"
+                                               class="table  table-bordered table-hover table-striped display  ">
+                                            <thead class="table-info">
+                                            <tr class="text-dark">
+
+                                                <th>Catégorie</th>
+                                                <th>Article</th>
+                                                <th>Unité</th>
+                                                <th>Quantité minimale</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            {% for article in articles %}
+
+                                                <tr>
+                                                    <td>{{ article.categorie.nomCat }}</td>
+                                                    <td>{{ article.nomArt }}</td>
+                                                    <td>{{ article.unite }}</td>
+                                                    <td>{{ article.qtemin |number_format(3) }}</td>
+                                                    <td>
+                                                        <a class=" btn btn-default btn-sm px-2  text-blue"
+                                                           href="{{ path('article', {'action':1| encode, 'id': (article.id+111985)| encode}) }}"
+                                                           data-toggle="tooltip" data-placement="top" title="Modifier">
+                                                            <i class="fas fa-pencil-alt mt-0"></i>
+
+                                                        </a>
+                                                        <form method="post" style="display: inline-block "
+                                                              action="{{ path('article', {'action':2| encode, 'id': (article.id+111985)| encode}) }}"
+                                                              onsubmit="return confirm('Voulez-vous vraiment supprimer ?')">
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <input type="hidden" name="_token"
+                                                                   value="{{ csrf_token('delete' ~ article.id) }}">
+                                                            <button data-toggle="tooltip" data-placement="top"
+                                                                    title="Supprimer" class="btn btn-default btn-sm px-2 text-blue">
+                                                                <i class="fas fa-trash mt-0"></i></button>
+
+
+
+                                                        </form>
+                                                    </td>
+
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                            <tfoot>
+                                            <tr id="filters">
+
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+
+                                            </tr>
+
+                                            </tfoot>
+                                        </table>
+
+                                        {% else %}
+                                            <div class="callout callout-info">
+                                                <h5><i class="fas fa-info"></i> Note:</h5>
+                                                Pas d'enregistrement.
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+
+                                </div><!-- /.card-body -->
+                            </div>
+                        </div><!-- /.container-fluid -->
+                    </section>
+                    <!-- /.content -->
+
+                </div>
+
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </section>
+
+
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+
+    <script src="../../plugins/jquery/jquery.validate.js"></script>
+
+    <script type="text/javascript">
+        /*    $.validator.setDefaults( {
+                submitHandler: function () {
+                    alert( "submitted!" );
+                }
+            } );*/
+
+
+        $(document).ready(function () {
+            $("#form").validate({
+
+
+                rules: {
+
+                    'article[nom_art]': {
+                        required: true,
+                        minlength: 2
+                    },
+                    'article[unite]': {
+                        required: true,
+                        minlength: 1
+                    },
+                    'article[qte_min]': {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 10,
+                        number: true
+                    },
+                    'article[categorie]': {
+                        required: true,
+                        // minlength: 4,
+                        // maxlength: 50,
+                    },
+
+                },
+                messages: {
+                    'article[nom_art]': {
+                        required: "Veuillez renseigner la désignation .",
+                        minlength: "Champ au moins 2 caractères.",
+                        maxlength: "Champ  au plus 50 caractères."
+                    },
+                    'article[unite]': {
+                        required: "Veuillez renseigner l\'unité.",
+                        minlength: "Champ au moins 2 caractères.",
+                        maxlength: "Champ  au plus 50 caractères."
+                    },
+                    'article[qte_min]': {
+                        required: "Veuillez renseigner la quantité minimale.",
+                        minlength: "Champ au moins 1 caractères.",
+                        maxlength: "Champ  au plus 10 caractères.",
+                        number: "Veuillez entrez une valeur valide."
+                    },
+                    'article[categorie]': {
+                        required: "Veuillez sélectionner la catégorie.",
+
+                    },
+
+                },
+                errorElement: "em",
+                errorPlacement: function (error, element) {
+                    // Add the `invalid-feedback` class to the error element
+                    error.addClass("invalid-feedback");
+
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.next("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-valid").removeClass("is-invalid");
+                }
+            });
+
+        });
+    </script>
+
+{% endblock %}

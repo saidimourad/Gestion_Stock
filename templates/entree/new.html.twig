@@ -1,0 +1,188 @@
+{% extends 'base.html.twig' %}
+
+{% macro niceForm(form) %}
+ <div class="row">
+                    <div class="col-md-4">
+
+  {{ form_row(form.article, {'attr' : {'class' : 'form-control select2','style':'width: 100%;'}}) }}
+
+    </div>
+                        <div class="col-md-4">
+
+    {{ form_row(form.qteentree) }}
+    </div>
+                        <div class="col-md-4">
+
+    {{ form_row(form.prixentree) }}
+
+    </div>
+ </div>
+{% endmacro niceForm %}
+{% import _self as formMacros %}
+{% block body %}
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- COLOR PALETTE -->
+            <div class="card card-default color-palette-box bgpowderblue ">
+                <div class="card-header border  bgdarkseagreen">
+                    <h3 class="card-title">
+                        <i class="fas fa-tag"></i>
+                        Gestion des Entrées
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                {% if commande  %}
+
+                <form  id="multipleArticle" class="form-horizontal" action="{{ path('addentree') }}" method="post" novalidate >
+
+
+                    <div class="card-body">
+                        <!-- Main content -->
+                        <section class="content">
+                            <div class="container-fluid">
+
+                            <div class="card   card-outline">
+                                <div class="card-header border  bglightblue">
+                                        <h3 class="card-title">
+                                            <i class="fas fa-list"></i>
+                                            Entrées
+
+                                        </h3>
+                                    </div> <!-- /.card-body -->
+                                    <div class="card-body">
+
+
+
+                                        <div class="my-custom-class-for-errors">
+                                            {{ form_errors(form) }}
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="form-group col-md-9">
+                                                <div class="form-group">
+                                                    {{ form_row(form.commande, {'label' : 'Commande', 'attr' : {'class' : 'form-control select2','style':'width: 100%;'}}) }}
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-3">
+
+                                                <div class="form-group">
+                                                    {{ form_row(form.anneeScolaire, {'label' : 'Année Scolaire', 'attr' : {'class' : 'form-control select2','style':'width: 100%;'}}) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div><!-- /.card-body -->
+                                </div>
+                            </div><!-- /.container-fluid -->
+                        </section>
+                        <!-- /.content -->
+
+                        <!-- Main content -->
+                        <section class="content">
+                            <div class="container-fluid">
+                            <div class="card card-outline  ">
+                                <div class="card-header border-0 bgmoccasin">
+                                        <h3 class="card-title">
+                                            <i class="fas fa-edit"></i>
+                                            Détail Entrées
+
+                                        </h3>
+                                    </div> <!-- /.card-body -->
+                                    <div class="card-body">
+
+                                        <div class="col-sm-12 col-sm-offset-2" id="exp_list" data-prototype="{{ formMacros.niceForm(form.detailentrees.vars.prototype)|e('html_attr') }}">
+
+                                        </div>
+                                        {{ form_end(form) }}
+
+                                        <a href="{{ path('entree')}}"  class="btn  block btn-outline-info  "><i class="fa fa-undo"></i> Vers Liste</a>
+
+                                    </div><!-- /.card-body -->
+                                </div>
+                            </div><!-- /.container-fluid -->
+                        </section>
+                        <!-- /.content -->
+
+                    </div>
+                </form>
+            </div>
+            {% else %}
+
+                <div class="callout callout-info">
+                    <h5><i class="fas fa-info"></i> Note:</h5>
+                    Pas de commande .
+                </div>
+
+            {% endif %}
+            <!-- /.card-body -->
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+
+    <script src="../../plugins/jquery/jquery.validate.js"></script>
+
+    <script type="text/javascript">
+        /*    $.validator.setDefaults( {
+                submitHandler: function () {
+                    alert( "submitted!" );
+                }
+            } );*/
+
+
+        $( document ).ready( function () {
+            $( "#multipleArticle" ).validate( {
+
+                lang:'fr',
+                rules: {
+
+                    'categorie[nom_cat]': {
+                        required: true,
+                        maxlength: 50,
+                        minlength: 5
+                    },
+
+
+                },
+                messages: {
+                    'categorie[nom_cat]': {
+                        required: "Veuillez renseigner la catégorie .",
+                        minlength: "Champ au moins 5 caractères.",
+                        maxlength: "Champ  au plus 50 caractères."
+                    },
+
+
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                    // Add the `invalid-feedback` class to the error element
+                    error.addClass( "invalid-feedback" );
+
+                    if ( element.prop( "type" ) === "checkbox" ) {
+                        error.insertAfter( element.next( "label" ) );
+                    } else {
+                        error.insertAfter( element );
+                    }
+                },
+                highlight: function ( element, errorClass, validClass ) {
+                    $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+                }
+            } );
+
+        } );
+    </script>
+
+{% endblock %}

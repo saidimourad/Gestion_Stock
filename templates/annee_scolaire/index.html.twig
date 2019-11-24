@@ -1,0 +1,516 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégorie{% endblock %}
+
+{% block body %}
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- COLOR PALETTE -->
+            <div class="card card-default color-palette-box bgpowderblue  ">
+                <div class="card-header border  bgdarkseagreen">
+                    <h3 class="card-title">
+                        <i class="fas fa-tag"></i>
+                        Gestion des années scolaires
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-body border ">
+                    <!-- Main content -->
+                    <section class="content">
+                        <div class="container-fluid">
+                            <div class="card  card-outline">
+                                <div class="card-header border  bglightblue">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-list"></i>
+                                        Détail année scolaire
+
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="maximize"><i
+                                                    class="fas fa-expand"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div> <!-- /.card-body -->
+                                <div class="card-body">
+
+
+                                    <div class="form-group   ">
+                                        {{ form_start(form, {'attr': {'novalidate': 'novalidate','class' : 'form-group form-horizontal', 'id':'annee' }}) }}
+
+
+                                        <div class="row">
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    {{ form_row(form.designation, { 'attr' : {'class' : 'form-control '}}) }}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+
+                                                <div class="form-group">
+                                                    {{ form_row(form.actif, { 'attr' : {'class' : 'form-control select2','style':'width: 100%;'}}) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-1">
+
+                                            <div class="form-group">
+                                                <button type="submit" class="btn  btn-outline-success "><i
+                                                            class="fa fa-save"></i> Enregistrer
+                                                </button>
+                                            </div>
+
+
+                                        </div>
+                                        {{ form_end(form) }}
+
+                                    </div>
+
+
+                                </div><!-- /.card-body -->
+                            </div>
+                        </div><!-- /.container-fluid -->
+                    </section>
+                    <!-- /.content -->
+
+                    <!-- Main content -->
+                    <section class="content">
+                        <div class="container-fluid">
+                            <div class="card card-outline  ">
+                                <div class="card-header border-0 bgmoccasin">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-edit"></i>
+                                        Liste des années scolaires
+
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="maximize"><i
+                                                    class="fas fa-expand"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div> <!-- /.card-body -->
+                                <div class="card-body">
+
+                                    {% if annee_scolaires %}
+
+                                    <div class="table-responsive mx-auto col-10  " id="categories">
+
+
+                                        <table id="exemple4"
+                                               class="table table-bordered table-hover table-striped display ">
+                                            <thead class="table-info">
+
+                                            <tr class="text-dark">
+                                                <th>Designation</th>
+                                                <th>En cours</th>
+                                                <th>Etat</th>
+                                                <th class="row justify-content-center align-items-center">Action</th>
+
+
+                                            </tr>
+
+                                            </thead>
+                                            <tbody>
+                                            {% for annee_scolaire in annee_scolaires %}
+                                                <tr>
+                                                    <td>{{ annee_scolaire.designation }}
+                                                        --{{ annee_scolaire.designation +1 }}</td>
+
+                                                    {% if annee_scolaire.encours==1 %}
+                                                        <td class="text-success">Année en cours
+
+                                                        </td>
+                                                    {% else %}
+
+                                                        <td class="text-warning">Rendre en cours<a
+                                                                    href="/anneescolaire/encours/{{ (annee_scolaire.id+111985)| encode }}"
+                                                                    data-toggle="tooltip" data-placement="top"
+                                                                    title="Rendre en cours">
+                                                                <i class="mdi mdi-check"></i>
+                                                            </a></td>
+
+
+                                                    {% endif %}
+
+
+                                                    {% if annee_scolaire.encours!=1 %}
+                                                        {% if annee_scolaire.actif==1 %}
+                                                            <td class="text-success">Actif <a
+                                                                        href="/anneescolaire/desactiver/{{ (annee_scolaire.id+111985)| encode }}"
+                                                                        data-toggle="tooltip" data-placement="top"
+                                                                        title="Déactiver">
+                                                                    <i class="m-r-10 mdi mdi-account-off"></i>
+                                                                </a></td>
+                                                        {% else %}
+                                                            <td class="text-warning">Inactif<a
+                                                                        href="/anneescolaire/activer/{{ (annee_scolaire.id+111985)| encode }}"
+                                                                        data-toggle="tooltip" data-placement="top"
+                                                                        title="Activer">
+                                                                    <i class="m-r-10 mdi mdi-account-check"></i>
+                                                                </a></td>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <td></td>
+                                                    {% endif %}
+
+                                                    <td class="row justify-content-center align-items-center">
+                                                        <a class="btn btn-default btn-sm px-2 text-blue"
+                                                           href={{ path('annee_scolaire', {'action':1| encode, 'id': (annee_scolaire.id+111985)| encode}) }} data-toggle="tooltip"
+                                                           data-placement="top" title="Modifier">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                        </a>
+
+                                                        <form method="post" style="display: inline-block "
+                                                              action="{{ path('annee_scolaire', {'action':2| encode, 'id': (annee_scolaire.id+111985)| encode}) }}"
+                                                              onsubmit="return confirm('Voulez-vous vraiment supprimer ?')">
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <input type="hidden" name="_token"
+                                                                   value="{{ csrf_token('delete' ~ annee_scolaire.id) }}">
+                                                            <button data-toggle="tooltip" data-placement="top"
+                                                                    title="Supprimer"
+                                                                    class="btn btn-default btn-sm px-2 text-blue">
+                                                                <i class="fas fa-trash mt-0"></i></button>
+
+                                                        </form>
+                                                        {# <a href="#" data-toggle="tooltip" data-placement="top" title="Delete" data-id="{{ annee_scolaire.id }}" class="fas fa-trash">
+                                                         </a>
+ #}
+                                                    </td>
+
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                            <tfoot>
+                                            <tr id="filters">
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+
+                                            </tfoot>
+                                        </table>
+
+                                        {% else %}
+                                            <div class="callout callout-info">
+                                                <h5><i class="fas fa-info"></i> Note:</h5>
+                                                Pas d'enregistrement.
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+
+                                </div><!-- /.card-body -->
+                            </div>
+                        </div><!-- /.container-fluid -->
+                    </section>
+                    <!-- /.content -->
+
+                </div>
+
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+    {#
+
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- COLOR PALETTE -->
+                <div class="card card-default color-palette-box bgpowderblue  ">
+                    <div class="card-header border  bgdarkseagreen">
+                        <h3 class="card-title">
+                            <i class="fas fa-tag"></i>
+                            Gestion des Années Scolaire
+                        </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="card-body">
+                        <!-- Main content -->
+                        <section class="content">
+                            <div class="container-fluid">
+                                <div class="card  card-info card-outline">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            <i class="fas fa-list"></i>
+                                            Détail Année Scolaire
+
+                                        </h3>
+                                    </div> <!-- /.card-body -->
+                                    <div class="card-body">
+
+
+                                        <div class="form-group   ">
+                                        {{ form_start(form, {'attr': {'novalidate': 'novalidate','class' : 'form-group form-horizontal', 'id':'annee' }}) }}
+
+
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    {{ form_row(form.designation, { 'attr' : {'class' : 'form-control '}}) }}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+
+                                                <div class="form-group">
+                                                    {{ form_row(form.actif, { 'attr' : {'class' : 'form-control select2','style':'width: 100%;'}}) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-1">
+
+                                            <div class="form-group">
+                                                <button type="submit" class="btn  btn-outline-success "><i class="fa fa-save"></i> Enregistrer</button>
+                                            </div>
+
+
+                                        </div>
+                                        {{ form_end(form) }}
+
+                                        </div>
+
+                                    </div><!-- /.card-body -->
+                                </div>
+                            </div><!-- /.container-fluid -->
+                        </section>
+                        <!-- /.content -->
+
+                        <!-- Main content -->
+                        <section class="content">
+                            <div class="container-fluid">
+                                <div class="card card-info card-outline">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            <i class="fas fa-edit"></i>
+                                            Liste des Années Scolaire
+
+                                        </h3>
+                                    </div> <!-- /.card-body -->
+                                    <div class="card-body">
+
+
+                                        {% if annee_scolaires %}
+
+                                        <div class="table-responsive mx-auto col-10  " id="categories">
+
+
+
+                                            <table id="exemple4" class="table table-bordered table-hover table-striped display " >
+                                                <thead class="table-info">
+                                                <tr class="text-dark">
+                                                    <th>Designation</th>
+                                                    <th>En cours</th>
+                                                    <th>Etat</th>
+                                                    <th class="row justify-content-center align-items-center">Action</th>
+
+                                                </tr>
+
+                                                </thead>
+                                                <tbody>
+                                                {% for annee_scolaire in annee_scolaires %}
+                                                    <tr>
+                                                        <td>{{ annee_scolaire.designation }}--{{ annee_scolaire.designation +1 }}</td>
+
+                                                        {% if annee_scolaire.encours==1 %}
+                                                            <td class="text-success">Année en cours
+
+                                                            </td>
+                                                        {% else %}
+
+                                                            <td class="text-warning">Rendre en cours<a href="/anneescolaire/encours/{{ annee_scolaire.id }}" data-toggle="tooltip" data-placement="top" title="Rendre en cours">
+                                                                    <i class="mdi mdi-check"></i>
+                                                                </a></td>
+
+
+                                                        {% endif %}
+
+                                                        {% if annee_scolaire.actif==1 %}
+                                                            <td class="text-success">Actif <a href="/anneescolaire/desactiver/{{ annee_scolaire.id }}" data-toggle="tooltip" data-placement="top" title="Déactiver">
+                                                                    <i  class="m-r-10 mdi mdi-account-off"></i>
+                                                                </a></td>
+
+
+                                                        {% else %}
+                                                            <td class="text-warning">Inactif<a href="/anneescolaire/activer/{{ annee_scolaire.id }}" data-toggle="tooltip" data-placement="top" title="Activer">
+                                                                    <i   class="m-r-10 mdi mdi-account-check"></i>
+                                                                </a></td>
+
+
+                                                        {% endif %}
+                                                        <td class="row justify-content-center align-items-center">
+
+                                                            <a href={{ path('annee_scolaire', {'action':1, 'id': annee_scolaire.id}) }} data-toggle="tooltip" data-placement="top" title="Update">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Delete" data-id="{{ annee_scolaire.id }}" class="fas fa-trash">
+                                                            </a>
+
+
+                                                        </td>
+
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                                <tfoot>
+                                                <tr id="filters">
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+
+                                                </tfoot>
+                                            </table>
+                                            {% else %}
+                                                <div class="callout callout-info">
+                                                    <h5><i class="fas fa-info"></i> Note:</h5>
+                                                    Pas d'enregistrement.
+                                                </div>
+                                            {% endif %}
+                                        </div>
+
+
+
+
+                                    </div><!-- /.card-body -->
+                                </div>
+                            </div><!-- /.container-fluid -->
+                        </section>
+                        <!-- /.content -->
+
+                    </div>
+
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </section>
+    #}
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+{% block javascripts %}
+
+
+    <script src="../../plugins/jquery/jquery.validate.js"></script>
+
+    <script type="text/javascript">
+        /*    $.validator.setDefaults( {
+                submitHandler: function () {
+                    alert( "submitted!" );
+                }
+            } );*/
+
+
+        $(document).ready(function () {
+            $("#annee").validate({
+
+
+                rules: {
+
+                    'annee_scolaire[designation]': {
+                        required: true,
+                        maxlength: 5,
+                        minlength: 4,
+                        number: true
+
+                    },
+                    'annee_scolaire[actif]': {
+                        required: true,
+                        //maxlength: 5,
+                        //  minlength: 4
+                    },
+
+
+                },
+                messages: {
+                    'annee_scolaire[designation]': {
+                        required: "Veuillez renseigner l\'année scolaire .",
+                        minlength: "Champ au moins 4 chiffres.",
+                        maxlength: "Champ  au plus 5 chiffres.",
+                        number: "Veuillez entrez une valeur valide."
+
+                    },
+
+
+                    'annee_scolaire[actif]': {
+                        required: "Veuillez renseigner l\'état de l\'année scolaire .",
+                        //minlength: "Champ au moins 4 caractères.",
+                        // maxlength: "Champ  au plus 5 caractères."
+                    },
+                },
+                errorElement: "em",
+                errorPlacement: function (error, element) {
+                    // Add the `invalid-feedback` class to the error element
+                    error.addClass("invalid-feedback");
+
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.next("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-valid").removeClass("is-invalid");
+                }
+            });
+
+        });
+    </script>
+
+
+{% endblock %}

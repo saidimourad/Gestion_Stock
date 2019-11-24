@@ -1,0 +1,384 @@
+{% extends 'base.html.twig' %}
+{% block title %} Ajouter Utilisateur{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12" >
+
+                            <div class="card border card-outline">
+
+                                <div class="card-header border  bgdarkseagreen">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-edit"></i>
+                                        Utilisateur
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                            <div class="card-body">
+
+                                {{ form_start(form, {'attr': {'novalidate': 'novalidate','class' : 'form-group form-horizontal', 'id':'form', 'role' : 'form' }}) }}
+                            <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    {{ form_row(form.nom) }}
+                                </div>
+                            </div>
+                                <div class="col-md-4">
+
+                                <div class="form-group">
+                                    {{ form_row(form.prenom) }}
+                                </div>
+                                </div>
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+                                        {{ form_row(form.cin) }}
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+                                        {{ form_row(form.datenassance) }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+                                        {{ form_row(form.adresse) }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+                                        {{ form_row(form.tel) }}
+{#
+                                        {{ form_row(form.tel, {'attr' : {'class' : 'form-control', 'pattern' : '[0-9]{2}[0-9]{3}[0-9]{3}'}}) }}
+#}
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+                                        {{ form_row(form.sexe) }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+                                        {{ form_row(form.etatcivil) }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+                                        {{ form_row(form.dateembauche) }}
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-3">
+
+                                    <div class="form-group">
+                                        {{ form_row(form.email) }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+
+                                    <div class="form-group">
+                                        {{ form_row(form.password) }}
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-3">
+
+                                    <div class="form-group">
+                                        {{ form_row(form.confirm_password) }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+
+                                    <div class="form-group">
+
+                                            {{ form_row(form.roles, {'attr' : {'class' : 'form-control'}}) }}
+
+                                        {{ form_row(form.roles) }}
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-2">
+
+                                    <div class="form-group">
+                                        {{ form_row(form.isActive) }}
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-1">
+
+                                    <div class="form-group">
+                                        <button type="submit" class="btn  btn-outline-success "><i class="fa fa-save"></i> Enregistrer</button>
+
+
+
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        {{ form_widget(form) }}
+                            </div>
+                    </div>
+
+
+                    {{ form_end(form) }}
+
+
+                {#    </div>#}
+                </div>
+
+
+
+ {#   </div>
+    </div>
+    </div>#}
+    </div><!--/.row-->
+
+
+
+
+        <!-- /.row -->
+    </div>
+
+{% block javascripts %}
+
+
+    <script src="../../plugins/jquery/jquery.validate.js"></script>
+
+    <script type="text/javascript">
+        /*    $.validator.setDefaults( {
+                submitHandler: function () {
+                    alert( "submitted!" );
+                }
+            } );*/
+
+
+        $( document ).ready( function () {
+            $( "#form" ).validate( {
+
+
+                rules: {
+
+                    'user[nom]': {
+                        required: true,
+                        maxlength: 50,
+                        minlength: 2
+                    },
+                    'user[prenom]': {
+                        required: true,
+                        maxlength: 50,
+                        minlength: 2
+                    },
+                    'user[cin]': {
+                        required: true,
+                        minlength: 7,
+                        maxlength: 20,
+                       // number: true
+                    },
+                    'user[datenassance]': {
+                        required: true,
+                      //  minlength: 1
+                    },
+                    'user[adresse]': {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 60,
+                    },
+                    'user[tel]': {
+                        required: true,
+                        minlength: 8,
+                        maxlength: 8,
+                      //  pattern:true,
+                       // pattern: true,
+                       // regex:"[0-9]{2}[0-9]{3}[0-9]{3}"
+                       // "regexphone": /^(\+33\.|0)[0-9]{9}$/
+                       // regexphone: /^0[1-9][0-9]{8}$/
+                    },
+                    'user[sexe]': {
+                        required: true,
+                       // minlength: 2
+                    },
+                    'user[etatcivil]': {
+                        required: true,
+                       // minlength: 2
+                    },
+                    'user[dateembauche]': {
+                        required: true,
+                       // minlength: 2
+                    },
+                    'user[email]': {
+                        required: true,
+                        email: true,
+                        minlength: 4,
+                        maxlength: 50,
+                    },
+                       'user[password]': {
+                           required: true,
+                           minlength: 8,
+                           maxlength: 50,
+                       },
+                    'user[confirm_password]': {
+                           required: true,
+                           minlength: 8,
+                           maxlength: 50,
+                           equalTo: "#user_password"
+                       },
+                    'user[roles][]': {
+                        required: true,
+                       // minlength: 5,
+                        //equalTo: "#password"
+                    },
+
+                    /*
+                       email: {
+                           required: true,
+                           email: true
+                       },
+                       agree: "required"*/
+                },
+                messages: {
+                    'user[nom]': {
+                        required: "Veuillez renseigner le nom .",
+                        minlength: "Champ au moins 2 caractères.",
+                        maxlength: "Champ  au plus 50 caractères."
+                    },
+                    'user[prenom]': {
+                        required: "Veuillez renseigner le prénom.",
+                        minlength: "Champ au moins 2 caractères.",
+                        maxlength: "Champ  au plus 50 caractères."
+                    },
+                    'user[cin]': {
+                        required: "Veuillez renseigner la carte d\'identité.",
+                        minlength: "Champ au moins 7 caractères.",
+                        maxlength: "Champ  au plus 20 caractères.",
+                       // number:"Veuillez entrez une valeur valide."
+                    },
+                    'user[datenassance]': {
+                        required: "Veuillez renseigner la date de naissance.",
+                       /* minlength: "Votre nom doit faire au moins 6 caractères.",
+                        maxlength: "Votre nom doit faire au plus 50 caractères."*/
+                    },
+
+                    'user[adresse]': {
+                        required: "Veuillez renseigner l\'adresse.",
+                        minlength: "Votre nom doit faire au moins 6 caractères.",
+                        maxlength: "Votre nom doit faire au plus 60 caractères."
+                    },
+
+                    'user[tel]': {
+                        required: "Vous devez saisir un numéro de téléphone au format 70 777 777.",
+                        minlength: "Champ  au moins 8 chiffres.",
+                        maxlength: "Champ au max 8 chiffres.",
+                        pattern: "Vous devez saisir un numéro de téléphone au format 70 777 777.",
+
+                     //   regex : "Veuillez renseigner un numéro de téléphone valide"
+                       // regexphone: "test"
+                    },
+                    'user[dateembauche]': {
+                        required: "Veuillez renseigner la date d\'embauche.",
+                      /*  minlength: "Votre nom doit faire au moins 6 caractères.",
+                        maxlength: "Votre nom doit faire au plus 50 caractères."*/
+                    },
+
+                    'user[sexe]': {
+                        required: "Veuillez renseigner le sexe.",
+                 /*       minlength: "Votre nom doit faire au moins 6 caractères.",
+                        maxlength: "Votre nom doit faire au plus 50 caractères."*/
+                    },
+                    'user[etatcivil]': {
+                        required: "Veuillez sélectionner l\'état civil .",
+                       /* minlength: "Votre nom doit faire au moins 6 caractères.",
+                        maxlength: "Votre nom doit faire au plus 50 caractères."*/
+                    },
+
+
+
+                    'user[email]': {
+                        required: "Veuillez renseigner l'émail.",
+                        minlength: "Votre nom doit faire au moins 4 caractères.",
+                        maxlength: "Votre nom doit faire au plus 50 caractères.",
+                        email:"Veuillez renseigner un email valide"
+                    },
+
+
+                    'user[password]': {
+                        required: "Veuillez renseigner le mot de passe.",
+                        minlength: "Champ au moins 8 caractères.",
+                        maxlength: "Champ  au plus 50 caractères.",
+                    },
+
+                    'user[confirm_password]': {
+                        required: "Veuillez confirmer le mot de passe.",
+                        minlength: "Champ au moins 8 caractères.",
+                        maxlength: "Champ  au plus 50 caractères.",
+                        equalTo: "Entrez le même mot de passe"
+                    },
+
+                    'user[roles][]': {
+                    required: "Sélectionner un role.",
+                   // minlength: "Votre nom doit faire au moins 6 caractères.",
+                   // maxlength: "Votre nom doit faire au plus 50 caractères."
+                },
+
+                    /* confirm_password: {
+                         required: "Please provide a password",
+                         minlength: "Your password must be at least 5 characters long",
+                         equalTo: "Please enter the same password as above"
+                     },
+                     email: "Please enter a valid email address",
+                     agree: "Please accept our policy"*/
+                },
+                errorElement: "em",
+                errorPlacement: function ( error, element ) {
+                    // Add the `invalid-feedback` class to the error element
+                    error.addClass( "invalid-feedback" );
+
+                    if ( element.prop( "type" ) === "checkbox" ) {
+                        error.insertAfter( element.next( "label" ) );
+                    } else {
+                        error.insertAfter( element );
+                    }
+                },
+                highlight: function ( element, errorClass, validClass ) {
+                    $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+                }
+            } );
+
+        } );
+    </script>
+
+{% endblock %}
+{% endblock %}

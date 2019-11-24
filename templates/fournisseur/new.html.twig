@@ -1,0 +1,349 @@
+{% extends 'base.html.twig' %}
+{% block title %} Ajouter Utilisateur{% endblock %}
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card border card-outline">
+
+                <div class="card-header border  bgdarkseagreen">
+
+                    <h3 class="card-title">
+                        <i class="fas fa-edit"></i>
+                        Fournisseur
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate','class' : 'form-group form-horizontal', 'id':'fr', 'role' : 'fr' }}) }}
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form_row(form.nomste) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                {{ form_row(form.mfste) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                {{ form_row(form.gerantste) }}
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                {{ form_row(form.adresse) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                {{ form_row(form.tel) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                {{ form_row(form.email) }}
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                {{ form_row(form.activiteste) }}
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                {{ form_row(form.password) }}
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                {{ form_row(form.confirm_password) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+
+                            <div class="form-group">
+                                {{ form_row(form.isActive) }}
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-1">
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-outline-success "><i class="fa fa-save"></i>
+                                    Enregistrer
+                                </button>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    {{ form_widget(form) }}
+                </div>
+            </div>
+
+
+            {{ form_end(form) }}
+
+
+            {#    </div>#}
+        </div>
+
+    </div><!--/.row-->
+
+
+
+
+    <!-- /.row -->
+    </div>
+
+
+    {% block javascripts %}
+
+
+
+        <script src="../../plugins/jquery/jquery.validate.js"></script>
+
+        <script type="text/javascript">
+            /*    $.validator.setDefaults( {
+                    submitHandler: function () {
+                        alert( "submitted!" );
+                    }
+                } );*/
+
+
+            $(document).ready(function () {
+                $("#fr").validate({
+
+
+                    rules: {
+
+                        'fr[nomste]': {
+                            required: true,
+                            maxlength: 50,
+                            minlength: 5
+                        },
+                        'fr[mfste]': {
+                            required: true,
+                            maxlength: 50,
+                            minlength: 12
+                        },
+                        'fr[gerantste]': {
+                            required: true,
+                            minlength: 10,
+                            maxlength: 30,
+                            // number: true
+                        },
+
+                        'fr[adresse]': {
+                            required: true,
+                            minlength: 6,
+                            maxlength: 60,
+                        },
+                        'fr[tel]': {
+                            required: true,
+                            minlength: 8,
+                            maxlength: 8,
+                        },
+
+
+                        'fr[email]': {
+                            required: true,
+                            email: true,
+                            minlength: 4,
+                            maxlength: 50,
+                        },
+
+                        'fr[activiteste]': {
+                            required: true,
+                            minlength: 5,
+                            maxlength: 50,
+                        },
+
+                        'fr[password]': {
+                            required: true,
+                            minlength: 8,
+                            maxlength: 50,
+                        },
+                        'fr[confirm_password]': {
+                            required: true,
+                            minlength: 8,
+                            maxlength: 50,
+                            equalTo: "#fr_password"
+                        },
+
+
+                    },
+                    messages: {
+                        'fr[nomste]': {
+                            required: "Veuillez renseigner le nom de société .",
+                            minlength: "Champ au moins 5 caractères.",
+                            maxlength: "Champ  au plus 50 caractères."
+                        },
+                        'fr[mfste]': {
+                            required: "Veuillez renseigner le matricule fiscale.",
+                            minlength: "Champ au moins 12 caractères.",
+                            maxlength: "Champ  au plus 50 caractères."
+                        },
+                        'fr[gerantste]': {
+                            required: "Veuillez renseigner le gérant.",
+                            minlength: "Champ au moins 10 caractères.",
+                            maxlength: "Champ  au plus 30 caractères."
+                        },
+
+                        'fr[adresse]': {
+                            required: "Veuillez renseigner l\'adresse.",
+                            minlength: "Votre nom doit faire au moins 6 caractères.",
+                            maxlength: "Votre nom doit faire au plus 60 caractères."
+                        },
+
+                        'fr[tel]': {
+                            required: "Vous devez saisir un numéro de téléphone au format 70 777 777.",
+                            minlength: "Champ  au moins 8 caractères.",
+                            maxlength: "Champ au max 8 caractères.",
+                            // regex : "Veuillez renseigner un numéro de téléphone valide"
+                            // regexphone: "test"
+                        },
+
+                        'fr[email]': {
+                            required: "Veuillez renseigner l'émail.",
+                            minlength: "Votre nom doit faire au moins 4 caractères.",
+                            maxlength: "Votre nom doit faire au plus 50 caractères.",
+                            email: "Veuillez renseigner un email valide"
+                        },
+                        'fr[activiteste]': {
+                            required: "Veuillez renseigner l'activité de société.",
+                            minlength: "Votre nom doit faire au moins 5 caractères.",
+                            maxlength: "Votre nom doit faire au plus 50 caractères.",
+
+                        },
+
+                        'fr[password]': {
+                            required: "Veuillez renseigner le mot de passe.",
+                            minlength: "Champ au moins 8 caractères.",
+                            maxlength: "Champ  au plus 50 caractères.",
+                        },
+
+                        'fr[confirm_password]': {
+                            required: "Veuillez confirmer le mot de passe.",
+                            minlength: "Champ au moins 8 caractères.",
+                            maxlength: "Champ  au plus 50 caractères.",
+                            equalTo: "Entrez le même mot de passe"
+                        },
+
+
+                    },
+                    errorElement: "em",
+                    errorPlacement: function (error, element) {
+                        // Add the `invalid-feedback` class to the error element
+                        error.addClass("invalid-feedback");
+
+                        if (element.prop("type") === "checkbox") {
+                            error.insertAfter(element.next("label"));
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).addClass("is-invalid").removeClass("is-valid");
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).addClass("is-valid").removeClass("is-invalid");
+                    }
+                });
+
+            });
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <script>
+            //***********************************//
+            // For select 2
+            //***********************************//
+            $(".select2").select2();
+
+            /*colorpicker*/
+            $('.demo').each(function () {
+                //
+                // Dear reader, it's actually very easy to initialize MiniColors. For example:
+                //
+                //  $(selector).minicolors();
+                //
+                // The way I've done it below is just for the demo, so don't get confused
+                // by it. Also, data- attributes aren't supported at this time...they're
+                // only used for this demo.
+                //
+                $(this).minicolors({
+                    control: $(this).attr('data-control') || 'hue',
+                    position: $(this).attr('data-position') || 'bottom left',
+
+                    change: function (value, opacity) {
+                        if (!value) return;
+                        if (opacity) value += ', ' + opacity;
+                        if (typeof console === 'object') {
+                            console.log(value);
+                        }
+                    },
+                    theme: 'bootstrap'
+                });
+
+            });
+            /*datwpicker*/
+            jQuery('.mydatepicker').datepicker();
+            jQuery('#datepicker-autoclose').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+            var quill = new Quill('#editor', {
+                theme: 'snow'
+            });
+
+        </script>
+    {% endblock %}
+{% endblock %}
