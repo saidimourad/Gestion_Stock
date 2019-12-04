@@ -24,19 +24,19 @@
                             <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    {{ form_row(form.nom) }}
+                                    {{ form_row(form.nom, {'attr': {'autocomplete': 'off' }}) }}
                                 </div>
                             </div>
                                 <div class="col-md-4">
 
                                 <div class="form-group">
-                                    {{ form_row(form.prenom) }}
+                                    {{ form_row(form.prenom, {'attr': {'autocomplete': 'off' }}) }}
                                 </div>
                                 </div>
                                 <div class="col-md-4">
 
                                     <div class="form-group">
-                                        {{ form_row(form.cin) }}
+                                        {{ form_row(form.cin, {'attr': {'autocomplete': 'off' }}) }}
                                     </div>
                                 </div>
 
@@ -51,14 +51,14 @@
                                 <div class="col-md-4">
 
                                     <div class="form-group">
-                                        {{ form_row(form.adresse) }}
+                                        {{ form_row(form.adresse, {'attr': {'autocomplete': 'off' }}) }}
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
 
                                     <div class="form-group">
-                                        {{ form_row(form.tel) }}
+                                        {{ form_row(form.tel, {'attr': {'autocomplete': 'off' }}) }}
 {#
                                         {{ form_row(form.tel, {'attr' : {'class' : 'form-control', 'pattern' : '[0-9]{2}[0-9]{3}[0-9]{3}'}}) }}
 #}
@@ -92,14 +92,21 @@
                                 <div class="col-md-3">
 
                                     <div class="form-group">
-                                        {{ form_row(form.email) }}
+                                        {{ form_row(form.email, {'attr': {'autocomplete': 'off' }}) }}
                                     </div>
                                 </div>
+
+
+{#
+                                {% if update ==0 %}
+#}
+
+
 
                                 <div class="col-md-3">
 
                                     <div class="form-group">
-                                        {{ form_row(form.password) }}
+                                        {{ form_row(form.password, {'attr': {'required': 'false' }}) }}
                                     </div>
                                 </div>
 
@@ -107,9 +114,14 @@
                                 <div class="col-md-3">
 
                                     <div class="form-group">
-                                        {{ form_row(form.confirm_password) }}
+                                        {{ form_row(form.confirm_password, {'attr': {'required': 'false' }}) }}
                                     </div>
                                 </div>
+
+{#
+                                {% endif %}
+#}
+
 
                                 <div class="col-md-3">
 
@@ -131,18 +143,19 @@
                                 </div>
 
 
-
-                                <div class="col-md-1">
+                                <div class="col-md-2">
 
                                     <div class="form-group">
                                         <button type="submit" class="btn  btn-outline-success "><i class="fa fa-save"></i> Enregistrer</button>
 
-
-
-
                                     </div>
                                 </div>
+                                <div class="col-md-2">
 
+                                    <div class="form-group">
+                                        <a href="{{ path('user')}}"  class="btn btn-outline-info  "><i class="fa fa-undo"></i> Annuler</a>
+                                    </div>
+                                </div>
 
                             </div>
 
@@ -211,7 +224,7 @@
                     },
                     'user[adresse]': {
                         required: true,
-                        minlength: 6,
+                        minlength: 3,
                         maxlength: 60,
                     },
                     'user[tel]': {
@@ -291,7 +304,7 @@
 
                     'user[adresse]': {
                         required: "Veuillez renseigner l\'adresse.",
-                        minlength: "Votre nom doit faire au moins 6 caractères.",
+                        minlength: "Votre nom doit faire au moins 3 caractères.",
                         maxlength: "Votre nom doit faire au plus 60 caractères."
                     },
 

@@ -154,13 +154,13 @@
 
                                                     <td>
                                                         <a class="btn btn-default btn-sm px-2 text-blue"
-                                                           href={{ path('affecterchb', {'action':1| encode, 'id': (chefb.id+111985)| encode}) }} data-toggle="tooltip"
+                                                           href={{ path('affecterchb', {'action':1| encode, 'id': (chefb.id)| encode}) }} data-toggle="tooltip"
                                                            data-placement="top" title="Modifier">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
 
                                                         <form method="post" style="display: inline-block "
-                                                              action="{{ path('affecterchb', {'action':2| encode, 'id': (chefb.id+111985)| encode}) }}"
+                                                              action="{{ path('affecterchb', {'action':2| encode, 'id': (chefb.id)| encode}) }}"
                                                               onsubmit="return confirm('Voulez-vous vraiment supprimer ?')">
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token"

@@ -51,7 +51,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                {{ form_row(form.designation, {'attr' : {'class' : 'form-control'}}) }}
+                                                {{ form_row(form.designation, {'attr' : {'class' : 'form-control','autocomplete': 'off'}}) }}
 
                                             </div>
                                         </div>
@@ -124,13 +124,13 @@
 
                                                     <td class="row justify-content-center align-items-center">
 
-                                                        <a class=" btn btn-default btn-sm px-2  text-blue" href={{ path('region', {'action':1| encode, 'id': (region.id+111985)| encode}) }}" data-toggle="tooltip"
+                                                        <a class=" btn btn-default btn-sm px-2  text-blue" href={{ path('region', {'action':1| encode, 'id': (region.id)| encode}) }}" data-toggle="tooltip"
                                                         data-placement="top" title="Modifier">
                                                         <i class="fas fa-pencil-alt"></i>
                                                         </a>
 
                                                         <form method="post" style="display: inline-block "
-                                                              action="{{ path('region', {'action':2| encode, 'id': (region.id+111985)| encode}) }}"
+                                                              action="{{ path('region', {'action':2| encode, 'id': (region.id)| encode}) }}"
                                                               onsubmit="return confirm('Voulez-vous vraiment supprimer ?')">
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token"

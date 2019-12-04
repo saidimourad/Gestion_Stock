@@ -10,7 +10,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Acceuil</a></li>
                             <li class="breadcrumb-item active">Bon de Commande</li>
                         </ol>
                     </div>
@@ -132,11 +132,11 @@
                                 <div class="col-12">
                                     <a href="{{ path('mescommande')}}"  class="btn btn-outline-info  "><i class="fa fa-undo"></i> Vers Liste</a>
                                     {% if (is_granted('ROLE_CHEFBUREAU'))%}
-                                    <a href="{{ path('updatecommande', { 'id': entity.id }) }}" class="btn btn-outline-success float-right" >
+                                    <a href="{{ path('updatecommande', { 'id': entity.id | encode}) }}" class="btn btn-outline-success float-right" >
                                         <i class="far fa-credit-card"></i> Mettre à jours</a>
                                     {% endif %}
 
-                                    <a href="{{ path('updatecommande', { 'id': entity.id }) }}" target="_blank" class="btn btn-outline-primary float-right" style="margin-right: 5px;" >
+                                    <a href="{{ path('imprimercommande', { 'id': entity.id | encode}) }}" target="_blank" class="btn btn-outline-primary float-right" style="margin-right: 5px;" >
                                         <i class="fas fa-download"></i> Generate PDF</a>
                                 </div>
                             </div>

@@ -60,10 +60,10 @@
                                                            id="min" type="text"
                                                            autocomplete="off" data-inputmask="'alias': 'dd/mm/yyyy'">
                                                     <div class="input-group-prepend">
-                                                           <span class="input-group-text">
+                                                        {#   <span class="input-group-text">
 
                                                         <img src="../../plugins/jquery-ui/img/calendar-blue.gif">
-                                                       </span>
+                                                       </span>#}
                                                     </div>
                                                 </div>
                                             </div>
@@ -76,11 +76,11 @@
                                                            id="max" type="text"
                                                            autocomplete="off" data-inputmask="'alias': 'dd/mm/yyyy'">
                                                     <div class="input-group-prepend">
-                                        <span class="input-group-text ">
+                                    {#    <span class="input-group-text ">
 
                                          <img src="../../plugins/jquery-ui/img/calendar-blue.gif">
                                     </span>
-
+#}
                                                     </div>
                                                 </div>
                                             </div>
@@ -154,7 +154,7 @@
                                                     <td>
                                                         {% if (is_granted('ROLE_MAGASINIER')) %}
                                                             <a class=" btn btn-default btn-sm px-2  text-blue"
-                                                               href="/entree/update/{{ (item.id+111985)| encode }}"
+                                                               href="/entree/update/{{ (item.id)| encode }}"
                                                                data-toggle="tooltip"
                                                                data-placement="top" title="Modifier">
                                                                 <i class="fas fa-pencil-alt"></i>
@@ -162,7 +162,7 @@
                                                         {% endif %}
 
                                                         <a class=" btn btn-default btn-sm px-2  text-blue"
-                                                           href="/entree/show/{{ (item.id+111985)| encode }}"
+                                                           href="/entree/show/{{ (item.id)| encode }}"
                                                            data-toggle="tooltip" data-placement="top"
                                                            title="Détail">
                                                             <i class="fas fa-search-plus"></i>
@@ -171,7 +171,7 @@
                                                         {% if (is_granted('ROLE_MAGASINIER')) %}
 
                                                             <form method="post" style="display: inline-block "
-                                                                  action="{{ path('entree_delete', {'id': (item.id+111985)| encode}) }}"
+                                                                  action="{{ path('entree_delete', {'id': (item.id)| encode}) }}"
                                                                   onsubmit="return confirm('Voulez-vous vraiment supprimer ?')">
                                                                 <input type="hidden" name="_method" value="DELETE">
                                                                 <input type="hidden" name="_token"
@@ -186,7 +186,7 @@
 
                                                         {% endif %}
                                                         <a class=" btn btn-default btn-sm px-2  text-blue"
-                                                           href="entree/imprimer/{{ (item.id+111985)| encode }}"
+                                                           href="entree/imprimer/{{ (item.id)| encode }}"
                                                            target="_blank" data-toggle="tooltip"
                                                            data-placement="top" title="Imprimer">
                                                             <i class="fas fa-print"></i>
@@ -297,7 +297,7 @@
             $("#min").datepicker({
                 dateFormat: "dd/mm/yy",
 
-                //  showOn: "button",
+                showOn: "button",
                 showAnim: 'slideDown',
                 showButtonPanel: true,
                 autoSize: true,
@@ -305,6 +305,8 @@
                 // buttonImageOnly: true,
                 // buttonText: "...",
                 //  buttonImage: "../../plugins/jquery-ui/img/calendar-blue.gif",
+                buttonImage: "../../plugins/jquery-ui/img/calendar-blue.gif",
+
                 closeText: "Vider",
 
 
@@ -320,10 +322,11 @@
 
             $("#max").datepicker({
                 dateFormat: "dd/mm/yy",
-                //showOn: "button",
+                showOn: "button",
                 showAnim: 'slideDown',
                 showButtonPanel: true,
                 autoSize: true,
+                buttonImage: "../../plugins/jquery-ui/img/calendar-blue.gif",
 
                 // buttonImage: "../../plugins/jquery-ui/img/calendar-blue.gif",
                 closeText: "Vider",
