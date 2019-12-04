@@ -38,7 +38,7 @@ class UserFixtures extends Fixture
         $user->setAdresse('sousse');
         $user->setPassword($this->passwordEncoder->encodePassword(
             $user,
-            '123456'
+            '123456789'
         ));
         $manager->persist($user);
 

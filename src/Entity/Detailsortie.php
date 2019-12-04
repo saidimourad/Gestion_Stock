@@ -32,7 +32,7 @@ class Detailsortie
 
     /**
      * @ORM\Column(type="float")
-     * @Assert\NotBlank(message="champ obligatoire")
+     * @Assert\NotBlank(message="champ quantité obligatoire")
      */
     private $qtesortie;
 

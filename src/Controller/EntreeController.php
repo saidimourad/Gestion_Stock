@@ -2,18 +2,16 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
 use App\Entity\Commande;
 use App\Entity\Entree;
 use App\Entity\Magasin;
-use App\Entity\User;
 use App\Form\EntreeType;
-use App\Entity\Detailentree;
 use App\Form\EntreeUpdateType;
 use App\Repository\CommandeRepository;
 use App\Repository\DetailentreeRepository;
 use App\Repository\EntreeRepository;
 use App\Repository\MagasinRepository;
+use App\Service\decodeID;
 use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -77,7 +75,7 @@ class EntreeController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexupdateAction(Request $request, $id, EntreeRepository $entreeRepository)
+    public function indexupdateAction(Request $request, $id, EntreeRepository $entreeRepository,decodeID $decodeID)
     {
 
         $rs = $entreeRepository->findMagasinEncours($this->getUser()->getId());
@@ -97,7 +95,7 @@ class EntreeController extends AbstractController
              *
              */
 
-            $entree = $em->getRepository(Entree::class)->findOneBy(['id' => (base64_decode($id)-111985)]);
+            $entree = $em->getRepository(Entree::class)->findOneBy(['id' => (base64_decode($id)/$decodeID->getDecode())]);
             $orignalDetails = new ArrayCollection();
             foreach ($entree->getDetailentrees() as $detail) {
                 $orignalDetails->add($detail);
@@ -116,7 +114,7 @@ class EntreeController extends AbstractController
                 $em->persist($entree);
                 $em->flush();
                 $this->addFlash('success', "Opération de mise à jours avec succées");
-                return $this->redirect($this->generateUrl('showentree', array('id' => $id)));
+                return $this->redirect($this->generateUrl('showentree', array('id' => (base64_encode($entree->getId()*$decodeID->getDecode())))));
             }
 
 
@@ -136,9 +134,6 @@ class EntreeController extends AbstractController
      */
     public function indexActionNew(Request $request, CommandeRepository $commandeRepository)
     {
-        //  $user = $this->getUser();
-        //  $userId = $user->getId();
-        //  echo $userId;
 
         $rs = $commandeRepository->selectCommandeByMG($this->getUser()->getId());
         $commande = new Commande();
@@ -167,9 +162,16 @@ class EntreeController extends AbstractController
    * @param Request $request
    * @return \Symfony\Component\HttpFoundation\Response
 */
-    public function indexActioncreates(Request $request, EntreeRepository $entreeRepository , MagasinRepository $magasinRepository)
+    public function indexActioncreates(Request $request, EntreeRepository $entreeRepository , MagasinRepository $magasinRepository,decodeID $decodeID)
 
     {
+
+
+
+
+
+
+
         $entree = new Entree();
         $rep = $this->getDoctrine()->getRepository(Commande::class);
         $form1 = $this->createForm(EntreeType::class, $entree);
@@ -212,32 +214,42 @@ class EntreeController extends AbstractController
         $form1->handleRequest($request);
         $form2->handleRequest($request);
 
-        if ($form1->isSubmitted() && $form1->isValid()) {
-            $entree = $form1->getData();
-            $commande = $form2->getData();
-            //  dump($commande);
-            $idcommande = $entree->getCommande()->getId();
-            $commande = $rep->findOneBy(['id' => $idcommande]);
-            $commande->setIsLivre(1);
-            $commande->setDatelivraison(new \DateTime());;
-            $em = $this->getDoctrine()->getManager();
-            $entree->setEntuser($this->getUser());
-            $entree->setMagasin($magasin);
-            $entree->setRefEntree($entreeRepository->maxid() + 1);
-            $entree->setDateEntree(new \DateTime());
-            //$commande->setDatelivraison(new \DateTime());
-            $em->persist($entree);
-            $em->flush();
-            $em->persist($commande);
-            $em->flush();
-            $this->addFlash('success', "Opération d'ajout avec succées");
+     /*   if (!isset($_POST["detailentrees"]) ) {
 
-            return $this->redirect($this->generateUrl('showentree', array('id' => (base64_encode($entree->getId()+111985)))));
+            $message= " Manque détail ";
+            echo '<script> alert("'.$message.'")</script>';
         }
-        return $this->render('entree/new.html.twig', ['form' => $form1->createView()]);
+        else {*/
 
 
-    }
+            if ($form1->isSubmitted() && $form1->isValid()) {
+                $entree = $form1->getData();
+                $commande = $form2->getData();
+                //  dump($commande);
+                $idcommande = $entree->getCommande()->getId();
+                $commande = $rep->findOneBy(['id' => $idcommande]);
+                $commande->setIsLivre(1);
+                $commande->setDatelivraison(new \DateTime());;
+                $em = $this->getDoctrine()->getManager();
+                $entree->setEntuser($this->getUser());
+                $entree->setMagasin($magasin);
+                $entree->setRefEntree($entreeRepository->maxid() + 1);
+                $entree->setDateEntree(new \DateTime());
+                //$commande->setDatelivraison(new \DateTime());
+                $em->persist($entree);
+                $em->flush();
+                $em->persist($commande);
+                $em->flush();
+                $this->addFlash('success', "Opération d'ajout avec succées");
+
+                return $this->redirect($this->generateUrl('showentree', array('id' => (base64_encode($entree->getId() * $decodeID->getDecode())))));
+            }
+        /*}*/
+
+
+            return $this->render('entree/new.html.twig', ['form' => $form1->createView()]);
+         }
+    //}
 /**
  *
  * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') or is_granted('ROLE_MAGASINIER')")
@@ -246,7 +258,7 @@ class EntreeController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
 
-public function showAction($id,  DetailentreeRepository $detailRepository, EntreeRepository $entreeRepository)
+public function showAction($id,  DetailentreeRepository $detailRepository, EntreeRepository $entreeRepository,decodeID $decodeID)
 {
     //$id = (base64_decode($id) - 111985);
     $em = $this->getDoctrine()->getManager();
@@ -262,9 +274,9 @@ public function showAction($id,  DetailentreeRepository $detailRepository, Entre
 
         } else {
 
-            $entity = $em->getRepository(Entree::class)->find((base64_decode($id) - 111985));
-            $ar_entrees = $detailRepository->search((base64_decode($id) - 111985));
-            $somme = $detailRepository->sommeEntree((base64_decode($id) - 111985));
+            $entity = $em->getRepository(Entree::class)->find(base64_decode($id)/$decodeID->getDecode());
+            $ar_entrees = $detailRepository->search(base64_decode($id)/$decodeID->getDecode());
+            $somme = $detailRepository->sommeEntree(base64_decode($id)/$decodeID->getDecode());
 
             if (!$entity) {
 
@@ -286,9 +298,9 @@ public function showAction($id,  DetailentreeRepository $detailRepository, Entre
         }
     } elseif ($roles['0'] == 'ROLE_ADMIN' or $roles['0'] == 'ROLE_DIRECTEUR') {
 
-        $entity = $em->getRepository(Entree::class)->find((base64_decode($id) - 111985));
-        $ar_entrees = $detailRepository->search((base64_decode($id) - 111985));
-        $somme = $detailRepository->sommeEntree((base64_decode($id) - 111985));
+        $entity = $em->getRepository(Entree::class)->find(base64_decode($id)/$decodeID->getDecode());
+        $ar_entrees = $detailRepository->search(base64_decode($id)/$decodeID->getDecode());
+        $somme = $detailRepository->sommeEntree(base64_decode($id)/$decodeID->getDecode());
 
         foreach ($somme as $key => $value) {
             $somme = $value;
@@ -310,10 +322,10 @@ public function showAction($id,  DetailentreeRepository $detailRepository, Entre
      * @return \Symfony\Component\HttpFoundation\Response
      */
 
-    public function ImpAction($id,  DetailentreeRepository $detailRepository, EntreeRepository $entreeRepository)
+    public function ImpAction($id,  DetailentreeRepository $detailRepository, EntreeRepository $entreeRepository,decodeID $decodeID)
     {
 
-        $id=(base64_decode($id)-111985);
+        $id=(base64_decode($id)/$decodeID->getDecode());
         $em = $this->getDoctrine()->getManager();
         $roles=$this->getUser()->getRoles();
         if($roles['0']=='ROLE_MAGASINIER') {
@@ -387,13 +399,13 @@ public function showAction($id,  DetailentreeRepository $detailRepository, Entre
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') or is_granted('ROLE_MAGASINIER')")
      * @Route("/entree_delete/{id}", name="entree_delete", methods="DELETE|POST")
      */
-    public function supprimer( Request $request,$id )
+    public function supprimer( Request $request,$id,decodeID $decodeID )
     {
 
         $em = $this->getDoctrine()->getManager();
         $repEntree = $this->getDoctrine()->getRepository(Entree::class);
         $repCommande = $this->getDoctrine()->getRepository(Commande::class);
-        $entree = $repEntree->findOneBy(['id' => (base64_decode($id)-111985)]);
+        $entree = $repEntree->findOneBy(['id' => base64_decode($id)/$decodeID->getDecode()]);
 
         if (!$entree) {
             throw $this->createNotFoundException('Enregistrement introuvable');

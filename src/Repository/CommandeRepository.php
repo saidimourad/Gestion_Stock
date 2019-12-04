@@ -78,7 +78,7 @@ class CommandeRepository extends ServiceEntityRepository
 
         $query = $entityManager->createQuery(
 
-            'SELECT cmd from App\Entity\Commande cmd  , App\Entity\User u, App\Entity\AnneeScolaire an   WHERE cmd.userfr =u.id  and u.id = :id and an.id = cmd.anneeScolaire  and an.actif=1 and an.encours=1') ;
+            'SELECT cmd from App\Entity\Commande cmd  , App\Entity\User u, App\Entity\AnneeScolaire an   WHERE cmd.userfr =u.id  and u.id = :id and an.id = cmd.anneeScolaire and cmd.isValid=1 or cmd.isValid IS NULL   and an.actif=1 and an.encours=1') ;
 
         $query->setParameter('id', $id);
         return $query->execute();

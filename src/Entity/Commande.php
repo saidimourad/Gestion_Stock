@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommandeRepository")
@@ -34,7 +35,9 @@ class Commande
     private $userchu;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Lingecommande", mappedBy="commande", fetch="EXTRA_LAZY",orphanRemoval=true,  cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Lingecommande", mappedBy="commande", fetch="EXTRA_LAZY",orphanRemoval=true, cascade={"remove", "persist"})
+     * @Assert\Valid()
+     *@Assert\NotBlank(message="Détail  obligatoire")
      */
     private $lingecommandes;
 
@@ -74,7 +77,7 @@ class Commande
     private $datelivraison;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Entree", mappedBy="commande" )
+     * @ORM\OneToMany(targetEntity="App\Entity\Entree", mappedBy="commande" , cascade={"remove", "persist"})
      */
     private $entrees;
 

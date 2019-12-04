@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Repository\AffecterChefuniteRepository;
+use App\Service\decodeID;
 
 
 
@@ -21,24 +22,15 @@ class AffecterMagasinierController extends AbstractController
      * @Route("/magasinier/{action}/{id}", name="affectermagasinier")
      */
 
-    public function index(Request $request, $action=0, $id=0,AffecterChefuniteRepository $affchu )
+    public function index(Request $request, $action=0, $id=0,AffecterChefuniteRepository $affchu,decodeID $decodeID )
     {
 
-      /*  $roles=$this->getUser()->getRoles();
-        if (  $roles['0']=='ROLE_CHEFUNITE') {
-            $rs = $affchu->findAffChefU($this->getUser()->getId());
-            if (!$rs) {
-                $message = "Vérifier si vous êtes affecter à cette année";
-                return $this->render('security/500.html.twig', array(
-                    'message' => $message));
-            }
-        }*/
 
         $em = $this->getDoctrine()->getManager();
         $rep = $this->getDoctrine()->getRepository(AffecterMagasinier::class);
         $magasin = new AffecterMagasinier();
         if ((base64_decode($action)) > 0)
-        { $magasin = $rep->findOneBy(['id' => (base64_decode($id)-111985)]);
+        { $magasin = $rep->findOneBy(['id' => (base64_decode($id)/$decodeID->getDecode())]);
             if(base64_decode($action) > 1)
             {
                 if ($this->isCsrfTokenValid('delete'.$magasin->getId(), $request->request->get('_token'))) {

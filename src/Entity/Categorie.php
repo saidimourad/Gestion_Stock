@@ -31,8 +31,9 @@ class Categorie
     private $nom_cat;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="categorie" , cascade={"remove", "persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="categorie" )
      */
+/*@ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="categorie" , cascade={"remove", "persist"})*/
     private $articles;
 
     public function __construct()

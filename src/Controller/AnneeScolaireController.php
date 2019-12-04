@@ -8,6 +8,7 @@ use App\Repository\AnneeScolaireRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\Service\decodeID;
 
 
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +22,7 @@ class AnneeScolaireController extends AbstractController
      * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_DIRECTEUR')")
      * @Route("/annee_scolaire/{action}/{id}", name="annee_scolaire")
      */
-    public function index(Request $request, $action=0, $id=0 )
+    public function index(Request $request, $action=0, $id=0 ,decodeID $decodeID)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -30,7 +31,7 @@ class AnneeScolaireController extends AbstractController
         if ((base64_decode($action)) > 0)
         {
             //$annee = $rep->findOneBy(['id' => (base64_decode($id)-111985)]);
-            $annee = $rep->findOneBy(['id' => (base64_decode($id)-111985)]);
+            $annee = $rep->findOneBy(['id' => (base64_decode($id)/$decodeID->getDecode())]);
 
             if(base64_decode($action) > 1)
             {
@@ -72,9 +73,9 @@ class AnneeScolaireController extends AbstractController
      *
      * @Route("/anneescolaire/encours/{id}", name="anneescolaire_encours")
      */
-    public function encour($id=0, AnneeScolaireRepository $encoursReposotory)
+    public function encour($id=0, AnneeScolaireRepository $encoursReposotory,decodeID $decodeID)
     {
-        $encoursReposotory->rendreencours((base64_decode($id)-111985));
+        $encoursReposotory->rendreencours(base64_decode($id)/$decodeID->getDecode());
 
 
         return $this->redirectToRoute('annee_scolaire');
@@ -88,9 +89,9 @@ class AnneeScolaireController extends AbstractController
      *
      * @Route("/anneescolaire/activer/{id}", name="activer_anneescolaire")
      */
-    public function activer( $id=0, AnneeScolaireRepository $activerReposotory)
+    public function activer( $id=0, AnneeScolaireRepository $activerReposotory,decodeID $decodeID)
     {
-        $activerReposotory->activer_annee((base64_decode($id)-111985));
+        $activerReposotory->activer_annee(base64_decode($id)/$decodeID->getDecode());
 
 
         return $this->redirectToRoute('annee_scolaire');
@@ -103,9 +104,9 @@ class AnneeScolaireController extends AbstractController
      *
      * @Route("/anneescolaire/desactiver/{id}", name="desactiver_anneescolaire")
      */
-    public function desactiver( $id=0, AnneeScolaireRepository $activerReposotory)
+    public function desactiver( $id=0, AnneeScolaireRepository $activerReposotory,decodeID $decodeID)
     {
-        $activerReposotory->deactiver_annee((base64_decode($id)-111985));
+        $activerReposotory->deactiver_annee(base64_decode($id)/$decodeID->getDecode());
 
 
         return $this->redirectToRoute('annee_scolaire');

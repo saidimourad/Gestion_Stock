@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\Service\decodeID;
 
 
 class RepasController extends AbstractController
@@ -21,14 +22,14 @@ class RepasController extends AbstractController
      * @Route("/repas/{action}/{id}", name="repas")
      *
      */
-    public function index(Request $request, $action = 0, $id = 0)
+    public function index(Request $request, $action = 0, $id = 0,decodeID $decodeID)
     {
 
         $em = $this->getDoctrine()->getManager();
         $rep = $this->getDoctrine()->getRepository(Repas::class);
         $repas = new Repas();
         if ((base64_decode($action)) > 0) {
-            $repas = $rep->findOneBy(['id' => (base64_decode($id) - 111985)]);
+            $repas = $rep->findOneBy(['id' => (base64_decode($id)/$decodeID->getDecode())]);
             if (base64_decode($action) > 1) {
                 if ($this->isCsrfTokenValid('delete' . $repas->getId(), $request->request->get('_token'))) {
                     $em->remove($repas);

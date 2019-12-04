@@ -9,6 +9,7 @@ use App\Form\SortieType;
 use App\Repository\DetailsortieRepository;
 use App\Repository\MagasinRepository;
 use App\Repository\SortieRepository;
+use App\Service\decodeID;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,14 +72,14 @@ class SortieController extends AbstractController
 
     }
 
-
+/*
     /**
      * @Security("is_granted('ROLE_MAGASINIER')")
      * @Route("addsorties", name="addsorties")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexActioncreates(Request $request, SortieRepository $sortieRepository, MagasinRepository $magasinRepository)
+   /* public function indexActioncreates(Request $request, SortieRepository $sortieRepository, MagasinRepository $magasinRepository)
     {
 
         $form = $this->createForm(SortieType::class);
@@ -137,7 +138,7 @@ class SortieController extends AbstractController
             }
         }
         return $this->render('sortie/new.html.twig', ['form' => $form->createView()]);
-    }
+    }*/
 
     /**
      *  @Security("is_granted('ROLE_MAGASINIER')")
@@ -145,7 +146,7 @@ class SortieController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexActioncreatess(Request $request, SortieRepository $sortieRepository, MagasinRepository $magasinRepository)
+    public function indexActioncreatess(Request $request, SortieRepository $sortieRepository, MagasinRepository $magasinRepository,decodeID $decodeID)
     {
         $form = $this->createForm(SortieType::class);
         $rs = $sortieRepository->findMagasinEncours($this->getUser()->getId());
@@ -196,7 +197,7 @@ class SortieController extends AbstractController
                     $em->persist($sortie);
                     $em->flush();
                     $this->addFlash('success', "Opération d'ajout avec succées");
-                    return $this->redirect($this->generateUrl('showsortie', array('id' => (base64_encode($sortie->getId()+111985)))));
+                    return $this->redirect($this->generateUrl('showsortie', array('id' => (base64_encode($sortie->getId()*$decodeID->getDecode())))));
                 }
             }
         }
@@ -212,7 +213,7 @@ class SortieController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
 
-    public function showAction($id, DetailsortieRepository $detailRepository, SortieRepository $sortieRepository)
+    public function showAction($id, DetailsortieRepository $detailRepository, SortieRepository $sortieRepository,decodeID $decodeID)
     {
         $roles=$this->getUser()->getRoles();
         $em = $this->getDoctrine()->getManager();
@@ -228,12 +229,12 @@ class SortieController extends AbstractController
 
             } else {
 
-                $entity = $em->getRepository(Sortie::class)->find((base64_decode($id)-111985));
-                $ar_sorties = $detailRepository->search((base64_decode($id)-111985));
+                $entity = $em->getRepository(Sortie::class)->find(base64_decode($id)/$decodeID->getDecode());
+                $ar_sorties = $detailRepository->search(base64_decode($id)/$decodeID->getDecode());
 
                 if (!$entity) {
 
-                    $message = "Détail n existe pas";
+                    $message = "Détail n'\existe pas";
                     return $this->render('security/500.html.twig', array(
                         'message' => $message));
 
@@ -251,8 +252,8 @@ class SortieController extends AbstractController
         elseif ($roles['0']=='ROLE_ADMIN' or $roles['0']=='ROLE_DIRECTEUR') {
 
 
-            $entity = $em->getRepository(Sortie::class)->find((base64_decode($id)-111985));
-            $ar_sorties = $detailRepository->search((base64_decode($id)-111985));
+            $entity = $em->getRepository(Sortie::class)->find(base64_decode($id)/$decodeID->getDecode());
+            $ar_sorties = $detailRepository->search(base64_decode($id)/$decodeID->getDecode());
             return $this->render('sortie/show.html.twig', array(
                 'entity' => $entity,
                 'sorties' => $ar_sorties,
@@ -268,7 +269,7 @@ class SortieController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request, $id, SortieRepository $sortieRepository)
+    public function indexAction(Request $request, $id, SortieRepository $sortieRepository,decodeID $decodeID)
     {
 
         $rs = $sortieRepository->findMagasinEncours($this->getUser()->getId());
@@ -288,7 +289,7 @@ class SortieController extends AbstractController
              *
              */
 
-            $sortie = $em->getRepository(Sortie::class)->findOneBy(['id' => (base64_decode($id)-111985)]);
+            $sortie = $em->getRepository(Sortie::class)->findOneBy(['id' => (base64_decode($id)/$decodeID->getDecode())]);
 
             //   $user->setFullname('OverSeas media');
             // save the records that are in the database first to compare them with the new one the user sent
@@ -348,7 +349,7 @@ class SortieController extends AbstractController
                     $em->persist($sortie);
                     $em->flush();
                     $this->addFlash('success', "Opération de mise à jours avec succées");
-                    return $this->redirect($this->generateUrl('showsortie', array('id' => $id)));
+                    return $this->redirect($this->generateUrl('showsortie', array('id' => (base64_encode($sortie->getId()*$decodeID->getDecode())))));
                 //}
             }
 
@@ -372,9 +373,10 @@ class SortieController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
 
-    public function ImpAction($id,  DetailsortieRepository $detailRepository, SortieRepository $sortieRepository)
+    public function ImpAction($id,  DetailsortieRepository $detailRepository, SortieRepository $sortieRepository,decodeID $decodeID)
     {
 
+        $id=(base64_decode($id)/$decodeID->getDecode());
 
         $roles=$this->getUser()->getRoles();
         $em = $this->getDoctrine()->getManager();
@@ -392,8 +394,8 @@ class SortieController extends AbstractController
 
 
 
-                $entity = $em->getRepository(Sortie::class)->find((base64_decode($id)-111985));
-                $ar_sorties = $detailRepository->search((base64_decode($id)-111985));
+                $entity = $em->getRepository(Sortie::class)->find(($id));
+                $ar_sorties = $detailRepository->search(($id));
 
 
 
@@ -411,8 +413,8 @@ class SortieController extends AbstractController
         elseif ($roles['0']=='ROLE_ADMIN' or $roles['0']=='ROLE_DIRECTEUR') {
 
 
-            $entity = $em->getRepository(Sortie::class)->find((base64_decode($id)-111985));
-            $ar_sorties = $detailRepository->search((base64_decode($id)-111985));
+            $entity = $em->getRepository(Sortie::class)->find(($id));
+            $ar_sorties = $detailRepository->search(($id));
 
         }
 
@@ -467,12 +469,12 @@ class SortieController extends AbstractController
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') or is_granted('ROLE_MAGASINIER')")
      * @Route("/sortie_delete/{id}", name="sortie_delete" , methods="DELETE|POST")
      */
-    public function supprimer(Request $request, $id )
+    public function supprimer(Request $request, $id,decodeID $decodeID )
     {
 
         $em = $this->getDoctrine()->getManager();
         $rep = $this->getDoctrine()->getRepository(Sortie::class);
-        $entity = $rep->findOneBy(['id' => (base64_decode($id)-111985)]);
+        $entity = $rep->findOneBy(['id' => (base64_decode($id)/$decodeID->getDecode())]);
         if (!$entity) {
             throw $this->createNotFoundException('Enregistrement introuvable');
             return new Response('not valid');
@@ -568,11 +570,7 @@ class SortieController extends AbstractController
 
     public function searchAction(Request $request, SortieRepository $sortieRepository)
     {
-        //$em = $this->getDoctrine()->getManager();
-        //  $requestString = $request->get('q');
-        // $posts=new Article();
-        // $posts =  $em->getRepository(Article::class)->findOneBy(['id' => $requestString]);
-        //SortieRepository $sortieRepository;
+
         $qtes = floatval($request->get('q'));
 
 
@@ -619,107 +617,6 @@ class SortieController extends AbstractController
 
 
 
-      //  find($requestString);
-       /// if(!$posts) {
-          ///  $result['posts']['error'] = "Post Not found ";
-        ///} else {
-          //  $result['posts'] = $this->getRealEntities($posts);
-           // foreach ($posts as $post){
-           ///     $list[$posts->getId()]= [$posts->getNomArt(),$posts->getUnite()];
-          // }
-            /// $result=$list;
-
-        ///}
-        ///return new Response(json_encode($result));
-    ///}
-    public function getRealEntities( $posts){
-        foreach ($posts as $posts){
-            $realEntities[$posts->getId()] = [$posts->getNomArt(),$posts->getUnite()];
-        }
-        return $realEntities;
-    }
-
-   /* public function ajaxGetProductsAction(Request $request)
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-
-        // This is optional.
-        // Only include it if the function is reserved for ajax calls only.
-        if (!$request->isXmlHttpRequest()) {
-            return new JsonResponse(array(
-                'status' => 'Error',
-                'message' => 'Error'),
-                400);
-        }
-
-        if(isset($request->request))
-        {
-
-            // Get data from ajax
-            $template_id = $request->request->get('template_id');
-
-            // Check if the data is integer
-            // I can do this because I know that I am sending the ID of a template.
-            // However, similar tests should be performed with other types of data
-            // to ensure that the data has not been tampered with
-            // Never trust client side data)
-            $template_id = intval($template_id);
-
-            if ($template_id == 0)
-            {
-                // You can customize error messages
-                // However keep in mind that this data is visible client-side
-                // You shouldn't give out clues to what went wrong to potential attackers
-                return new JsonResponse(array(
-                    'status' => 'Error',
-                    'message' => 'Error'),
-                    400);
-            }
-
-            // Check that the template object really exists and fetch it
-            $templateRepository = $entityManager->getRepository('PinkGeekBundle:Template');
-            $template = $templateRepository->findOneBy(array(
-                'id' => $template_id
-            ));
-
-            if ($template === null)
-            {
-                // Looks like something went wrong
-                return new JsonResponse(array(
-                    'status' => 'Error',
-                    'message' => 'Error'),
-                    400);
-            }
-
-            // All the test were perfomed, time to handle the data and perform the request
-            // Which in our case means retriving the products for
-            $products = $template->getProducts();
-
-            // Transform data to whatever form is needed for the client side
-            // In my case, I need an array with names and ids
-
-            $products_array = array();
-            foreach ($products as $product)
-            {
-                array_push($products_array, array(
-                    'name' => $product->getName(),
-                    'id' => $product->getId()
-                ));
-            }
-
-            // Send all this back to client
-            return new JsonResponse(array(
-                'status' => 'OK',
-                'message' => $products_array),
-                200);
-        }
-
-        // If we reach this point, it means that something went wrong
-        return new JsonResponse(array(
-            'status' => 'Error',
-            'message' => 'Error'),
-            400);
-    }*/
 
 
 }

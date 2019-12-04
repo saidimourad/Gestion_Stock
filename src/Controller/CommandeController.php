@@ -10,12 +10,15 @@ use App\Repository\AffecterChefbureauRepository;
 use App\Repository\CommandeRepository;
 use App\Repository\LingecommandeRepository;
 use App\Repository\MagasinRepository;
+use App\Service\decodeID;
+use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Repository\AffecterChefuniteRepository;
 use App\Repository\EntreeRepository;
+use Dompdf\Dompdf;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -51,7 +54,7 @@ class CommandeController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexActioncreates(Request $request, CommandeRepository $commandeRepository,AffecterChefbureauRepository $affchb)
+    public function indexActioncreates(Request $request, CommandeRepository $commandeRepository,AffecterChefbureauRepository $affchb,decodeID $decodeID)
     {
         $rs = $affchb->findAffChefB($this->getUser()->getId());
         if (!$rs) {
@@ -73,7 +76,7 @@ class CommandeController extends AbstractController
                 $em->persist($commande);
                 $em->flush();
                 $this->addFlash('success', "Opération d'ajout avec succées");
-                return $this->redirect($this->generateUrl('showcommande', array('id' => (base64_encode($commande->getId() + 111985)))));
+                return $this->redirect($this->generateUrl('showcommande', array('id' => (base64_encode($commande->getId()*$decodeID->getDecode())))));
             }
             return $this->render('commande/new.html.twig', ['form' => $form->createView()]);
 
@@ -87,7 +90,7 @@ class CommandeController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexupdateAction(Request $request, $id,  CommandeRepository $entreeRepository,AffecterChefbureauRepository $affchb)
+    public function indexupdateAction(Request $request, $id,  CommandeRepository $entreeRepository,AffecterChefbureauRepository $affchb,decodeID $decodeID)
     {
         $rs = $affchb->findAffChefB($this->getUser()->getId());
         if (!$rs) {
@@ -98,7 +101,7 @@ class CommandeController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $commande = new Commande();
-            $commande = $em->getRepository(Commande::class)->findOneBy(['id' => (base64_decode($id) - 111985)]);
+            $commande = $em->getRepository(Commande::class)->findOneBy(['id' => (base64_decode($id)/$decodeID->getDecode())]);
             //   $user->setFullname('OverSeas media');
             // save the records that are in the database first to compare them with the new one the user sent
             // make sure this line comes before the $form->handleRequest();
@@ -120,7 +123,7 @@ class CommandeController extends AbstractController
                 $em->persist($commande);
                 $em->flush();
                 $this->addFlash('success', "Opération de mise à jours avec succées");
-                return $this->redirect($this->generateUrl('showcommande', array('id' => $id)));
+                return $this->redirect($this->generateUrl('showcommande', array('id' => (base64_encode($commande->getId()*$decodeID->getDecode())))));
             }
             // replace this example code with whatever you need
             return $this->render('commande/update.html.twig', [
@@ -199,15 +202,15 @@ class CommandeController extends AbstractController
      *  @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') or is_granted('ROLE_CHEFUNITE')")
      * @Route("/validercommande/{id}", name="validercommande")
      */
-    public function validercommande(CommandeRepository $commandeRepository, $id, LingecommandeRepository $lingecommandeRepository,Request $request)
+    public function validercommande(CommandeRepository $commandeRepository, $id, LingecommandeRepository $lingecommandeRepository,Request $request,decodeID $decodeID)
     {
 
        // $form = $this->createForm(ValidCommandeType::class);
 
 
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository(Commande::class)->find((base64_decode($id)-111985));
-        $ar_entrees = $lingecommandeRepository->search((base64_decode($id)-111985));
+        $entity = $em->getRepository(Commande::class)->find(base64_decode($id)/$decodeID->getDecode());
+        $ar_entrees = $lingecommandeRepository->search(base64_decode($id)/$decodeID->getDecode());
         // $somme = $lingecommandeRepository->sommeEntree($id);
 
         if (!$entity) {
@@ -218,7 +221,7 @@ class CommandeController extends AbstractController
 
         }
 
-        $entity = $em->getRepository(Commande::class)->findOneBy(['id' => (base64_decode($id)-111985)]);
+        $entity = $em->getRepository(Commande::class)->findOneBy(['id' => base64_decode($id)/$decodeID->getDecode()]);
         $form = $this->createForm(ValidCommandeType::class, $entity);
         $form->handleRequest($request);
 
@@ -238,7 +241,7 @@ class CommandeController extends AbstractController
           $em->persist($entity);
           $em->flush();
             $this->addFlash('success', "Validation avec succées");
-          return $this->redirect($this->generateUrl('showcommande', array('id' => (base64_encode($entity->getId()+111985)))));
+          return $this->redirect($this->generateUrl('showcommande', array('id' => (base64_encode($entity->getId()*$decodeID->getDecode())))));
 
       }
 
@@ -263,14 +266,14 @@ class CommandeController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
 
-    public function showAction($id,  LingecommandeRepository $lingecommandeRepository, CommandeRepository $commandeRepository)
+    public function showAction($id,  LingecommandeRepository $lingecommandeRepository, CommandeRepository $commandeRepository,decodeID $decodeID)
     {
 
 
 
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository(Commande::class)->find((base64_decode($id)-111985));
-            $ar_entrees = $lingecommandeRepository->search((base64_decode($id)-111985));
+            $entity = $em->getRepository(Commande::class)->find(base64_decode($id)/$decodeID->getDecode());
+            $ar_entrees = $lingecommandeRepository->search(base64_decode($id)/$decodeID->getDecode());
            // $somme = $lingecommandeRepository->sommeEntree($id);
 
             if (!$entity) {
@@ -287,16 +290,78 @@ class CommandeController extends AbstractController
             ));
         }
 
-   // }
+    /**
+     *@Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') or is_granted('ROLE_CHEFUNITE')or is_granted('ROLE_MAGASINIER')or is_granted('ROLE_CHEFBUREAU') or is_granted('ROLE_FOURNISSEUR')")
+     *
+     * @Route("imprimercommande/{id}", name="imprimercommande")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+
+    public function ImpAction($id,  LingecommandeRepository $lingecommandeRepository, CommandeRepository $entreeRepository,decodeID $decodeID)
+    {
+
+/*        $id=(base64_decode($id)/$decodeID->getDecode());*/
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository(Commande::class)->find(base64_decode($id)/$decodeID->getDecode());
+        $ar_details = $lingecommandeRepository->search(base64_decode($id)/$decodeID->getDecode());
+        // $somme = $lingecommandeRepository->sommeEntree($id);
+
+        if (!$entity) {
+
+            $message = "Détail n existe pas";
+            return $this->render('security/500.html.twig', array(
+                'message' => $message));
+        }
+
+
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+
+        // Retrieve the HTML generated in our twig file
+        $html =  $this->render('commande/imprimer.html.twig', array(
+            'entity' => $entity,
+            'sorties' => $ar_details,
+            // 'somme' => $somme
+            /* 'delete_form' => $deleteForm->createView(),*/
+        ));
+
+        /*  $html = $this->renderView('default/mypdf.html.twig', [
+              'title' => "Welcome to our PDF Test"
+          ]);*/
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("benentree.pdf", [
+            "Attachment" => false
+        ]);
+
+
+
+    }
+
+    // }
 
     /**
      *@Security("is_granted('ROLE_FOURNISSEUR')")
 
      * @Route("/refusercommande/{id}", name="refusercommande")
      */
-    public function activer(CommandeRepository $commandeReposotory ,$id)
+    public function activer(CommandeRepository $commandeReposotory ,$id,decodeID $decodeID)
     {
-            $commandeReposotory->refusercommande((base64_decode($id)-111985), $this->getUser()->getId());
+            $commandeReposotory->refusercommande(base64_decode($id)/$decodeID->getDecode(), $this->getUser()->getId());
             return $this->redirectToRoute('mescommande');
     }
 
@@ -305,9 +370,9 @@ class CommandeController extends AbstractController
 
      * @Route("/acceptercommande/{id}", name="acceptercommande")
      */
-    public function desactiver( CommandeRepository $commandeReposotory, $id)
+    public function desactiver( CommandeRepository $commandeReposotory, $id,decodeID $decodeID)
     {
-            $commandeReposotory->acceptercommande((base64_decode($id)-111985), $this->getUser()->getId());
+            $commandeReposotory->acceptercommande(base64_decode($id)/$decodeID->getDecode(), $this->getUser()->getId());
             return $this->redirectToRoute('mescommande');
 
     }
@@ -318,12 +383,12 @@ class CommandeController extends AbstractController
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEUR') or is_granted('ROLE_CHEFBUREAU')")
      * @Route("/commande_delete/{id}", name="commande_delete")
      */
-    public function supprimer(int $id = 0)
+    public function supprimer($id ,decodeID $decodeID)
     {
 
         $em = $this->getDoctrine()->getManager();
         $rep = $this->getDoctrine()->getRepository(Commande::class);
-        $entity = $rep->findOneBy(['id' => $id]);
+        $entity = $rep->findOneBy(['id' => base64_decode($id)/$decodeID->getDecode()]);
 
         if (!$entity) {
             throw $this->createNotFoundException('Enregistrement introuvable');
@@ -333,7 +398,7 @@ class CommandeController extends AbstractController
 
             $em->remove($entity);
             $em->flush();
-            return $this->redirectToRoute('commande');
+            return $this->redirectToRoute('mescommande');
         }
     }
 

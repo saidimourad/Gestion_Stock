@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\FRType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Service\decodeID;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,14 +59,16 @@ class SecurityController extends AbstractController
      * @Route("/user/{action}/{id}", name="user_edit", methods="DELETE|GET|POST")
      */
 
-    public function form(User $utilisateur = null, Request $request, UserPasswordEncoderInterface $passwordEncoder, $action = 0, $id = 0)
+    public function form(User $utilisateur = null, Request $request, UserPasswordEncoderInterface $passwordEncoder, $action = 0, $id = 0,decodeID $decodeID)
     {
 
         $em = $this->getDoctrine()->getManager();
         $rep = $this->getDoctrine()->getRepository(User::class);
         $utilisateur = new User();
+        $update=0;
         if ((base64_decode($action)) > 0) {
-            $utilisateur = $rep->findOneBy(['id' => (base64_decode($id) - 111985)]);
+            $utilisateur = $rep->findOneBy(['id' => (base64_decode($id)/$decodeID->getDecode())]);
+            $update=1;
             if (base64_decode($action) > 1) {
                 if ($this->isCsrfTokenValid('delete' . $utilisateur->getId(), $request->request->get('_token'))) {
 
@@ -97,7 +100,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('user');
         }
 
-        return $this->render('user/new.html.twig', ['form' => $form->createView()]);
+        return $this->render('user/new.html.twig', ['form' => $form->createView(),'update'=>$update]);
 
     }
 
@@ -120,14 +123,14 @@ class SecurityController extends AbstractController
      * @Route("/fournisseur/{action}/{id}", name="edit_fournisseur", methods="DELETE|GET|POST")
      */
 
-    public function formFR(User $utilisateur = null, Request $request, UserPasswordEncoderInterface $passwordEncoder, $action = 0, $id = 0)
+    public function formFR(User $utilisateur = null, Request $request, UserPasswordEncoderInterface $passwordEncoder, $action = 0, $id = 0,decodeID $decodeID)
     {
 
         $em = $this->getDoctrine()->getManager();
         $rep = $this->getDoctrine()->getRepository(User::class);
         $utilisateur = new User();
         if ((base64_decode($action)) > 0) {
-            $utilisateur = $rep->findOneBy(['id' => (base64_decode($id) - 111985)]);
+            $utilisateur = $rep->findOneBy(['id' => (base64_decode($id)/$decodeID->getDecode())]);
             if (base64_decode($action) > 1) {
                 if ($this->isCsrfTokenValid('delete' . $utilisateur->getId(), $request->request->get('_token'))) {
 
@@ -166,17 +169,19 @@ class SecurityController extends AbstractController
      * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_DIRECTEUR')")
      * @Route("/user/activer/{action}/{id}", name="activeruser")
      */
-    public function activer(UserRepository $activerReposotory, $action = 0, $id = 0)
+    public function activer(UserRepository $activerReposotory, $action = 0, $id = 0,decodeID $decodeID)
     {
 
-        if ((base64_decode($action)) == 0) {
-            $activerReposotory->activer_user((base64_decode($id) - 111985));
+        if ($action == 0) {
+            $activerReposotory->activer_user((base64_decode($id)/$decodeID->getDecode()));
+            $this->addFlash('success', "Compte activer avec succées");
 
             return $this->redirectToRoute('user');
         }
 
-        if ((base64_decode($action)) == 1) {
-            $activerReposotory->activer_user((base64_decode($id) - 111985));
+        if ($action == 1) {
+            $activerReposotory->activer_user((base64_decode($id)/$decodeID->getDecode()));
+            $this->addFlash('success', "Compte activer avec succées");
 
             return $this->redirectToRoute('fournisseur');
         }
@@ -187,15 +192,22 @@ class SecurityController extends AbstractController
      * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_DIRECTEUR')")
      * @Route("/user/desactiver/{action}/{id}", name="desactiveruser")
      */
-    public function desactiver(UserRepository $activerReposotory, $action = 0, $id = 0)
+    public function desactiver(UserRepository $activerReposotory, $action = 0, $id = 0,decodeID $decodeID)
     {
-        if ((base64_decode($action)) == 0) {
-            $activerReposotory->deactiver_user((base64_decode($id) - 111985));
+/*        if ((base64_decode($action)) == 0) {*/
+            if ($action == 0) {
+
+                $activerReposotory->deactiver_user((base64_decode($id)/$decodeID->getDecode()));
+            $this->addFlash('notice', "Compte déactiver avec succées");
 
             return $this->redirectToRoute('user');
         }
-        if ((base64_decode($action)) == 1) {
-            $activerReposotory->deactiver_user((base64_decode($id) - 111985));
+/*        if ((base64_decode($action)) == 1) {*/
+        if ($action == 1) {
+
+            $activerReposotory->deactiver_user((base64_decode($id)/$decodeID->getDecode()));
+            $this->addFlash('notice', "Compte déactiver avec succées");
+
             return $this->redirectToRoute('fournisseur');
         }
     }
