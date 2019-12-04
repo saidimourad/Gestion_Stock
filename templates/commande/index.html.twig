@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    {% if commandes %}
+        <div class="row">
+        <div class="col-lg-12">
+        <div class="panel panel-default">
+        <div class="panel-body">
+        <div class="table-responsive" id="utilisateurs">
+        <div class="card-body">
+            <h5 class="card-title m-b-0">Liste des Commandes</h5>
+        </div>
+
+
+
+
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+
+                <th>Ref</th>
+                <th>Date</th>
+                <th>Annee</th>
+
+                <th>Magasin</th>
+                <th>Lancé par</th>
+                <th>Validé par</th>
+                <th>Accepté par</th>
+
+                <th>Action</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in commandes %}
+
+
+
+                <tr>
+
+                    <td>
+                        <a href="/show/{{ item.id | url_encode}}" data-toggle="tooltip" data-placement="top" title="detail">Ref{{ item.refCommande }}CMD{{ item.anneeScolaire.designation }} </a>
+                    </td>
+               {#     <td>
+                        <a href="/show/{{ item.id | url_encode}}" data-toggle="tooltip" data-placement="top" title="detail">Ref{{ item.refCommande }}CMD </a>
+                    </td>#}
+                    <td>{{ item.dateCommande|date("d/m/Y") }}</td>
+                    <td>{{ item.anneeScolaire.designation }}</td>
+                    {#<td>{{ item.anneeScolaire.designation }}</td>
+                       <td>{{ item.userchb.email }}</td>
+                      <td>{{ item.magasin.designation }}</td>#}
+                    <td>{{ item.magasin.designation }}</td>
+
+                    <td>{{ item.userchb.nom }} {{ item.userchb.prenom }}</td>
+                    <td> {% if userchu is defined  %}
+                        {{ item.userchu.nom }} {{ item.userchu.prenom }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.userfr is defined  %}
+                        {{ item.userfr.nomste }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="/update/{{ item.id }}" data-toggle="tooltip" data-placement="top" title="Update">
+                            <i class="mdi mdi-settings"></i>
+
+
+                            <a href="/show/{{ item.id }}" data-toggle="tooltip" data-placement="top" title="detail">
+                                <i class="mdi mdi-magnify-plus"></i>
+                            </a>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Delete" data-id="{{ item.id }}" class="mdi mdi-close">
+
+                                <a href="/imprimer/{{ item.id }}" target="_blank" data-toggle="tooltip" data-placement="top" title="Imprimer">
+                                    <i class="mdi mdi-printer"></i>
+                                </a>
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <p>No record to display</p>
+    {% endif %}
+    </div>
+
+    </div>
+    <a href="/newentree" class="btn btn-success float-left" >
+        <i class="fa fa-plus-square"></i> Ajouter</a>
+
+    </div>
+    </div>
+    </div><!--/.row-->
+
+
+    </div>
+{% endblock %}

@@ -1,0 +1,318 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Affecté Chef d'unité {% endblock %}
+
+{% block body %}
+
+
+
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- COLOR PALETTE -->
+            <div class="card card-default color-palette-box bgpowderblue  ">
+                <div class="card-header border  bgdarkseagreen">
+                    <h3 class="card-title">
+                        <i class="fas fa-tag"></i>
+                        Gestion des Chefs d'unité
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="card-body">
+                    <!-- Main content -->
+                    <section class="content">
+                        <div class="container-fluid">
+                            <div class="card  card-outline">
+                                <div class="card-header border  bglightblue">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-list"></i>
+                                        Affecter Chef d'unité
+
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="maximize"><i
+                                                    class="fas fa-expand"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div> <!-- /.card-body -->
+                                <div class="card-body">
+
+
+                                    {{ form_start(form, {'attr': {'novalidate': 'novalidate','class' : 'form-group form-horizontal', 'id':'affchunite' }}) }}
+
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                {{ form_row(form.user, {'label' : 'Chef d"unité', 'attr' : {'class' : 'form-control select2','style':'width: 100%;'}}) }}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                            <div class="form-group">
+                                                {{ form_row(form.region, {'label' : 'Région', 'attr' : {'class' : 'form-control select2','style':'width: 100%;'}}) }}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                            <div class="form-group">
+                                                {{ form_row(form.anneeScolaire, {'label' : 'Année Scolaire', 'attr' : {'class' : 'form-control select2','style':'width: 100%;'}}) }}
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-1">
+
+                                        <div class="form-group">
+                                            <button type="submit" class="btn  btn-outline-success "><i
+                                                        class="fa fa-save"></i> Enregistrer
+                                            </button>
+
+                                        </div>
+
+
+                                    </div>
+                                    {{ form_end(form) }}
+
+
+                                </div><!-- /.card-body -->
+                            </div>
+                        </div><!-- /.container-fluid -->
+                    </section>
+                    <!-- /.content -->
+
+                    <!-- Main content -->
+                    <section class="content">
+                        <div class="container-fluid">
+                            <div class="card card-outline  ">
+                                <div class="card-header border-0 bgmoccasin">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-edit"></i>
+                                        Liste des chefs d'unité
+
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="maximize"><i
+                                                    class="fas fa-expand"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div> <!-- /.card-body -->
+                                <div class="card-body">
+                                    {% if affecterchu %}
+
+                                    <div class="table-responsive mx-auto col-10  " id="chefunites">
+                                        <table id="exemple4"
+                                               class="table table-bordered table-hover table-striped display ">
+                                            <thead class="table-info">
+                                            <tr class="text-dark">
+                                                <th>Nom</th>
+                                                <th>Prénom</th>
+                                                <th>Email</th>
+                                                <th>Date d'affectation</th>
+                                                <th>Région</th>
+                                                <th>Année</th>
+                                                <th class="row justify-content-center align-items-center">Action</th>
+
+                                            </tr>
+
+                                            </thead>
+                                            <tbody>
+                                            {% for chefb in affecterchu %}
+
+                                                <tr>
+                                                    <td>{{ chefb.user.nom }}</td>
+                                                    <td>{{ chefb.user.prenom }}</td>
+                                                    <td>{{ chefb.user.email }}</td>
+                                                    <td>{{ chefb.date|date("d/m/Y") }}</td>
+                                                    <td>{{ chefb.region.designation }}</td>
+                                                    <td>{{ chefb.anneeScolaire.designation }}
+                                                        --{{ chefb.anneeScolaire.designation +1 }}</td>
+                                                    <td class="row justify-content-center align-items-center">
+
+                                                        <a class="btn btn-default btn-sm px-2 text-blue"
+                                                           href={{ path('affecterchunite', {'action':1| encode, 'id': (chefb.id+111985)| encode}) }} data-toggle="tooltip"
+                                                           data-placement="top" title="Modifier">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                        </a>
+
+                                                        <form method="post" style="display: inline-block "
+                                                              action="{{ path('affecterchunite', {'action':2| encode, 'id': (chefb.id+111985)| encode}) }}"
+                                                              onsubmit="return confirm('Voulez-vous vraiment supprimer ?')">
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <input type="hidden" name="_token"
+                                                                   value="{{ csrf_token('delete' ~ chefb.id) }}">
+                                                            <button data-toggle="tooltip" data-placement="top"
+                                                                    title="Supprimer"
+                                                                    class="btn btn-default btn-sm px-2 text-blue">
+                                                                <i class="fas fa-trash mt-0"></i></button>
+
+                                                        </form>
+
+
+                                                        {# <a href="#" data-toggle="tooltip" data-placement="top"
+                                                            title="Delete" data-id="{{ (chefb.id+111985)| encode}}" class="fas fa-trash">
+                                                         </a>#}
+
+
+                                                    </td>
+
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                            <tfoot>
+                                            <tr id="filters">
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tfoot>
+                                        </table>
+
+                                        {% else %}
+                                            <div class="callout callout-info">
+                                                <h5><i class="fas fa-info"></i> Note:</h5>
+                                                Pas d'enregistrement.
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                </div><!-- /.card-body -->
+                            </div>
+                        </div><!-- /.container-fluid -->
+                    </section>
+                    <!-- /.content -->
+
+                </div>
+
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+
+    <script src="../../plugins/jquery/jquery.validate.js"></script>
+
+    <script type="text/javascript">
+        /*    $.validator.setDefaults( {
+                submitHandler: function () {
+                    alert( "submitted!" );
+                }
+            } );*/
+
+
+        $(document).ready(function () {
+            $("#affchunite").validate({
+
+
+                rules: {
+                    'affecter_chefunite[user]': {
+                        required: true,
+                        // maxlength: 50,
+                        //minlength: 3,
+
+
+                    },
+
+                    'affecter_chefunite[region]': {
+                        required: true,
+                        // maxlength: 50,
+                        //minlength: 5,
+
+
+                    },
+
+                    'affecter_chefunite[anneeScolaire]': {
+                        required: true,
+
+                    },
+
+
+                },
+                messages: {
+                    'affecter_chefunite[user]': {
+                        required: "Veuillez renseigner le chef d\'unité .",
+
+                    },
+
+
+                    'affecter_chefunite[region]': {
+                        required: "Veuillez renseigner la région .",
+                    },
+                    'affecter_chefunite[anneeScolaire]': {
+                        required: "Veuillez renseigner l\'année scolaire' .",
+                    },
+                },
+                errorElement: "em",
+                errorPlacement: function (error, element) {
+                    // Add the `invalid-feedback` class to the error element
+                    error.addClass("invalid-feedback");
+
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.next("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-valid").removeClass("is-invalid");
+                }
+            });
+
+        });
+    </script>
+
+
+{% endblock %}

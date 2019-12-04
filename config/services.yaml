@@ -25,3 +25,12 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Service\AnneeEncours:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: ['twig.extension']
+    App\Service\MagasinEncours:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: ['twig.extension']
+
+    App\Service\ConvertMD5:
+        tags: ['twig.extension']
