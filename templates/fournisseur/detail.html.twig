@@ -1,0 +1,447 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Mise à jour Compte
+{% endblock %}
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="card border card-outline">
+            <div class="card-header border  bglightblue">
+                <h3 class="card-title">
+                    <i class="fas fa-list"></i>
+                    Profile </h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body ">
+
+
+
+
+                <div class="container">
+                    <div class="row m-y-2">
+                        <div class="col-lg-8 push-lg-4">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a href="" data-target="#edit" data-toggle="tab" class="nav-link ">Modifier </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" data-target="#profile" data-toggle="tab" class="nav-link active ">Profile</a>
+                                </li>
+
+
+                            </ul>
+                            <div class="tab-content p-b-3">
+                                <div class="tab-pane active" id="profile">
+                                    <br/>
+                                    <h3 class="m-y-2">Profile</h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+
+                                        </div>
+                                        <div class="col-md-6">
+
+
+                                        </div>
+
+                                        <div class="col-md-12">
+
+
+                                            <div class="row">
+
+
+                                                <div class="col-md-3">
+                                                    <label>Email:</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p>{{ user.email }}</p>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Date de création:</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p>{{ user.datecreation|date("d/m/Y") }}</p>
+                                                </div>
+                                            </div>
+
+
+                                            {% if user.nomste %}
+
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Nom de Société:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.nomste }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Gérant de Société:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.gerantste }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Activité de Société:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.activiteste }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Matricule Fiscale:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.mfste }}</p>
+                                                    </div>
+                                                </div>
+
+                                            {% endif %}
+
+
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Tél:</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p>{{ user.tel }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Adresse:</label>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <p>{{ user.adresse }}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Etat de compte:</label>
+                                                </div>
+                                                <div class="col-md-3">
+
+                                                    {% if user.isActive==0 %}
+                                                        <div class="icon">
+
+                                                            <img src="../../img/checkoff.jpg"
+                                                                 class="img-size-50 img-circle elevation-1" alt="User Image">
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if user.isActive==1 %}
+                                                        <div class="icon">
+                                                            <img src="../../img/checkon.jpg"
+                                                                 class=" img-size-50 img-circle elevation-1" alt="User Image">
+
+                                                        </div>
+
+                                                    {% endif %}
+
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <!--/row-->
+                                </div>
+                                <div class="tab-pane " id="messages">
+
+                                </div>
+                                <div class="tab-pane " id="edit">
+                                    <br/>
+                                    <h3 class="m-y-2">Modifier le compte</h3>
+
+
+                                    <form class="form-horizontal" id="form" method="POST" novalidate action="{{ path('pwdupAdmFR') }}" >
+
+
+                                        <fieldset>
+                                            {# <legend>Changer votre mot de passe</legend>#}
+
+                                            {% for message in app.flashes('notice') %}
+                                                <div class="alert alert-warning">
+                                                    {{ message }}
+                                                </div>
+                                            {% endfor %}
+
+                                            <div >
+
+                                                <div class="row">
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {{ form_row(form.id)}}
+
+                                                            {{ form_row(form.nomste, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.mfste, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.gerantste, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.adresse, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.tel, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.email, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.activiteste, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="col-md-2">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.isActive) }}
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-2">
+                                                        <button type="submit" name="valider" class="btn lock btn-outline-primary"></span> Mettre à jour</button>
+                                                    </div>
+                                                </div>
+
+
+
+                                                {{ form_rest(form) }}
+
+                                                {{ form_end(form) }}
+
+
+
+                                        </fieldset>
+
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <div class="form-group">
+                                        <a href="{{ path('fournisseur')}}"  class="btn btn-outline-info  "><i class="fa fa-undo"></i> Annuler</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 pull-lg-8 text-xs-center">
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+
+
+
+    {% block javascripts %}
+
+
+
+        <script src="../../plugins/jquery/jquery.validate.js"></script>
+
+        <script type="text/javascript">
+            /*    $.validator.setDefaults( {
+                    submitHandler: function () {
+                        alert( "submitted!" );
+                    }
+                } );*/
+
+
+            $(document).ready(function () {
+                $("#form").validate({
+
+
+                    rules: {
+
+                        'fr_update[nomste]': {
+                            required: true,
+                            maxlength: 50,
+                            minlength: 3
+                        },
+                        'fr_update[mfste]': {
+                            required: true,
+                            maxlength: 50,
+                            minlength: 12
+                        },
+                        'fr_update[gerantste]': {
+                            required: true,
+                            minlength: 6,
+                            maxlength: 30,
+                            // number: true
+                        },
+
+                        'fr_update[adresse]': {
+                            required: true,
+                            minlength: 6,
+                            maxlength: 60,
+                        },
+                        'fr_update[tel]': {
+                            required: true,
+                            minlength: 8,
+                            maxlength: 8,
+                        },
+
+
+                        'fr_update[email]': {
+                            required: true,
+                            email: true,
+                            minlength: 4,
+                            maxlength: 50,
+                        },
+
+                        'fr[activiteste]': {
+                            required: true,
+                            minlength: 3,
+                            maxlength: 50,
+                        },
+
+
+
+
+                    },
+                    messages: {
+                        'fr_update[nomste]': {
+                            required: "Veuillez renseigner le nom de société .",
+                            minlength: "Champ au moins 3 caractères.",
+                            maxlength: "Champ  au plus 50 caractères."
+                        },
+                        'fr_update[mfste]': {
+                            required: "Veuillez renseigner le matricule fiscale.",
+                            minlength: "Champ au moins 12 caractères.",
+                            maxlength: "Champ  au plus 50 caractères."
+                        },
+                        'fr_update[gerantste]': {
+                            required: "Veuillez renseigner le gérant.",
+                            minlength: "Champ au moins 6 caractères.",
+                            maxlength: "Champ  au plus 30 caractères."
+                        },
+
+                        'fr_update[adresse]': {
+                            required: "Veuillez renseigner l\'adresse.",
+                            minlength: "Votre nom doit faire au moins 6 caractères.",
+                            maxlength: "Votre nom doit faire au plus 60 caractères."
+                        },
+
+                        'fr_update[tel]': {
+                            required: "Vous devez saisir un numéro de téléphone au format 70 777 777.",
+                            minlength: "Champ  au moins 8 caractères.",
+                            maxlength: "Champ au max 8 caractères.",
+                            // regex : "Veuillez renseigner un numéro de téléphone valide"
+                            // regexphone: "test"
+                        },
+
+                        'fr_update[email]': {
+                            required: "Veuillez renseigner l'émail.",
+                            minlength: "Votre nom doit faire au moins 4 caractères.",
+                            maxlength: "Votre nom doit faire au plus 50 caractères.",
+                            email: "Veuillez renseigner un email valide"
+                        },
+                        'fr_update[activiteste]': {
+                            required: "Veuillez renseigner l'activité de société.",
+                            minlength: "Votre nom doit faire au moins 3 caractères.",
+                            maxlength: "Votre nom doit faire au plus 50 caractères.",
+
+                        },
+
+                        'fr_update[password]': {
+                            required: "Veuillez renseigner le mot de passe.",
+                            minlength: "Champ au moins 8 caractères.",
+                            maxlength: "Champ  au plus 50 caractères.",
+                        },
+
+                        'fr_update[confirm_password]': {
+                            required: "Veuillez confirmer le mot de passe.",
+                            minlength: "Champ au moins 8 caractères.",
+                            maxlength: "Champ  au plus 50 caractères.",
+                            equalTo: "Entrez le même mot de passe"
+                        },
+
+
+                    },
+                    errorElement: "em",
+                    errorPlacement: function (error, element) {
+                        // Add the `invalid-feedback` class to the error element
+                        error.addClass("invalid-feedback");
+
+                        if (element.prop("type") === "checkbox") {
+                            error.insertAfter(element.next("label"));
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).addClass("is-invalid").removeClass("is-valid");
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).addClass("is-valid").removeClass("is-invalid");
+                    }
+                });
+
+            });
+        </script>
+
+    {% endblock %}
+
