@@ -51,131 +51,131 @@
                                         <div class="col-md-12">
 
 
-                                        <div class="row">
-
-
-                                            <div class="col-md-3">
-                                                <label>Email:</label>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <p>{{ user.email }}</p>
-                                            </div>
-                                        </div>
-                                        {% if user.nom %}
-
                                             <div class="row">
-                                                <div class="col-md-3">
-                                                    <label>Nom:</label>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p>{{ user.nom }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <label>Prénom:</label>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p>{{ user.prenom }}m</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <label>CIN:</label>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p>{{ app.user.cin }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <label>Date de naissance:</label>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p>{{ user.datenassance|date("d/m/Y") }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <label>Sexe:</label>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p>{{ user.sexe }}</p>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <label>Date d'embauche:</label>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p>{{ user.dateembauche|date("d/m/Y") }}</p>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <label>Etat civil:</label>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p>{{ user.etatcivil }}</p>
-                                                </div>
-                                            </div>
-                                        {% endif %}
-
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label>Date de création:</label>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <p>{{ user.datecreation|date("d/m/Y") }}</p>
-                                            </div>
-                                        </div>
 
 
+                                                <div class="col-md-3">
+                                                    <label>Email:</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p>{{ user.email }}</p>
+                                                </div>
+                                            </div>
+                                            {% if user.nom %}
 
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label>Tél:</label>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <p>{{ user.tel }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label>Adresse:</label>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <p>{{ user.adresse }}</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label>Etat de compte:</label>
-                                            </div>
-                                            <div class="col-md-3">
-
-                                                {% if user.isActive==0 %}
-                                                    <div class="icon">
-
-                                                        <img src="../../img/checkoff.jpg"
-                                                             class="img-size-50 img-circle elevation-1" alt="User Image">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Nom:</label>
                                                     </div>
-                                                {% endif %}
-                                                {% if user.isActive==1 %}
-                                                    <div class="icon">
-                                                        <img src="../../img/checkon.jpg"
-                                                             class=" img-size-50 img-circle elevation-1" alt="User Image">
-
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.nom }}</p>
                                                     </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Prénom:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.prenom }}m</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>CIN:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ app.user.cin }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Date de naissance:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.datenassance|date("d/m/Y") }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Sexe:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.sexe }}</p>
+                                                    </div>
+                                                </div>
 
-                                                {% endif %}
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Date d'embauche:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.dateembauche|date("d/m/Y") }}</p>
+                                                    </div>
+                                                </div>
 
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Etat civil:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.etatcivil }}</p>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
 
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Date de création:</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p>{{ user.datecreation|date("d/m/Y") }}</p>
+                                                </div>
                                             </div>
-                                        </div>
+
+
+
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Tél:</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p>{{ user.tel }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Adresse:</label>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <p>{{ user.adresse }}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Etat de compte:</label>
+                                                </div>
+                                                <div class="col-md-3">
+
+                                                    {% if user.isActive==0 %}
+                                                        <div class="icon">
+
+                                                            <img src="../../img/checkoff.jpg"
+                                                                 class="img-size-50 img-circle elevation-1" alt="User Image">
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if user.isActive==1 %}
+                                                        <div class="icon">
+                                                            <img src="../../img/checkon.jpg"
+                                                                 class=" img-size-50 img-circle elevation-1" alt="User Image">
+
+                                                        </div>
+
+                                                    {% endif %}
+
+
+                                                </div>
+                                            </div>
 
 
                                         </div>
@@ -228,143 +228,143 @@
                                                     </div>
 
                                                 </div>#}
-{#
-                                                   {{ form_start(form, {'attr': {'novalidate': 'novalidate','class' : 'form-group form-horizontal', 'id':'form', 'role' : 'form' }}) }}
-#}
-                            <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                                                                        {{ form_row(form.id)}}
+                                                {#
+                                                                                                   {{ form_start(form, {'attr': {'novalidate': 'novalidate','class' : 'form-group form-horizontal', 'id':'form', 'role' : 'form' }}) }}
+                                                #}
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {{ form_row(form.id)}}
 
-                                    {{ form_row(form.nom, {'attr': {'autocomplete': 'off' }}) }}
-                                </div>
-                            </div>
-                                <div class="col-md-4">
+                                                            {{ form_row(form.nom, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
 
-                                <div class="form-group">
-                                    {{ form_row(form.prenom, {'attr': {'autocomplete': 'off' }}) }}
-                                </div>
-                                </div>
-                                <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {{ form_row(form.prenom, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
 
-                                    <div class="form-group">
-                                        {{ form_row(form.cin, {'attr': {'autocomplete': 'off' }}) }}
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-4">
-
-                                    <div class="form-group">
-                                        {{ form_row(form.datenassance) }}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-
-                                    <div class="form-group">
-                                        {{ form_row(form.adresse, {'attr': {'autocomplete': 'off' }}) }}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-
-                                    <div class="form-group">
-                                        {{ form_row(form.tel, {'attr': {'autocomplete': 'off' }}) }}
-{#
-                                        {{ form_row(form.tel, {'attr' : {'class' : 'form-control', 'pattern' : '[0-9]{2}[0-9]{3}[0-9]{3}'}}) }}
-#}
-
-                                    </div>
-                                </div>
+                                                        <div class="form-group">
+                                                            {{ form_row(form.cin, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
 
 
-                                <div class="col-md-4">
+                                                    <div class="col-md-4">
 
-                                    <div class="form-group">
-                                        {{ form_row(form.sexe) }}
-                                    </div>
-                                </div>
+                                                        <div class="form-group">
+                                                            {{ form_row(form.datenassance) }}
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-md-4">
+                                                    <div class="col-md-4">
 
-                                    <div class="form-group">
-                                        {{ form_row(form.etatcivil) }}
-                                    </div>
-                                </div>
+                                                        <div class="form-group">
+                                                            {{ form_row(form.adresse, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-md-4">
+                                                    <div class="col-md-4">
 
-                                    <div class="form-group">
-                                        {{ form_row(form.dateembauche) }}
-                                    </div>
-                                </div>
+                                                        <div class="form-group">
+                                                            {{ form_row(form.tel, {'attr': {'autocomplete': 'off' }}) }}
+                                                            {#
+                                                                                                    {{ form_row(form.tel, {'attr' : {'class' : 'form-control', 'pattern' : '[0-9]{2}[0-9]{3}[0-9]{3}'}}) }}
+                                                            #}
 
-
-                                <div class="col-md-3">
-
-                                    <div class="form-group">
-                                        {{ form_row(form.email, {'attr': {'autocomplete': 'off' }}) }}
-                                    </div>
-                                </div>
+                                                        </div>
+                                                    </div>
 
 
-{#
-                                {% if update ==0 %}
-#}
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.sexe) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.etatcivil) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.dateembauche) }}
+                                                        </div>
+                                                    </div>
 
 
+                                                    <div class="col-md-3">
 
-                             {#   <div class="col-md-3">
-
-                                    <div class="form-group">
-                                        {{ form_row(form.password, {'attr': {'required': 'false' }}) }}
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-3">
-
-                                    <div class="form-group">
-                                        {{ form_row(form.confirm_password, {'attr': {'required': 'false' }}) }}
-                                    </div>
-                                </div>#}
-
-{#
-                                {% endif %}
-#}
+                                                        <div class="form-group">
+                                                            {{ form_row(form.email, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
 
 
-                                <div class="col-md-3">
-
-                                    <div class="form-group">
-
-                                            {{ form_row(form.roles, {'attr' : {'class' : 'form-control'}}) }}
-
-{#
-                                        {{ form_row(form.roles) }}
-#}
-                                    </div>
-                                </div>
+                                                    {#
+                                                                                    {% if update ==0 %}
+                                                    #}
 
 
 
-                                <div class="col-md-2">
+                                                    {#   <div class="col-md-3">
 
-                                    <div class="form-group">
-                                        {{ form_row(form.isActive) }}
-                                    </div>
-                                </div>
-                                 <div class="col-md-2">
-                                            <button type="submit" name="valider" class="btn lock btn-outline-primary"></span> Mettre à jour</button>
-</div>
-                                </div>
+                                                           <div class="form-group">
+                                                               {{ form_row(form.password, {'attr': {'required': 'false' }}) }}
+                                                           </div>
+                                                       </div>
 
 
+                                                       <div class="col-md-3">
 
-                                            {{ form_rest(form) }}
+                                                           <div class="form-group">
+                                                               {{ form_row(form.confirm_password, {'attr': {'required': 'false' }}) }}
+                                                           </div>
+                                                       </div>#}
 
-                    {{ form_end(form) }}
+                                                    {#
+                                                                                    {% endif %}
+                                                    #}
+
+
+                                                    <div class="col-md-3">
+
+                                                        <div class="form-group">
+
+                                                            {{ form_row(form.roles, {'attr' : {'class' : 'form-control'}}) }}
+
+                                                            {#
+                                                                                                    {{ form_row(form.roles) }}
+                                                            #}
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="col-md-2">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.isActive) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button type="submit" name="valider" class="btn lock btn-outline-primary"></span> Mettre à jour</button>
+                                                    </div>
+                                                </div>
+
+
+
+                                                {{ form_rest(form) }}
+
+                                                {{ form_end(form) }}
 
 
 
@@ -372,12 +372,12 @@
 
                                 </div>
 
-                                                           <div class="col-md-2">
+                                <div class="col-md-2">
 
-                                <div class="form-group">
+                                    <div class="form-group">
                                         <a href="{{ path('user')}}"  class="btn btn-outline-info  "><i class="fa fa-undo"></i> Annuler</a>
                                     </div>
-                                                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -397,7 +397,7 @@
         </div>
     </div>
 
-{% endblock %}
+    {% endblock %}
 
 
 
@@ -613,80 +613,80 @@
 
     {% endblock %}
 
-{#
-{% block javascripts %}
+    {#
+    {% block javascripts %}
 
 
-    <script src="../../plugins/jquery/jquery.validate.js"></script>
+        <script src="../../plugins/jquery/jquery.validate.js"></script>
 
-    <script type="text/javascript">
-        /*    $.validator.setDefaults( {
-                submitHandler: function () {
-                    alert( "submitted!" );
-                }
-            } );*/
-
-
-        $( document ).ready( function () {
-            $( "#password" ).validate( {
-
-
-                rules: {
-
-
-                    'userupdate[password]': {
-                        required: true,
-                        minlength: 8,
-                        maxlength: 50,
-                    },
-                    'userupdate[confirm_password]]': {
-                        required: true,
-                        minlength: 8,
-                        maxlength: 50,
-                        equalTo: "#userupdate_password"
-                    },
-
-
-                },
-                messages: {
-
-
-                    'userupdate[password]': {
-                        required: "Veuillez renseigner le mot de passe.",
-                        minlength: "Champ au moins 8 caractères.",
-                        maxlength: "Champ  au plus 50 caractères.",
-                    },
-
-                    'userupdate[confirm_password]': {
-                        required: "Veuillez confirmer le mot de passe.",
-                        minlength: "Champ au moins 8 caractères.",
-                        maxlength: "Champ  au plus 50 caractères.",
-                        equalTo: "Entrez le même mot de passe"
-                    },
-
-
-                },
-                errorElement: "em",
-                errorPlacement: function ( error, element ) {
-                    // Add the `invalid-feedback` class to the error element
-                    error.addClass( "invalid-feedback" );
-
-                    if ( element.prop( "type" ) === "checkbox" ) {
-                        error.insertAfter( element.next( "label" ) );
-                    } else {
-                        error.insertAfter( element );
+        <script type="text/javascript">
+            /*    $.validator.setDefaults( {
+                    submitHandler: function () {
+                        alert( "submitted!" );
                     }
-                },
-                highlight: function ( element, errorClass, validClass ) {
-                    $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
-                },
-                unhighlight: function (element, errorClass, validClass) {
-                    $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
-                }
+                } );*/
+
+
+            $( document ).ready( function () {
+                $( "#password" ).validate( {
+
+
+                    rules: {
+
+
+                        'userupdate[password]': {
+                            required: true,
+                            minlength: 8,
+                            maxlength: 50,
+                        },
+                        'userupdate[confirm_password]]': {
+                            required: true,
+                            minlength: 8,
+                            maxlength: 50,
+                            equalTo: "#userupdate_password"
+                        },
+
+
+                    },
+                    messages: {
+
+
+                        'userupdate[password]': {
+                            required: "Veuillez renseigner le mot de passe.",
+                            minlength: "Champ au moins 8 caractères.",
+                            maxlength: "Champ  au plus 50 caractères.",
+                        },
+
+                        'userupdate[confirm_password]': {
+                            required: "Veuillez confirmer le mot de passe.",
+                            minlength: "Champ au moins 8 caractères.",
+                            maxlength: "Champ  au plus 50 caractères.",
+                            equalTo: "Entrez le même mot de passe"
+                        },
+
+
+                    },
+                    errorElement: "em",
+                    errorPlacement: function ( error, element ) {
+                        // Add the `invalid-feedback` class to the error element
+                        error.addClass( "invalid-feedback" );
+
+                        if ( element.prop( "type" ) === "checkbox" ) {
+                            error.insertAfter( element.next( "label" ) );
+                        } else {
+                            error.insertAfter( element );
+                        }
+                    },
+                    highlight: function ( element, errorClass, validClass ) {
+                        $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+                    }
+                } );
+
             } );
-
-        } );
-    </script>
+        </script>
 
 
-{% endblock %}#}
+    {% endblock %}#}
