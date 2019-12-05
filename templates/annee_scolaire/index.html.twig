@@ -143,7 +143,7 @@
                                                     {% else %}
 
                                                         <td class="text-warning">Rendre en cours<a
-                                                                    href="/anneescolaire/encours/{{ (annee_scolaire.id+111985)| encode }}"
+                                                                    href="/anneescolaire/encours/{{ (annee_scolaire.id)| encode }}"
                                                                     data-toggle="tooltip" data-placement="top"
                                                                     title="Rendre en cours">
                                                                 <i class="mdi mdi-check"></i>
@@ -156,14 +156,14 @@
                                                     {% if annee_scolaire.encours!=1 %}
                                                         {% if annee_scolaire.actif==1 %}
                                                             <td class="text-success">Actif <a
-                                                                        href="/anneescolaire/desactiver/{{ (annee_scolaire.id+111985)| encode }}"
+                                                                        href="/anneescolaire/desactiver/{{ (annee_scolaire.id)| encode }}"
                                                                         data-toggle="tooltip" data-placement="top"
                                                                         title="Déactiver">
                                                                     <i class="m-r-10 mdi mdi-account-off"></i>
                                                                 </a></td>
                                                         {% else %}
                                                             <td class="text-warning">Inactif<a
-                                                                        href="/anneescolaire/activer/{{ (annee_scolaire.id+111985)| encode }}"
+                                                                        href="/anneescolaire/activer/{{ (annee_scolaire.id)| encode }}"
                                                                         data-toggle="tooltip" data-placement="top"
                                                                         title="Activer">
                                                                     <i class="m-r-10 mdi mdi-account-check"></i>
@@ -174,14 +174,16 @@
                                                     {% endif %}
 
                                                     <td class="row justify-content-center align-items-center">
-                                                        <a class="btn btn-default btn-sm px-2 text-blue"
-                                                           href={{ path('annee_scolaire', {'action':1| encode, 'id': (annee_scolaire.id+111985)| encode}) }} data-toggle="tooltip"
+                                                        {% if annee_scolaire.encours!=1 %}
+
+                                                            <a class="btn btn-default btn-sm px-2 text-blue"
+                                                           href={{ path('annee_scolaire', {'action':1| encode, 'id': (annee_scolaire.id)| encode}) }} data-toggle="tooltip"
                                                            data-placement="top" title="Modifier">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
 
                                                         <form method="post" style="display: inline-block "
-                                                              action="{{ path('annee_scolaire', {'action':2| encode, 'id': (annee_scolaire.id+111985)| encode}) }}"
+                                                              action="{{ path('annee_scolaire', {'action':2| encode, 'id': (annee_scolaire.id)| encode}) }}"
                                                               onsubmit="return confirm('Voulez-vous vraiment supprimer ?')">
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token"
@@ -194,7 +196,8 @@
                                                         </form>
                                                         {# <a href="#" data-toggle="tooltip" data-placement="top" title="Delete" data-id="{{ annee_scolaire.id }}" class="fas fa-trash">
                                                          </a>
- #}
+ #}                                                    {% endif %}
+
                                                     </td>
 
                                                 </tr>

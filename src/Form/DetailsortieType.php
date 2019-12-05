@@ -31,7 +31,7 @@ class DetailsortieType extends AbstractType
     {
         $builder
             ->add('article', EntityType::class, ['class'=>Article::class, 'choices' => $this->articleRepository->findArticleByuser($this->security->getUser()->getId()), 'choice_label' => 'nom_art',  'label' => 'Article', 'attr' => array('class'=>'select2 form-control',  'required' => true) ])
-            ->add('qtesortie', TextType::class , array('attr' => array( 'required' => true, 'type'=>'number','min'=>'0.001','title'=>'Vous devez saisir un nombre valide.', 'pattern'=>'\d+(\.\d{3})?',  'placeholder'=> '0.000',  'class'=>'form-control'),'label' => 'Quantité' ) )
+            ->add('qtesortie', TextType::class , array('attr' => array( 'required' => true, 'type'=>'number','min'=>'0.001','title'=>'Vous devez saisir un nombre valide.', 'pattern'=>'\d+(\.\d{3})?','autocomplete'=>'off',  'placeholder'=> '0.000',  'class'=>'form-control'),'label' => 'Quantité' ) )
            // ->add('message')
             ->add('message', TextType::class , array('attr' => array( 'required' => false,'autocomplete'=>'off', 'class'=>'form-control-plaintext'),'label' => ' ','disabled'=>true ) )
 

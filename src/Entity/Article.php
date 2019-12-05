@@ -59,13 +59,14 @@ class Article
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Categorie", inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotBlank(message="Catégorie de l'Article est obligatoire")
+     * @Assert\NotBlank(message="Catégorie de l'article est obligatoire")
      */
     private $categorie;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Detailentree", mappedBy="article" , cascade={"remove", "persist"})
      */
+
     private $detailentrees;
 
     /**

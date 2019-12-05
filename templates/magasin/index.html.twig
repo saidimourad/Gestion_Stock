@@ -3,336 +3,6 @@
         {% block title %}Repas{% endblock %}
 
         {% block body %}
-            {#       <div class="row">
-                       <div class="col-lg-12">
-                           #}{#     <div class="panel panel-default">
-                                <div class="panel-body">#}{#
-
-                           <!--       Form       --->
-                           <div class="card card-info card-outline">
-                               <div class="card-header">
-                                   <h3 class="card-title">
-                                       <i class="fas fa-edit"></i>
-                                       Détail Magasin
-                                   </h3>
-
-                                   <div class="card-tools">
-                                       <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
-                                       </button>
-                                   </div>
-                               </div>
-                               <div class="card-body mx-auto col-10">
-                                   <div class="form-group   ">
-                                       {{ form_start(form, {'class' : 'form-group'}) }}
-
-                                       <div class="row">
-
-                                           <div class="col-md-4">
-                                               <div class="form-group">
-                                                   {{ form_row(form.designation) }}
-                                               </div>
-                                           </div>
-
-                                           <div class="col-md-4">
-
-                                               <div class="form-group">
-                                                   {{ form_row(form.adresse) }}
-                                               </div>
-                                           </div>
-
-
-                                           <div class="col-md-4">
-
-                                               <div class="form-group">
-                                                   {{ form_row(form.region) }}
-                                               </div>
-                                           </div>
-
-
-
-                                   </div>
-
-                                   <div class="col-md-1">
-
-                                       <div class="form-group">
-                                           <button type="submit" class="btn  btn-outline-success "><i class="fa fa-save"></i> Enregistrer</button>
-
-
-
-                                       </div>
-                                       </div>
-                                       {{ form_end(form) }}
-                                   </div>
-                               </div>
-
-                               <!--     end  Form       --->
-                               <div class="card card-info card-outline">
-                                   <div class="card-header">
-                                       <h3 class="card-title">
-                                           <i class="fas fa-list"></i>
-                                           Liste des Magasins
-                                       </h3>
-                                   </div>
-
-                                   <div class="card-body">
-                                       {% if magasins %}
-                                       <div class="table-responsive mx-auto col-10  " id="magasins">
-
-
-
-                                           <table id="exemple4" class="table table-bordered table-hover table-striped display " >
-                                               <thead class="table-info">
-                                               <tr class="text-dark">
-
-                                                   <th>Magasin</th>
-                                                   <th>Region</th>
-                                                   <th>Adresse</th>
-
-                                                   <th class="row justify-content-center align-items-center">Action</th>
-
-                                               </tr>
-
-                                               </thead>
-                                               <tbody>
-                                               {% for magasin in magasins %}
-
-                                                   <tr>
-                                                   <td>{{ magasin.designation}}</td>
-
-                                                   <td>{{ magasin.region.designation }}</td>
-                                                   <td>{{ magasin.adresse}}</td>
-
-
-                                                        <td class="row justify-content-center align-items-center">
-
-                                                           <a href={{ path('magasin', {'action':1, 'id': magasin.id}) }} data-toggle="tooltip" data-placement="top" title="Update">
-                                                               <i class="fas fa-pencil-alt"></i>
-                                                           </a>
-                                                           <a href="#" data-toggle="tooltip" data-placement="top" title="Delete" data-id="{{ magasin.id }}" class="fas fa-trash">
-                                                           </a>
-
-
-                                                       </td>
-
-                                                   </tr>
-                                               {% endfor %}
-                                               </tbody>
-                                               <tfoot>
-                                               <tr id="filters">
-
-                                                   <th></th>
-                                                   <th></th>
-                                                   <th></th>
-                                                   <th></th>
-
-                                               </tfoot>
-                                           </table>
-
-                                           {% else %}
-                                               <p>Pas de Repas</p>
-                                           {% endif %}
-                                       </div>
-                                   </div>
-                               </div>
-                           </div>
-                       </div>
-                   </div><!--/.row-->
-
-                   </div>
-                   </div>
-                   </div>
-       #}
-
-
-
-
-
-            {# <!-- Main content -->
-             <section class="content">
-                 <div class="container-fluid">
-                     <!-- COLOR PALETTE -->
-                     <div class="card card-default color-palette-box  ">
-                         <div class="card-header">
-                             <h3 class="card-title">
-                                 <i class="fas fa-tag"></i>
-                                 Gestion des Magasins
-                             </h3>
-                             <div class="card-tools">
-                                 <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
-                                 </button>
-                             </div>
-                         </div>
-
-
-                         <div class="card-body">
-                             <!-- Main content -->
-                             <section class="content">
-                                 <div class="container-fluid">
-                                     <div class="card  card-info card-outline">
-                                         <div class="card-header">
-                                             <h3 class="card-title">
-                                                 <i class="fas fa-list"></i>
-                                                 Détail Magasin
-
-                                             </h3>
-                                         </div> <!-- /.card-body -->
-                                         <div class="card-body">
-
-
-
-
-
-
-                                             {{ form_start(form, {'attr': {'novalidate': 'novalidate','class' : 'form-group form-horizontal', 'id':'magasin' }}) }}
-
-
-                                             <div class="row">
-
-                                                 <div class="col-md-6">
-                                                     <div class="form-group">
-                                                         {{ form_row(form.designation, { 'attr' : {'class' : 'form-control'}}) }}
-                                                     </div>
-                                                 </div>
-
-                                                 <div class="col-md-3">
-
-                                                     <div class="form-group">
-                                                         {{ form_row(form.adresse, { 'attr' : {'class' : 'form-control'}}) }}
-                                                     </div>
-                                                 </div>
-
-                                                 <div class="col-md-3">
-
-                                                     <div class="form-group">
-                                                         {{ form_row(form.region, { 'attr' : {'class' : 'form-control select2','style':'width: 100%;'}}) }}
-                                                     </div>
-                                                 </div>
-
-                                             </div>
-
-                                             <div class="col-md-1">
-
-                                                 <div class="form-group">
-                                                     <button type="submit" class="btn  btn-outline-success "><i class="fa fa-save"></i> Enregistrer</button>
-
-                                                 </div>
-
-
-                                             </div>
-                                             {{ form_end(form) }}
-
-
-
-
-
-
-
-
-                                         </div><!-- /.card-body -->
-                                     </div>
-                                 </div><!-- /.container-fluid -->
-                             </section>
-                             <!-- /.content -->
-
-                             <!-- Main content -->
-                             <section class="content">
-                                 <div class="container-fluid">
-                                     <div class="card card-info card-outline">
-                                         <div class="card-header">
-                                             <h3 class="card-title">
-                                                 <i class="fas fa-edit"></i>
-                                                 Liste des Magasins
-
-                                             </h3>
-                                         </div> <!-- /.card-body -->
-                                         <div class="card-body">
-
-
-
-                                             {% if magasins %}
-                                             <div class="table-responsive mx-auto col-10  " id="magasins">
-
-
-
-                                                 <table id="exemple4" class="table table-bordered table-hover table-striped display " >
-                                                     <thead class="table-info">
-                                                     <tr class="text-dark">
-
-                                                         <th>Magasin</th>
-                                                         <th>Region</th>
-                                                         <th>Adresse</th>
-
-                                                         <th class="row justify-content-center align-items-center">Action</th>
-
-                                                     </tr>
-
-                                                     </thead>
-                                                     <tbody>
-                                                     {% for magasin in magasins %}
-
-                                                         <tr>
-                                                             <td>{{ magasin.designation}}</td>
-
-                                                             <td>{{ magasin.region.designation }}</td>
-                                                             <td>{{ magasin.adresse}}</td>
-
-
-                                                             <td class="row justify-content-center align-items-center">
-
-                                                                 <a href={{ path('magasin', {'action':1, 'id': magasin.id}) }} data-toggle="tooltip" data-placement="top" title="Modifier">
-                                                                     <i class="fas fa-pencil-alt"></i>
-                                                                 </a>
-                                                                 <a href="#" data-toggle="tooltip" data-placement="top" title="Supprimer" data-id="{{ magasin.id }}" class="fas fa-trash">
-                                                                 </a>
-
-
-                                                             </td>
-
-                                                         </tr>
-                                                     {% endfor %}
-                                                     </tbody>
-                                                     <tfoot>
-                                                     <tr id="filters">
-
-                                                         <th></th>
-                                                         <th></th>
-                                                         <th></th>
-                                                         <th></th>
-
-                                                     </tfoot>
-                                                 </table>
-
-
-                                                 {% else %}
-                                                     <div class="callout callout-info">
-                                                         <h5><i class="fas fa-info"></i> Note:</h5>
-                                                         Pas d'enregistrement.
-                                                     </div>
-                                                 {% endif %}
-                                             </div>
-
-
-
-
-                                         </div><!-- /.card-body -->
-                                     </div>
-                                 </div><!-- /.container-fluid -->
-                             </section>
-                             <!-- /.content -->
-
-                         </div>
-
-
-                     </div>
-                     <!-- /.card-body -->
-                 </div>
-             </section>
-
- #}
-
-
-
-
 
             <!-- Main content -->
             <section class="content">
@@ -384,14 +54,14 @@
 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        {{ form_row(form.designation) }}
+                                                        {{ form_row(form.designation, {'attr' : {'class' : 'form-control','autocomplete': 'off'}}) }}
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-4">
 
                                                     <div class="form-group">
-                                                        {{ form_row(form.adresse) }}
+                                                        {{ form_row(form.adresse, {'attr' : {'class' : 'form-control','autocomplete': 'off'}}) }}
                                                     </div>
                                                 </div>
 
@@ -480,14 +150,14 @@
                                                             <td class="row justify-content-center align-items-center">
 
                                                                 <a class=" btn btn-default btn-sm px-2  text-blue"
-                                                                   href={{ path('magasin', {'action':1| encode, 'id': (magasin.id+111985)| encode}) }}" data-toggle="
+                                                                   href={{ path('magasin', {'action':1| encode, 'id': (magasin.id)| encode}) }}" data-toggle="
                                                                    tooltip"
                                                                 data-placement="top" title="Modifier">
                                                                 <i class="fas fa-pencil-alt"></i>
                                                                 </a>
 
                                                                 <form method="post" style="display: inline-block "
-                                                                      action="{{ path('magasin', {'action':2| encode, 'id': (magasin.id+111985)| encode}) }}"
+                                                                      action="{{ path('magasin', {'action':2| encode, 'id': (magasin.id)| encode}) }}"
                                                                       onsubmit="return confirm('Voulez-vous vraiment supprimer ?')">
                                                                     <input type="hidden" name="_method" value="DELETE">
                                                                     <input type="hidden" name="_token"
@@ -543,9 +213,6 @@
 
 
 
-
-
-
         {% endblock %}
 
 
@@ -593,7 +260,7 @@
                         },
                         messages: {
                             'magasin[designation]': {
-                                required: "Veuillez renseigner la désignation magasin .",
+                                required: "Veuillez renseigner la désignation de magasin .",
                                 minlength: "Champ au moins 3 caractères.",
                                 maxlength: "Champ  au plus 50 caractères.",
 

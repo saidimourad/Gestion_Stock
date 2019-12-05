@@ -18,8 +18,7 @@ class LingnecommandeType extends AbstractType
     {
         $builder
             ->add('article' , EntityType::class ,array('class'=>Article::class,'choice_label' => 'nom_art','attr' => array('class'=>'select2 form-control')))
-            ->add('qtecommande', TextType::class , array('attr' => array( 'required' => true, 'type'=>'number','min'=>'0.001','title'=>'Vous devez saisir un nombre  décimal.', 'pattern'=>'\d+(\.\d{3})?',  'placeholder'=> '0.000',  'class'=>'form-control'),'label' => 'Quantité' ) )
-
+            ->add('qtecommande', TextType::class , array('attr' => array( 'required' => true, 'type'=>'number','min'=>'0.001','title'=>'Vous devez saisir un nombre  décimal.','autocomplete'=>'off', 'pattern'=>'\d+(\.\d{3})?',  'placeholder'=> '0.000',  'class'=>'form-control'),'label' => 'Quantité' ) )
 
         ;
     }

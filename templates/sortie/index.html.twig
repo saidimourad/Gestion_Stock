@@ -154,20 +154,20 @@
 
                                                     <td>
                                                         {% if (is_granted('ROLE_MAGASINIER')) %}
-                                                        <a class=" btn btn-default btn-sm px-2  text-blue" href="sortie/updatesortie/{{ (item.id+111985)| encode }}"
+                                                        <a class=" btn btn-default btn-sm px-2  text-blue" href="sortie/updatesortie/{{ (item.id)| encode }}"
                                                            data-toggle="tooltip" data-placement="top" title="Modifier">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
                                                             {% endif %}
 
-                                                            <a class=" btn btn-default btn-sm px-2  text-blue" href="sortie/show/{{ (item.id+111985)| encode }}" data-toggle="tooltip"
+                                                            <a class=" btn btn-default btn-sm px-2  text-blue" href="sortie/show/{{ (item.id)| encode }}" data-toggle="tooltip"
                                                                data-placement="top" title="Détail">
                                                                 <i class="fas fa-search-plus "></i>
                                                             </a>
                                                             {% if (is_granted('ROLE_MAGASINIER')) %}
 
                                                                 <form method="post" style="display: inline-block "
-                                                                      action="{{ path('sortie_delete', {'id': (item.id+111985)| encode}) }}"
+                                                                      action="{{ path('sortie_delete', {'id': (item.id)| encode}) }}"
                                                                       onsubmit="return confirm('Voulez-vous vraiment supprimer ?')">
                                                                     <input type="hidden" name="_method" value="DELETE">
                                                                     <input type="hidden" name="_token"
@@ -180,7 +180,7 @@
 
                                                                 </form>
                                                                 {% endif %}
-                                                                <a class=" btn btn-default btn-sm px-2  text-blue" href="sortie/imprimersortie/{{ (item.id+111985)| encode }}"
+                                                                <a class=" btn btn-default btn-sm px-2  text-blue" href="sortie/imprimersortie/{{ (item.id)| encode }}"
                                                                    target="_blank" data-toggle="tooltip"
                                                                    data-placement="top" title="Imprimer">
                                                                     <i class="fas fa-print"></i>

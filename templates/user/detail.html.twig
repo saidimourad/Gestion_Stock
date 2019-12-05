@@ -1,0 +1,692 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Mise à jour Compte
+{% endblock %}
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="card border card-outline">
+            <div class="card-header border  bglightblue">
+                <h3 class="card-title">
+                    <i class="fas fa-list"></i>
+                    Profile </h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-widget="maximize"><i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body ">
+
+
+                <div class="container">
+                    <div class="row m-y-2">
+                        <div class="col-lg-8 push-lg-4">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a href="" data-target="#edit" data-toggle="tab" class="nav-link ">Modifier </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" data-target="#profile" data-toggle="tab" class="nav-link active ">Profile</a>
+                                </li>
+
+
+                            </ul>
+                            <div class="tab-content p-b-3">
+                                <div class="tab-pane active" id="profile">
+                                    <br/>
+                                    <h3 class="m-y-2">Profile</h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+
+                                        </div>
+                                        <div class="col-md-6">
+
+
+                                        </div>
+
+                                        <div class="col-md-12">
+
+
+                                            <div class="row">
+
+
+                                                <div class="col-md-3">
+                                                    <label>Email:</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p>{{ user.email }}</p>
+                                                </div>
+                                            </div>
+                                            {% if user.nom %}
+
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Nom:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.nom }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Prénom:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.prenom }}m</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>CIN:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ app.user.cin }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Date de naissance:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.datenassance|date("d/m/Y") }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Sexe:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.sexe }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Date d'embauche:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.dateembauche|date("d/m/Y") }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Etat civil:</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <p>{{ user.etatcivil }}</p>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Date de création:</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p>{{ user.datecreation|date("d/m/Y") }}</p>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Tél:</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p>{{ user.tel }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Adresse:</label>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <p>{{ user.adresse }}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Etat de compte:</label>
+                                                </div>
+                                                <div class="col-md-3">
+
+                                                    {% if user.isActive==0 %}
+                                                        <div class="icon">
+
+                                                            <img src="../../img/checkoff.jpg"
+                                                                 class="img-size-50 img-circle elevation-1" alt="User Image">
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if user.isActive==1 %}
+                                                        <div class="icon">
+                                                            <img src="../../img/checkon.jpg"
+                                                                 class=" img-size-50 img-circle elevation-1" alt="User Image">
+
+                                                        </div>
+
+                                                    {% endif %}
+
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <!--/row-->
+                                </div>
+                                <div class="tab-pane " id="messages">
+
+                                </div>
+                                <div class="tab-pane " id="edit">
+                                    <br/>
+                                    <h3 class="m-y-2">Modifier le compte</h3>
+
+
+                                    <form class="form-horizontal" id="form" method="POST" novalidate action="{{ path('pwdupAdmUSER') }}" >
+
+
+
+
+                                        <fieldset>
+                                            {# <legend>Changer votre mot de passe</legend>#}
+
+                                            {% for message in app.flashes('notice') %}
+                                                <div class="alert alert-warning">
+                                                    {{ message }}
+                                                </div>
+                                            {% endfor %}
+
+                                            <div >
+                                                {#<div class="row">
+                                                    <div class="col-md-4">
+                                                        {{ form_row(form.id)}}
+
+                                                        {{ form_row(form.email, {'attr': {'required': 'false' }}) }}
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+
+                                                <div class="col-md-4">
+                                                        {{ form_row(form.password, {'attr': {'required': 'false' }}) }}
+
+                                                </div>
+                                                </div>
+                                                    <div class="row">
+
+                                                    <div class="col-md-4">
+                                                        {{ form_row(form.confirm_password, {'attr': {'required': 'false' }}) }}                                                     </div>
+                                                    </div>
+
+                                                </div>#}
+                                                {#
+                                                                                                   {{ form_start(form, {'attr': {'novalidate': 'novalidate','class' : 'form-group form-horizontal', 'id':'form', 'role' : 'form' }}) }}
+                                                #}
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {{ form_row(form.id)}}
+
+                                                            {{ form_row(form.nom, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.prenom, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.cin, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.datenassance) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.adresse, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.tel, {'attr': {'autocomplete': 'off' }}) }}
+                                                            {#
+                                                                                                    {{ form_row(form.tel, {'attr' : {'class' : 'form-control', 'pattern' : '[0-9]{2}[0-9]{3}[0-9]{3}'}}) }}
+                                                            #}
+
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.sexe) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.etatcivil) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.dateembauche) }}
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-3">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.email, {'attr': {'autocomplete': 'off' }}) }}
+                                                        </div>
+                                                    </div>
+
+
+                                                    {#
+                                                                                    {% if update ==0 %}
+                                                    #}
+
+
+
+                                                    {#   <div class="col-md-3">
+
+                                                           <div class="form-group">
+                                                               {{ form_row(form.password, {'attr': {'required': 'false' }}) }}
+                                                           </div>
+                                                       </div>
+
+
+                                                       <div class="col-md-3">
+
+                                                           <div class="form-group">
+                                                               {{ form_row(form.confirm_password, {'attr': {'required': 'false' }}) }}
+                                                           </div>
+                                                       </div>#}
+
+                                                    {#
+                                                                                    {% endif %}
+                                                    #}
+
+
+                                                    <div class="col-md-3">
+
+                                                        <div class="form-group">
+
+                                                            {{ form_row(form.roles, {'attr' : {'class' : 'form-control'}}) }}
+
+                                                            {#
+                                                                                                    {{ form_row(form.roles) }}
+                                                            #}
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="col-md-2">
+
+                                                        <div class="form-group">
+                                                            {{ form_row(form.isActive) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button type="submit" name="valider" class="btn lock btn-outline-primary"></span> Mettre à jour</button>
+                                                    </div>
+                                                </div>
+
+
+
+                                                {{ form_rest(form) }}
+
+                                                {{ form_end(form) }}
+
+
+
+                                        </fieldset>
+
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <div class="form-group">
+                                        <a href="{{ path('user')}}"  class="btn btn-outline-info  "><i class="fa fa-undo"></i> Annuler</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 pull-lg-8 text-xs-center">
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+fdff
+
+
+
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+
+
+
+    {% block javascripts %}
+
+
+        <script src="../../plugins/jquery/jquery.validate.js"></script>
+
+        <script type="text/javascript">
+            /*    $.validator.setDefaults( {
+                    submitHandler: function () {
+                        alert( "submitted!" );
+                    }
+                } );*/
+
+
+            $( document ).ready( function () {
+                $( "#form" ).validate( {
+
+
+                    rules: {
+
+                        'userupdate[nom]': {
+                            required: true,
+                            maxlength: 50,
+                            minlength: 2
+                        },
+                        'userupdate[prenom]': {
+                            required: true,
+                            maxlength: 50,
+                            minlength: 2
+                        },
+                        'userupdate[cin]': {
+                            required: true,
+                            minlength: 7,
+                            maxlength: 20,
+                            // number: true
+                        },
+                        'userupdate[datenassance]': {
+                            required: true,
+                            //  minlength: 1
+                        },
+                        'userupdate[adresse]': {
+                            required: true,
+                            minlength: 3,
+                            maxlength: 60,
+                        },
+                        'userupdate[tel]': {
+                            required: true,
+                            minlength: 8,
+                            maxlength: 8,
+                            //  pattern:true,
+                            // pattern: true,
+                            // regex:"[0-9]{2}[0-9]{3}[0-9]{3}"
+                            // "regexphone": /^(\+33\.|0)[0-9]{9}$/
+                            // regexphone: /^0[1-9][0-9]{8}$/
+                        },
+                        'userupdate[sexe]': {
+                            required: true,
+                            // minlength: 2
+                        },
+                        'userupdate[etatcivil]': {
+                            required: true,
+                            // minlength: 2
+                        },
+                        'userupdate[dateembauche]': {
+                            required: true,
+                            // minlength: 2
+                        },
+                        'userupdate[email]': {
+                            required: true,
+                            email: true,
+                            minlength: 4,
+                            maxlength: 50,
+                        },
+                        'userupdate[password]': {
+                            required: true,
+                            minlength: 8,
+                            maxlength: 50,
+                        },
+                        'userupdate[confirm_password]': {
+                            required: true,
+                            minlength: 8,
+                            maxlength: 50,
+                            equalTo: "#user_password"
+                        },
+                        'userupdate[roles][]': {
+                            required: true,
+                            // minlength: 5,
+                            //equalTo: "#password"
+                        },
+
+                        /*
+                           email: {
+                               required: true,
+                               email: true
+                           },
+                           agree: "required"*/
+                    },
+                    messages: {
+                        'userupdate[nom]': {
+                            required: "Veuillez renseigner le nom .",
+                            minlength: "Champ au moins 2 caractères.",
+                            maxlength: "Champ  au plus 50 caractères."
+                        },
+                        'userupdate[prenom]': {
+                            required: "Veuillez renseigner le prénom.",
+                            minlength: "Champ au moins 2 caractères.",
+                            maxlength: "Champ  au plus 50 caractères."
+                        },
+                        'userupdate[cin]': {
+                            required: "Veuillez renseigner la carte d\'identité.",
+                            minlength: "Champ au moins 7 caractères.",
+                            maxlength: "Champ  au plus 20 caractères.",
+                            // number:"Veuillez entrez une valeur valide."
+                        },
+                        'userupdate[datenassance]': {
+                            required: "Veuillez renseigner la date de naissance.",
+                            /* minlength: "Votre nom doit faire au moins 6 caractères.",
+                             maxlength: "Votre nom doit faire au plus 50 caractères."*/
+                        },
+
+                        'userupdate[adresse]': {
+                            required: "Veuillez renseigner l\'adresse.",
+                            minlength: "Votre nom doit faire au moins 3 caractères.",
+                            maxlength: "Votre nom doit faire au plus 60 caractères."
+                        },
+
+                        'userupdate[tel]': {
+                            required: "Vous devez saisir un numéro de téléphone au format 70 777 777.",
+                            minlength: "Champ  au moins 8 chiffres.",
+                            maxlength: "Champ au max 8 chiffres.",
+                            pattern: "Vous devez saisir un numéro de téléphone au format 70 777 777.",
+
+                            //   regex : "Veuillez renseigner un numéro de téléphone valide"
+                            // regexphone: "test"
+                        },
+                        'userupdate[dateembauche]': {
+                            required: "Veuillez renseigner la date d\'embauche.",
+                            /*  minlength: "Votre nom doit faire au moins 6 caractères.",
+                              maxlength: "Votre nom doit faire au plus 50 caractères."*/
+                        },
+
+                        'userupdate[sexe]': {
+                            required: "Veuillez renseigner le sexe.",
+                            /*       minlength: "Votre nom doit faire au moins 6 caractères.",
+                                   maxlength: "Votre nom doit faire au plus 50 caractères."*/
+                        },
+                        'userupdate[etatcivil]': {
+                            required: "Veuillez sélectionner l\'état civil .",
+                            /* minlength: "Votre nom doit faire au moins 6 caractères.",
+                             maxlength: "Votre nom doit faire au plus 50 caractères."*/
+                        },
+
+
+
+                        'userupdate[email]': {
+                            required: "Veuillez renseigner l'émail.",
+                            minlength: "Votre nom doit faire au moins 4 caractères.",
+                            maxlength: "Votre nom doit faire au plus 50 caractères.",
+                            email:"Veuillez renseigner un email valide"
+                        },
+
+
+                        'userupdate[password]': {
+                            required: "Veuillez renseigner le mot de passe.",
+                            minlength: "Champ au moins 8 caractères.",
+                            maxlength: "Champ  au plus 50 caractères.",
+                        },
+
+                        'userupdate[confirm_password]': {
+                            required: "Veuillez confirmer le mot de passe.",
+                            minlength: "Champ au moins 8 caractères.",
+                            maxlength: "Champ  au plus 50 caractères.",
+                            equalTo: "Entrez le même mot de passe"
+                        },
+
+                        'userupdate[roles][]': {
+                            required: "Sélectionner un role.",
+                            // minlength: "Votre nom doit faire au moins 6 caractères.",
+                            // maxlength: "Votre nom doit faire au plus 50 caractères."
+                        },
+
+                        /* confirm_password: {
+                             required: "Please provide a password",
+                             minlength: "Your password must be at least 5 characters long",
+                             equalTo: "Please enter the same password as above"
+                         },
+                         email: "Please enter a valid email address",
+                         agree: "Please accept our policy"*/
+                    },
+                    errorElement: "em",
+                    errorPlacement: function ( error, element ) {
+                        // Add the `invalid-feedback` class to the error element
+                        error.addClass( "invalid-feedback" );
+
+                        if ( element.prop( "type" ) === "checkbox" ) {
+                            error.insertAfter( element.next( "label" ) );
+                        } else {
+                            error.insertAfter( element );
+                        }
+                    },
+                    highlight: function ( element, errorClass, validClass ) {
+                        $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+                    }
+                } );
+
+            } );
+        </script>
+
+    {% endblock %}
+
+    {#
+    {% block javascripts %}
+
+
+        <script src="../../plugins/jquery/jquery.validate.js"></script>
+
+        <script type="text/javascript">
+            /*    $.validator.setDefaults( {
+                    submitHandler: function () {
+                        alert( "submitted!" );
+                    }
+                } );*/
+
+
+            $( document ).ready( function () {
+                $( "#password" ).validate( {
+
+
+                    rules: {
+
+
+                        'userupdate[password]': {
+                            required: true,
+                            minlength: 8,
+                            maxlength: 50,
+                        },
+                        'userupdate[confirm_password]]': {
+                            required: true,
+                            minlength: 8,
+                            maxlength: 50,
+                            equalTo: "#userupdate_password"
+                        },
+
+
+                    },
+                    messages: {
+
+
+                        'userupdate[password]': {
+                            required: "Veuillez renseigner le mot de passe.",
+                            minlength: "Champ au moins 8 caractères.",
+                            maxlength: "Champ  au plus 50 caractères.",
+                        },
+
+                        'userupdate[confirm_password]': {
+                            required: "Veuillez confirmer le mot de passe.",
+                            minlength: "Champ au moins 8 caractères.",
+                            maxlength: "Champ  au plus 50 caractères.",
+                            equalTo: "Entrez le même mot de passe"
+                        },
+
+
+                    },
+                    errorElement: "em",
+                    errorPlacement: function ( error, element ) {
+                        // Add the `invalid-feedback` class to the error element
+                        error.addClass( "invalid-feedback" );
+
+                        if ( element.prop( "type" ) === "checkbox" ) {
+                            error.insertAfter( element.next( "label" ) );
+                        } else {
+                            error.insertAfter( element );
+                        }
+                    },
+                    highlight: function ( element, errorClass, validClass ) {
+                        $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+                    }
+                } );
+
+            } );
+        </script>
+
+
+    {% endblock %}#}

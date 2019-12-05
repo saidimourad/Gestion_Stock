@@ -18,8 +18,8 @@ class DetailentreeType extends AbstractType
          {
     $builder
             ->add('article' , EntityType::class ,array('class'=>Article::class,'choice_label' => 'nom_art','attr' => array('class'=>'select2')))
-            ->add('qteentree', TextType::class , array('attr' => array( 'required' => true, 'type'=>'number','min'=>'0.001','title'=>'Vous devez saisir un nombre  valide.', 'pattern'=>'\d+(\.\d{3})?',  'placeholder'=> '0.000',  'class'=>'form-control'),'label' => 'Quantité' ) )
-            ->add('prixentree', TextType::class, array('attr' => array( 'required' => true, 'type'=>'number','min'=>'0.001' ,'title'=>'Vous devez saisir un nombre  valide.', 'pattern'=>'\d+(\.\d{3})?', 'placeholder'=> '0.000', 'class'=>'form-control'),'label' => 'Prix' ))  ;
+            ->add('qteentree', TextType::class , array('attr' => array( 'required' => true, 'type'=>'number','min'=>'0.001','title'=>'Vous devez saisir un nombre  valide.', 'pattern'=>'\d+(\.\d{3})?','autocomplete'=>'off',  'placeholder'=> '0.000',  'class'=>'form-control'),'label' => 'Quantité' ) )
+            ->add('prixentree', TextType::class, array('attr' => array( 'required' => true, 'type'=>'number','min'=>'0.001' ,'title'=>'Vous devez saisir un nombre  valide.', 'pattern'=>'\d+(\.\d{3})?','autocomplete'=>'off', 'placeholder'=> '0.000', 'class'=>'form-control'),'label' => 'Prix' ))  ;
          }
 
 

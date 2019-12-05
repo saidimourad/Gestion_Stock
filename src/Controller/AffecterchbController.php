@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\Service\decodeID;
 
 
 class AffecterchbController extends AbstractController
@@ -19,7 +20,7 @@ class AffecterchbController extends AbstractController
      *
      */
 
-    public function index(Request $request, $action=0, $id=0 )
+    public function index(Request $request, $action=0, $id=0,decodeID $decodeID )
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -27,7 +28,7 @@ class AffecterchbController extends AbstractController
         $chbureau= new AffecterChefbureau();
         if ((base64_decode($action)) > 0)
         {
-            $chbureau = $rep->findOneBy(['id' => (base64_decode($id)-111985)]);
+            $chbureau = $rep->findOneBy(['id' => (base64_decode($id)/$decodeID->getDecode())]);
             if(base64_decode($action) > 1)
             {
                 if ($this->isCsrfTokenValid('delete'.$chbureau->getId(), $request->request->get('_token'))) {

@@ -61,14 +61,22 @@
 
 
                                 <a class="btn btn-default btn-sm px-2  text-blue"
-                                   href="{{ path('edit_fournisseur', {'action':1| encode, 'id': (utilisateur.id+111985)| encode}) }}"
+                                   href="{{ path('profile', {'action':2,'id': (utilisateur.id)| encode}) }}"
+                                   data-toggle="tooltip" data-placement="top" title="Détail">
+                                    <i class="fas fa-search-plus"></i>
+                                </a>
+
+
+                                <a class="btn btn-default btn-sm px-2  text-blue"
+                                   href="{{ path('edit_fournisseur', {'action':2| encode, 'id': (utilisateur.id)| encode}) }}"
                                    data-toggle="tooltip" data-placement="top" title="Modifier">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
 
 
+
                                 <form method="post" style="display: inline-block "
-                                      action="{{ path('edit_fournisseur', {'action':2| encode, 'id': (utilisateur.id+111985)| encode}) }}"
+                                      action="{{ path('edit_fournisseur', {'action':2| encode, 'id': (utilisateur.id)| encode}) }}"
                                       onsubmit="return confirm('Voulez-vous vraiment supprimer ?')">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="_token"
@@ -82,13 +90,13 @@
                                 {% if utilisateur.isActive==1 %}
 
                                     <a class="btn btn-default btn-sm px-2  text-blue"
-                                       href="{{ path('desactiveruser', {'action':1| encode, 'id': (utilisateur.id+111985)| encode}) }}"
+                                       href="{{ path('desactiveruser', {'action':1, 'id': (utilisateur.id)| encode}) }}"
                                        data-toggle="tooltip" data-placement="top" title="Déactiver">
                                         <i class="m-r-10 mdi mdi-account-off"></i>
                                     </a>
                                 {% else %}
                                     <a class="btn btn-default btn-sm px-2  text-blue"
-                                       href="{{ path('activeruser', {'action':1| encode, 'id': (utilisateur.id+111985)| encode}) }}"
+                                       href="{{ path('activeruser', {'action':1, 'id': (utilisateur.id)| encode}) }}"
                                        data-toggle="tooltip" data-placement="top" title="Activer">
                                         <i class="m-r-10 mdi mdi-account-check"></i>
                                     </a>

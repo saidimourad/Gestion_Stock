@@ -130,11 +130,11 @@
                             <div class="col-12">
                                 <a href="{{ path('entree')}}"  class="btn btn-outline-info  "><i class="fa fa-undo"></i> Vers Liste</a>
                                 {% if (is_granted('ROLE_MAGASINIER'))%}
-                                <a href="{{ path('updateentree', { 'id': (entity.id+111985)| encode }) }}" class="btn btn-outline-success float-right" >
+                                <a href="{{ path('updateentree', { 'id': (entity.id)| encode }) }}" class="btn btn-outline-success float-right" >
                                     <i class="far fa-credit-card"></i> Mettre à jours</a>
                                 {% endif %}
 
-                                <a href="{{ path('imprimerentree', { 'id': (entity.id+111985)| encode }) }}" target="_blank" class="btn btn-outline-primary float-right" style="margin-right: 5px;" >
+                                <a href="{{ path('imprimerentree', { 'id': (entity.id)| encode }) }}" target="_blank" class="btn btn-outline-primary float-right" style="margin-right: 5px;" >
                                     <i class="fas fa-download"></i> Genérer PDF</a>
                             </div>
                         </div>

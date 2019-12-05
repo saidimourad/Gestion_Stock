@@ -3,6 +3,7 @@
 
 namespace App\Entity;
 use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 class ChangePassword
@@ -11,9 +12,14 @@ class ChangePassword
      * @SecurityAssert\UserPassword(
      *     message = "le mot de passe actuel incorrect"
      * )
+     * @Assert\NotBlank(message="le mot de passe est obligatoire")
      */
-    protected $oldPassword;
 
+    protected $oldPassword;
+    /**
+     * @Assert\NotBlank(message="le mot de passe est obligatoire")
+
+     */
     protected $password;
 
 

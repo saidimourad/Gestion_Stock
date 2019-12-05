@@ -25,13 +25,23 @@ class ConvertMD5 extends AbstractExtension
     //public function encodeID($value, $padding)
             public function encodeID($value)
     {
+       // $hashids = new Hashids();
 
       //  $hashids = new Hashids('', $padding);
-      //  $hashids->encode($value);
-      //  return $hashids;
-        $hashids = base64_encode($value);
+     //  $hashids->encode($value);
+       // return $hashids;
+
+    //  $val=($value*111985);
+        $val=($value*111985);
+
+       $hashids = base64_encode($val);
 
         return $hashids;
+
+
+
+
+
 
     }
 }

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Repository\AffecterChefuniteRepository;
+use App\Service\decodeID;
 
 
 class CategorieController extends AbstractController
@@ -19,7 +20,7 @@ class CategorieController extends AbstractController
      * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_DIRECTEUR') or has_role('ROLE_CHEFUNITE')")
      * @Route("/categorie/{action}/{id}", name="categorie", methods="DELETE|GET|POST")
      */
-    public function index(Request $request, $action=0, $id=0,AffecterChefuniteRepository $affchu )
+    public function index(Request $request, $action=0, $id=0,AffecterChefuniteRepository $affchu,decodeID $decodeID )
     {
         $roles=$this->getUser()->getRoles();
         if (  $roles['0']=='ROLE_CHEFUNITE') {
@@ -36,7 +37,7 @@ class CategorieController extends AbstractController
         $categorie = new Categorie();
         if ((base64_decode($action)) > 0)
         {
-            $categorie = $rep->findOneBy(['id' => (base64_decode($id)-111985)]);
+            $categorie = $rep->findOneBy(['id' => (base64_decode($id)/$decodeID->getDecode())]);
             if(base64_decode($action) > 1)
             {
                 if ($this->isCsrfTokenValid('delete'.$categorie->getId(), $request->request->get('_token'))) {

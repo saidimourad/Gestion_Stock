@@ -28,43 +28,21 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                {{ form_row(form.nomste) }}
+                                {{ form_row(form.nomste, {'attr': {'autocomplete': 'off' }}) }}
                             </div>
                         </div>
 
                         <div class="col-md-4">
 
                             <div class="form-group">
-                                {{ form_row(form.mfste) }}
+                                {{ form_row(form.mfste, {'attr': {'autocomplete': 'off' }}) }}
                             </div>
                         </div>
 
                         <div class="col-md-4">
 
                             <div class="form-group">
-                                {{ form_row(form.gerantste) }}
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-4">
-
-                            <div class="form-group">
-                                {{ form_row(form.adresse) }}
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-
-                            <div class="form-group">
-                                {{ form_row(form.tel) }}
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-
-                            <div class="form-group">
-                                {{ form_row(form.email) }}
+                                {{ form_row(form.gerantste, {'attr': {'autocomplete': 'off' }}) }}
                             </div>
                         </div>
 
@@ -72,7 +50,29 @@
                         <div class="col-md-4">
 
                             <div class="form-group">
-                                {{ form_row(form.activiteste) }}
+                                {{ form_row(form.adresse, {'attr': {'autocomplete': 'off' }}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                {{ form_row(form.tel, {'attr': {'autocomplete': 'off' }}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                {{ form_row(form.email, {'attr': {'autocomplete': 'off' }}) }}
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                {{ form_row(form.activiteste, {'attr': {'autocomplete': 'off' }}) }}
                             </div>
                         </div>
 
@@ -100,7 +100,7 @@
                         </div>
 
 
-                        <div class="col-md-1">
+                        <div class="col-md-2">
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-outline-success "><i class="fa fa-save"></i>
@@ -109,7 +109,12 @@
 
                             </div>
                         </div>
+                        <div class="col-md-2">
 
+                            <div class="form-group">
+                                <a href="{{ path('fournisseur')}}"  class="btn btn-outline-info  "><i class="fa fa-undo"></i> Annuler</a>
+                            </div>
+                        </div>
 
                     </div>
 
@@ -156,7 +161,7 @@
                         'fr[nomste]': {
                             required: true,
                             maxlength: 50,
-                            minlength: 5
+                            minlength: 3
                         },
                         'fr[mfste]': {
                             required: true,
@@ -165,7 +170,7 @@
                         },
                         'fr[gerantste]': {
                             required: true,
-                            minlength: 10,
+                            minlength: 6,
                             maxlength: 30,
                             // number: true
                         },
@@ -191,7 +196,7 @@
 
                         'fr[activiteste]': {
                             required: true,
-                            minlength: 5,
+                            minlength: 3,
                             maxlength: 50,
                         },
 
@@ -212,7 +217,7 @@
                     messages: {
                         'fr[nomste]': {
                             required: "Veuillez renseigner le nom de société .",
-                            minlength: "Champ au moins 5 caractères.",
+                            minlength: "Champ au moins 3 caractères.",
                             maxlength: "Champ  au plus 50 caractères."
                         },
                         'fr[mfste]': {
@@ -222,7 +227,7 @@
                         },
                         'fr[gerantste]': {
                             required: "Veuillez renseigner le gérant.",
-                            minlength: "Champ au moins 10 caractères.",
+                            minlength: "Champ au moins 6 caractères.",
                             maxlength: "Champ  au plus 30 caractères."
                         },
 
@@ -248,7 +253,7 @@
                         },
                         'fr[activiteste]': {
                             required: "Veuillez renseigner l'activité de société.",
-                            minlength: "Votre nom doit faire au moins 5 caractères.",
+                            minlength: "Votre nom doit faire au moins 3 caractères.",
                             maxlength: "Votre nom doit faire au plus 50 caractères.",
 
                         },

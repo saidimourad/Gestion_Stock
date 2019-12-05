@@ -170,7 +170,7 @@
                                                         </td>
                                                     {% endif %}
                                                     <td>
-                                                        {% if item.dateprevulivraison is defined %}
+                                                        {% if item.dateprevulivraison  %}
                                                             <span class="badge badge-success">{{ item.dateprevulivraison |date("d/m/Y") }}</span>
                                                         {% else %}
                                                             <span class="badge badge-warning">En cours</span>
@@ -187,7 +187,7 @@
                                                     <td>
                                                         {% if item.isLivre==0 %}
                                                         {% if (is_granted('ROLE_CHEFUNITE')) %}
-                                                            <a href="/validercommande/{{ (item.id+111985)| encode }}"
+                                                            <a href="/validercommande/{{ (item.id)| encode }}"
                                                                data-toggle="tooltip" data-placement="top"
                                                                title="Valider commande">
                                                                 <i class="mdi mdi-check-all"></i>
@@ -198,7 +198,7 @@
 
                                                             {% if item.isAccept==0 or item.isAccept==2 %}
                                                                 <a class="text-success">Accepter <a
-                                                                            href="{{ path('acceptercommande', { 'id': (item.id+111985)| encode }) }}"
+                                                                            href="{{ path('acceptercommande', { 'id': (item.id)| encode }) }}"
                                                                             data-toggle="tooltip" data-placement="top"
                                                                             title="Accepter">
                                                                         <i class="m-r-10 mdi mdi-account-check"></i>
@@ -206,7 +206,7 @@
                                                             {% endif %}
                                                             {% if item.isAccept==1 %}
                                                                 <a class="text-warning">Refuser<a
-                                                                            href="{{ path('refusercommande', { 'id': (item.id+111985)| encode }) }}"
+                                                                            href="{{ path('refusercommande', { 'id': (item.id)| encode }) }}"
                                                                             data-toggle="tooltip" data-placement="top"
                                                                             title="Refuser">
                                                                         <i class="m-r-10 mdi mdi-account-off"></i>
@@ -215,13 +215,13 @@
 
                                                         {% endif %}
                                                         {% if (is_granted('ROLE_CHEFBUREAU')) %}
-                                                        <a class=" btn btn-default btn-sm px-2  text-blue" href="commande/update/{{ (item.id+111985)| encode }}"
+                                                        <a class=" btn btn-default btn-sm px-2  text-blue" href="commande/update/{{ (item.id)| encode }}"
                                                            data-toggle="tooltip" data-placement="top" title="Modifier">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
 
                                                             <form method="post" style="display: inline-block "
-                                                                  action="{{ path('entree_delete', {'id': (item.id+111985)| encode}) }}"
+                                                                  action="{{ path('commande_delete', {'id': (item.id)| encode}) }}"
                                                                   onsubmit="return confirm('Voulez-vous vraiment supprimer ?')">
                                                                 <input type="hidden" name="_method" value="DELETE">
                                                                 <input type="hidden" name="_token"
@@ -240,12 +240,12 @@
                                                             </a>#}
                                                                 {% endif %}
                                                                 {% endif %}
-                                                                <a class=" btn btn-default btn-sm px-2  text-blue" href="/showcommande/{{ (item.id+111985)| encode }}"
+                                                                <a class=" btn btn-default btn-sm px-2  text-blue" href="/showcommande/{{ (item.id)| encode }}"
                                                                    data-toggle="tooltip" data-placement="top"
                                                                    title="detail">
                                                                     <i class="fas fa-search-plus"></i>
                                                                 </a>
-                                                                <a class=" btn btn-default btn-sm px-2  text-blue" href="commande/imprimer/{{ (item.id+111985)| encode }}"
+                                                                <a class=" btn btn-default btn-sm px-2  text-blue" href="imprimercommande/{{ (item.id)| encode }}"
                                                                    target="_blank" data-toggle="tooltip"
                                                                    data-placement="top" title="Imprimer">
                                                                     <i class="fas fa-print"></i>

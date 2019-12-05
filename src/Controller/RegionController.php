@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\Service\decodeID;
 
 
 
@@ -19,7 +20,7 @@ class RegionController extends AbstractController
          * @Security("has_role('ROLE_ADMIN') or has_role('ROLE_DIRECTEUR') ")
      * @Route("/region/{action}/{id}", name="region")
      */
-    public function index(Request $request, $action=0, $id=0 )
+    public function index(Request $request, $action=0, $id=0,decodeID $decodeID )
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -27,7 +28,7 @@ class RegionController extends AbstractController
         $region = new Region();
         if ((base64_decode($action)) > 0)
         {
-            $region = $rep->findOneBy(['id' => (base64_decode($id)-111985)]);
+            $region = $rep->findOneBy(['id' => (base64_decode($id)/$decodeID->getDecode())]);
             if(base64_decode($action)> 1)
             {
 
